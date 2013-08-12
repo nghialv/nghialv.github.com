@@ -60,6 +60,8 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">Projects</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
 
 </nav>
@@ -90,6 +92,8 @@
 
 
 <time datetime="2013-08-12T18:16:00+09:00" pubdate data-updated="true">Aug 12<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/#disqus_thread">Comments</a>
         
       </p>
     
@@ -362,16 +366,18 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 
 <p>Tiếp theo còn một đoạn <code>...</code> tại phần tạo cell mới khi mà không tìm thấy cell có thể dùng lại. Như bạn thấy đấy để tạo cell mới chúng ta cần biết Class của cell. Với Objective-C chúng ta có thể tạo 1 instance từ tên class. Khi đó chúng ta có thể tạo 1 cell như sau:</p>
 
-<p><code>
-cell = [[NSClassFromString(CELL_CLASS_NAME) alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.cellIdentifier];
-</code></p>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cell</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="n">CELL_CLASS_NAME</span><span class="p">)</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewCellStyleDefault</span>
+</span><span class='line'>                                                 <span class="nl">reuseIdentifier:</span><span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Như vậy class TVArrayDataSource chỉ cần có thêm thông tin là tên class của cell là mọi việc có thể hoàn tất. Ngoài ra nhiều khi chúng ta muốn tạo cell từ file Xib. Để tạo cell từ file xib chúng ta cũng chỉ cần biết thêm tên file xib. Thế nên mình tạo thêm một property <code>cellName</code> để lưu tên class của cell hoặc tên file Xib tuỳ theo trường hợp cell tạo từ file xib hay từ code.
 Như vậy việc tạo class TVArrayDatasource đã hoàn thành. Và bây giờ trong ViewController chúng ta chỉ implement đoạn code ngắn như sau:
 Khi sử dụng với block</p>
 
-<figure class='code'><figcaption><span>ViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>block - ViewController.m</span><a href='https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m'>github </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -503,6 +509,19 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'nghialv';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
