@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: project | nghialv blog]]></title>
+  <link href="http://nghialv.github.io/blog/categories/project/atom.xml" rel="self"/>
+  <link href="http://nghialv.github.io/"/>
+  <updated>2013-08-14T11:10:13+09:00</updated>
+  <id>http://nghialv.github.io/</id>
+  <author>
+    <name><![CDATA[nghialv]]></name>
+    <email><![CDATA[nghialv2607@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[vlcamera]]></title>
+    <link href="http://nghialv.github.io/blog/2013/08/13/vlcamera/"/>
+    <updated>2013-08-13T11:29:00+09:00</updated>
+    <id>http://nghialv.github.io/blog/2013/08/13/vlcamera</id>
+    <content type="html"><![CDATA[<h3>Description</h3>
+
+<p>Do you like to put troll faces and funny texts in your photos? &ldquo;vlcamera&rdquo; can offer you all that.</p>
+
+<p>FEATURES</p>
+
+<ul>
+<li>Easy to use! You can add unlimited number of troll faces and funny texts in your photos.</li>
+<li>Easy to translate, rotate, scale, flip the troll faces and the texts</li>
+<li>Can change the content of the texts with cool GUI.</li>
+<li>Can undo, remove the troll faces and the texts.</li>
+<li>Save photos to your Photo Album.</li>
+<li>Share your photos with friends on Facebook and Twitter.</li>
+<li>Enjoy your fun without any ads.</li>
+</ul>
+
+
+<p>Let&rsquo;s have funny moments with &ldquo;vlcamera&rdquo;.</p>
+
+<p>keywords: troll, haivl, funny, photo, camera</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iBall game]]></title>
+    <link href="http://nghialv.github.io/blog/2012/12/09/iball-game/"/>
+    <updated>2012-12-09T01:17:00+09:00</updated>
+    <id>http://nghialv.github.io/blog/2012/12/09/iball-game</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
