@@ -4,7 +4,7 @@
   <title><![CDATA[Category: project | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/project/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2013-09-10T01:58:29+09:00</updated>
+  <updated>2013-11-06T14:45:21+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[sslide]]></title>
+    <link href="http://nghialv.github.io/blog/2013/11/06/sslide/"/>
+    <updated>2013-11-06T10:00:00+09:00</updated>
+    <id>http://nghialv.github.io/blog/2013/11/06/sslide</id>
+    <content type="html"><![CDATA[<h3>Description</h3>
+
+<p>&ldquo;&mdash; Welcome to a new world of presentations &mdash;&rdquo;</p>
+
+<p>SSlide is a presentation tool that will make your presentations more interactive.</p>
+
+<p>FEATURES</p>
+
+<ul>
+<li><p>Integrating with SlideShare</p>
+
+<ul>
+<li>Browse your slides on SlideShare</li>
+<li>Download slides for offline viewing</li>
+<li>Browse your favourite slides at top page (you can add or remove the tags)</li>
+<li>Search slides by keyword with three options: relevance, most viewed, latest</li>
+</ul>
+</li>
+<li><p>Presentation</p>
+
+<ul>
+<li>Streaming
+
+<ul>
+<li>establish streaming for the subscribing from other devices</li>
+<li>subscribe to a streaming channel (established by other device or web)</li>
+<li>synchronize your slide page</li>
+<li>synchronize your drawing on each page</li>
+</ul>
+</li>
+<li>Send the questions to the presenter directly on your device</li>
+<li>Take the notes in your slide</li>
+</ul>
+</li>
+<li><p>Super cool interface</p></li>
+</ul>
+
+
+<p>keywords: slideshare, slide, presentation, streaming</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[vlcamera]]></title>
