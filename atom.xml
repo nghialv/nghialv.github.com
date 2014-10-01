@@ -4,7 +4,7 @@
   <title><![CDATA[nghialv blog]]></title>
   <link href="http://nghialv.github.io/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-01-06T14:48:08+09:00</updated>
+  <updated>2014-10-01T17:19:21+07:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[#include, #import, @import (clang modules)]]></title>
     <link href="http://nghialv.github.io/blog/2014/01/06/clang-modules/"/>
-    <updated>2014-01-06T04:14:00+09:00</updated>
+    <updated>2014-01-06T04:14:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2014/01/06/clang-modules</id>
     <content type="html"><![CDATA[<h1>Mở đầu</h1>
 
@@ -297,7 +297,7 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   <entry>
     <title type="html"><![CDATA[sslide]]></title>
     <link href="http://nghialv.github.io/blog/2013/11/06/sslide/"/>
-    <updated>2013-11-06T10:00:00+09:00</updated>
+    <updated>2013-11-06T10:00:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2013/11/06/sslide</id>
     <content type="html"><![CDATA[<h3>Description</h3>
 
@@ -344,7 +344,7 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   <entry>
     <title type="html"><![CDATA[[iOS property:attributes]]]></title>
     <link href="http://nghialv.github.io/blog/2013/09/10/ios-property-attributes/"/>
-    <updated>2013-09-10T00:56:00+09:00</updated>
+    <updated>2013-09-10T00:56:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2013/09/10/ios-property-attributes</id>
     <content type="html"><![CDATA[<h1>Mở đầu</h1>
 
@@ -648,7 +648,7 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
   <entry>
     <title type="html"><![CDATA[vlcamera]]></title>
     <link href="http://nghialv.github.io/blog/2013/08/13/vlcamera/"/>
-    <updated>2013-08-13T11:29:00+09:00</updated>
+    <updated>2013-08-13T11:29:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2013/08/13/vlcamera</id>
     <content type="html"><![CDATA[<h3>Description</h3>
 
@@ -676,7 +676,7 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
   <entry>
     <title type="html"><![CDATA[Tạo class datasource cho TableView]]></title>
     <link href="http://nghialv.github.io/blog/2013/08/12/tao-class-datasource-cho-tableview/"/>
-    <updated>2013-08-12T18:16:00+09:00</updated>
+    <updated>2013-08-12T18:16:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2013/08/12/tao-class-datasource-cho-tableview</id>
     <content type="html"><![CDATA[<h1>Mở đầu</h1>
 
@@ -1022,7 +1022,7 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
   <entry>
     <title type="html"><![CDATA[iBall game]]></title>
     <link href="http://nghialv.github.io/blog/2012/12/09/iball-game/"/>
-    <updated>2012-12-09T01:17:00+09:00</updated>
+    <updated>2012-12-09T01:17:00+07:00</updated>
     <id>http://nghialv.github.io/blog/2012/12/09/iball-game</id>
     <content type="html"><![CDATA[
 ]]></content>
