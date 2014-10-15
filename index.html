@@ -9,8 +9,8 @@
   <meta name="author" content="nghialv">
 
   
-  <meta name="description" content="Mở đầu Happy New Year! Chúc mọi người năm mới vui vẻ, hạnh phúc. Như các bạn cũng biết gần đây XCode5 cùng iOS7 đã được giới thiệu.
-Đi cùng XCode5 là &hellip;">
+  <meta name="description" content="Net is a HttpRequest wrapper written in Swift. source code : https://github.com/nghialv/Net Features GET, POST, PUT, DELETE method
+Powerful request &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,14 +67,17 @@
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-    <li><a href="nghialv2607@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:nghialv.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -100,6 +103,669 @@
         
   <header>
     
+      <h1 class="entry-title vn-title"><a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest Wrapper</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-02T20:29:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 pm</span></time>
+        
+         | <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/#disqus_thread" class="article-comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Net is a HttpRequest wrapper written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/Net">source code : https://github.com/nghialv/Net</a></p>
+
+<h3>Features</h3>
+
+<ul>
+<li>GET, POST, PUT, DELETE method</li>
+<li>Powerful request params: nested params, number, string, dic, array, image, data</li>
+<li>Json, Image, Xml Response</li>
+<li>Download file: resume, suspend, cancel</li>
+<li>Upload file, data, params(multi-part)</li>
+<li>Progress closure</li>
+<li>Background donwload, upload</li>
+<li>Authentication</li>
+<li>Batch of operations</li>
+<li>BaseURL</li>
+<li>Customizable header</li>
+</ul>
+
+
+<h3>Demo app</h3>
+
+<p><img src="https://dl.dropboxusercontent.com/u/8556646/screenshot2.png" alt="screenshot" /></p>
+
+<h3>Usage</h3>
+
+<p>Use one of the following methods to create a Net instance</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// without baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// with baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="nl">baseUrlString</span><span class="p">:</span> <span class="s">&quot;http://www.puqiz.com/&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>HttpRequest</h4>
+
+<h6><code>GET</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;get_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;doubleNumber&quot;</span><span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;hello&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can also make a request with absolute url</span>
+</span><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.puqiz.com/get_path&quot;</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also use nested params</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// nested params</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;array&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;dictionary&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;image&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By using responseData in sucessHandler closure you can quickly</p>
+
+<ul>
+<li>get json dictionary</li>
+<li>get image</li>
+<li>parse xml</li>
+</ul>
+
+
+<p>for GET, POST, PUT, DELETE request.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get json dictionary from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">jsonDic</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// get image from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">image</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// parse xml with delegate</span>
+</span><span class='line'><span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">parseXml</span><span class="p">(</span><span class="nl">delegate</span><span class="p">:</span> <span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>POST</code> Request</h6>
+
+<p>Net will automatically check your params to send request as a URL-Encoded request or a Multi-Part request. So you can easily post with number, string, image or binary data.</p>
+
+<ul>
+<li>URL-Encoded Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Multi-Part Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;puqiz_icon&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;icon&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>PUT</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;put_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>DELETE</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;delete_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Task</h4>
+
+<p>Before using download/upload function you have to call <code>setupSession</code> method to setup the session.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session without backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To perform background downloads or uploads, you have to call <code>setupSession</code> method with a background identifier string. Then your download/upload tasks can be run even when the app is suspended, exits or crashes.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session with backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">(</span><span class="nl">backgroundIdentifier</span><span class="p">:</span> <span class="s">&quot;com.nghialv.download&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can set eventsForBackgroundHandler closure</span>
+</span><span class='line'><span class="c1">// this closure will be invoked when a task is completed in the background</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;All files have been downloaded!&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Download</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Download failed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Downloaded to  : \(fileUrl)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can control your task</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">suspend</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Upload</h6>
+
+<ul>
+<li>Upload with file path</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload failed : \(error)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with data</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">yourData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(...)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with params</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;image_file&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;number&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;net&quot;</span><span class="p">,</span> <span class="s">&quot;data&quot;</span><span class="o">:</span> <span class="n">imageData</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the upload task will be performed as POST method and</p>
+
+<ul>
+<li><code>Content-Type</code> = <code>application/octet-stream</code> (upload with file or data)</li>
+<li><code>Content-Type</code> = <code>multipart/form-data</code> (upload with params)</li>
+</ul>
+
+
+<p>But you can configure the upload task before resuming.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// set method</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setHttpMethod</span><span class="p">(.</span><span class="n">PUT</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// set header field</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="nl">value</span><span class="p">:</span> <span class="s">&quot;your_value&quot;</span><span class="p">,</span> <span class="nl">forHttpHeaderField</span><span class="p">:</span> <span class="s">&quot;header_field&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>In progress</h3>
+
+<ul>
+<li>Batch of operations</li>
+<li>Basic authentiacation</li>
+</ul>
+
+
+<h3>Integration</h3>
+
+<p>Just drag Net folder to the project tree</p>
+</div>
+  
+  
+
+
+      
+    </article>
+  
+    
+    <article>
+      
+        
+  <header>
+    
+      <h1 class="entry-title vn-title"><a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a Wrapper of Grand Central Dispatch</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-01T20:22:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>8:22 pm</span></time>
+        
+         | <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/#disqus_thread" class="article-comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>GCD is a wrapper of Grand Central Dispatch written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/GCD">source code : https://github.com/nghialv/GCD</a></p>
+
+<h3>Examples</h3>
+
+<h6>&ndash; gcd</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// submit your code for asynchronous execution on a global queue with high priority</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">High</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// or with main thread</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Default</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'>    <span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// code run on main thread</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// with your custom queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">myQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="s">&quot;myQueue&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Custom</span><span class="p">(</span><span class="n">myQueue</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// run with delay</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Background</span><span class="p">,</span> <span class="nl">delay</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// sync code</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">sync</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// apply</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">apply</span><span class="p">(.</span><span class="n">Default</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// once</span>
+</span><span class='line'><span class="k">var</span> <span class="nl">onceToken</span><span class="p">:</span> <span class="n">GCDOnce</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>&ndash; manage group of block with GCDGroup</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create group</span>
+</span><span class='line'><span class="k">let</span> <span class="n">group</span> <span class="o">=</span> <span class="n">GCDGroup</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can add async code to group</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Defaul</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can set notify for this group</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">notify</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// or wait synchronously for block in group to complete and timeout is 10 seconds</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>&ndash; create your custom queue with CGDQueue</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a serial queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">serialQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="s">&quot;mySerialQueue&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// create a concurrent queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">concurrentQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">concurrent</span><span class="p">:</span> <span class="s">&quot;myConcurrentQueue&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can submit async barrier to queue</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">asyncBarrier</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// or sync code</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">syncBarrier</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Integration</h3>
+
+<p>Just drag GCD.swift file to the project tree</p>
+</div>
+  
+  
+
+
+      
+    </article>
+  
+    
+    <article>
+      
+        
+  <header>
+    
       <h1 class="entry-title vn-title"><a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (Clang Modules)</a></h1>
     
     
@@ -109,14 +775,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-01-06T04:14:00+07:00" pubdate data-updated="true">Jan 6<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-01-06T04:14:00+07:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:14 am</span></time>
         
          | <a href="/blog/2014/01/06/clang-modules/#disqus_thread" class="article-comments">Comments</a>
         
@@ -146,7 +805,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 <p>Ví dụ với chương trình helloworld quen thuộc như dưới đây:</p>
 
 <figure class='code'><figcaption><span>helloworld.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -172,7 +831,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 <p>Với việc sử dụng <code>#include</code> tồn tại vấn đề gọi là recursive include. Ví dụ :</p>
 
 <figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;SecondFile.h&quot;</span>
@@ -184,7 +843,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 
 <figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;FirstFile.h&quot;</span>
@@ -224,7 +883,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 Để hiểu về vấn đề Header Fragility chúng ta xem qua một ví dụ đơn giản sau:</p>
 
 <figure class='code'><figcaption><span>MyFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -243,7 +902,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 
 <p>Khi đó sau quá trình preprocessing thì file header của chúng ta sẽ như sau:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -277,7 +936,7 @@ Thế nên thời gian compile sẽ trở nên nhiều hơn rất nhiều.</p>
 Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra đều có file PROJECTNAME-Prefix.pch như sau:</p>
 
 <figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -429,14 +1088,7 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-11-06T10:00:00+07:00" pubdate data-updated="true">Nov 6<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-11-06T10:00:00+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:00 am</span></time>
        | <a href="/blog/2013/11/06/sslide/#disqus_thread" class="article-comments">Comments</a>
         
     </p>
@@ -644,14 +1296,7 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-09-10T00:56:00+07:00" pubdate data-updated="true">Sep 10<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-09-10T00:56:00+07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:56 am</span></time>
         
          | <a href="/blog/2013/09/10/ios-property-attributes/#disqus_thread" class="article-comments">Comments</a>
         
@@ -668,9 +1313,10 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {
-</span><span class='line'>    NSString *myString;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>hoặc có thể dùng <code>@property (attributes) type name</code> để khai báo như sau:</p>
@@ -678,9 +1324,10 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {
-</span><span class='line'>}
-</span><span class='line'>@property (strong, nonatomic) NSString *myString;</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Với cách thứ 2 thì compiler sẽ tự động sinh ra các setter/getter cho property ấy. Thế nhưng việc sinh ra setter/getter như thế nào là phụ thuộc vào tập <code>attributes</code> mà bạn đã set ở trên. Khi mới bắt đầu code iOS mình thấy việc set thuộc tính này hơi bị loạn với khá nhiều thuộc tính (retain, strong, weak, unsafe_unretained, nonatomic&hellip;). Rồi khi phiên bản thay đổi, kiểu project có dùng ARC hay không cũng dẫn đến việc sử dụng các thuộc tính này cũng khác nhau. Ngoài ra trong một số trường hợp nếu bạn không sử dụng đúng thuộc tính có thể làm app của bạn chạy bị lỗi. Trong bài viết này mình sẽ tóm tắt lại các thuộc tính của property, cũng như nói về khi nào sẽ dùng thuộc tính nào, tại sao, và thuộc tính nào là mặc định.</p>
@@ -705,9 +1352,10 @@ Trước hết chúng ta sẽ nói qua về cách quản lý bộ nhớ trước
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Car *car1 = [[Car alloc] init];
-</span><span class='line'>//...
-</span><span class='line'>[car1 release]</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car1</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Car</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'><span class="p">[</span><span class="n">car1</span> <span class="n">release</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trước khi ARC xuất hiện thì các lập trình viên iOS đều phải tự quản lý bộ nhớ.
@@ -721,16 +1369,18 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// retain
-</span><span class='line'>Car *car2 = [car1 retain];  // retainCount = 2</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// retain</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car2</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">retain</span><span class="p">];</span>  <span class="c1">// retainCount = 2</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Ngoài ra để copy sang vùng nhớ mới chúng ta có thể gửi message <code>copy</code> như ví dụ dưới đây. Khi đó <code>retainCount</code> ở vùng nhớ mới có giá trị khởi tạo là 1.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// copy
-</span><span class='line'>Car *car3 = [car1 copy];    // retainCount = 1</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// copy</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car3</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">copy</span><span class="p">];</span>    <span class="c1">// retainCount = 1</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Quay trở lại với thuộc tính của property. Thuộc tính đầu tiên là <code>retain</code>. Như ví dụ dưới đây khi ta set thuộc tính <code>retain</code> cho property <code>name</code> thì compiler sẽ sinh ra setter <code>setName</code> như bên dưới.</p>
@@ -740,11 +1390,12 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span>
 </span><span class='line'>
-</span><span class='line'>@property (nonatomic, retain) NSString *name;
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end;</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -754,11 +1405,12 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setName:(NSString *)newName {
-</span><span class='line'>    [newName retain];
-</span><span class='line'>    [_name release];
-</span><span class='line'>    _name = newName;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">_name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Nhìn vào setter ta thấy đầu tiên là tạo ownership (hay tăng <code>retainCount</code> thêm 1) của <code>newName</code> bằng cách gọi <code>[newNmane retain]</code>.
@@ -786,11 +1438,12 @@ Thuộc tính <code>weak</code> cũng chỉ dùng trong trường hợp bạn đ
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span>
 </span><span class='line'>
-</span><span class='line'>@property (nonatomic, copy) NSString *name;
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end;</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -799,10 +1452,11 @@ Thuộc tính <code>weak</code> cũng chỉ dùng trong trường hợp bạn đ
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setName:(NSString *)newName {
-</span><span class='line'>    [_name release];
-</span><span class='line'>    _name = [newName copy];     // retainCount = 1
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">copy</span><span class="p">];</span>     <span class="c1">// retainCount = 1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Như ở trên ta thấy 1 vùng nhớ mới được copy ra và <code>_name</code> giờ chiếm giữ 1 ownership của vùng nhớ đó.
@@ -811,9 +1465,10 @@ Tại sao chúng ta không dùng <code>strong</code> ở đây mà lại dùng <
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSString *name1 = @"Toyota";
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>name1 = @"Honda";</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Toyota&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Honda&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp này <code>car1.name</code> vẫn có giá trị là &ldquo;Toyota&rdquo; và <code>name1</code> giờ chuyển thành &ldquo;Honda&rdquo;. Hoàn toàn không có vấn đề gì.
@@ -822,9 +1477,10 @@ Thế nhưng trong ví dụ thứ 2 dưới đây thay vì dùng NSString mà d�
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSMutableString *name1 = @"Toyota";
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>[name1 appendString:"2"];</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSMutableString</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Toyota&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="p">[</span><span class="n">name1</span> <span class="nl">appendString:</span><span class="s">&quot;2&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp này giá trị của <code>car1.name</code> là &ldquo;Toyota2&rdquo; mặc dù ban đầu chúng ta set là &ldquo;Toyota&rdquo;.
@@ -847,12 +1503,13 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyView {
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyView</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>@property CGPoint center;
+</span><span class='line'><span class="k">@property</span> <span class="n">CGPoint</span> <span class="n">center</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>khi đấy chúng ta có setter/getter như sau:</p>
@@ -864,13 +1521,14 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint) center {
-</span><span class='line'>  return _center;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="nf">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  _center = newCenter;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>và bởi vì struct CGPoint có 2 thành phần <code>CGFloat x, CGFloat y</code> nên thực ra setter sẽ thực hiện các bước như sau:</p>
@@ -879,10 +1537,11 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  _center.x = newCenter.x;
-</span><span class='line'>  _center.y = newCenter.y;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">_center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">_center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp chúng ta chạy multithread thì có thể xảy ra khả năng như sau:</p>
@@ -901,20 +1560,21 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// giả sủ ban đầu center của myView là (-5.f, -8.f)
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// giả sủ ban đầu center của myView là (-5.f, -8.f)</span>
 </span><span class='line'>
-</span><span class='line'>// thread 1 gọi setter
-</span><span class='line'>[myView setCenter:CGPointMake(1.f, 2.f)];
+</span><span class='line'><span class="c1">// thread 1 gọi setter</span>
+</span><span class='line'><span class="p">[</span><span class="n">myView</span> <span class="nl">setCenter:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mf">1.f</span><span class="p">,</span> <span class="mf">2.f</span><span class="p">)];</span>
 </span><span class='line'>
-</span><span class='line'>// tiep theo bên trong setCenter sẽ chạy
-</span><span class='line'>_center.x = newCenter.x; // _center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f
+</span><span class='line'><span class="c1">// tiep theo bên trong setCenter sẽ chạy</span>
+</span><span class='line'><span class="n">_center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="c1">// _center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f</span>
 </span><span class='line'>
-</span><span class='line'>// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter
-</span><span class='line'>CGPoint point = [myView center];
-</span><span class='line'>// và getter chạy trả về (1.f, -8.f)
+</span><span class='line'><span class="c1">// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter</span>
+</span><span class='line'><span class="n">CGPoint</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">myView</span> <span class="n">center</span><span class="p">];</span>
+</span><span class='line'><span class="c1">// và getter chạy trả về (1.f, -8.f)</span>
 </span><span class='line'>
-</span><span class='line'>// thread 1 tiếp tục giá trị cho y
-</span><span class='line'>_center.y = newCenter.y // _center.y giờ là  2.f</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="c1">// thread 1 tiếp tục giá trị cho y</span>
+</span><span class='line'><span class="n">_center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="c1">// _center.y giờ là  2.f</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Như trường hợp ở trên ta thấy giá trị center là (1.f, 2.f) nhưng tại thread 2 giá trị lấy được lại là (1.f, -8.f)
@@ -934,19 +1594,20 @@ Vì vậy trong trường hợp multithread để tránh những tình huống n
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint) center {
-</span><span class='line'>  CGPoint curCenter;
-</span><span class='line'>  @synchronized(self) {
-</span><span class='line'>    curCenter = _center;
-</span><span class='line'>  }
-</span><span class='line'>  return curCenter;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="nf">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">CGPoint</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">curCenter</span> <span class="o">=</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  @synchronized(self) {
-</span><span class='line'>    _center = newCenter;
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Bên trong setter/getter sử dụng lock để tránh việc nhiều thread truy cập đồng thời. Thế nhưng việc dùng lock sẽ mất chi phí cũng như cản trở tốc độ của chương trình. Vì vậy nên trong trường hợp bạn không dùng multithread hoặc không thể xảy ra những vấn đề như trên thì bạn nên dùng thuộc tính <code>nonatomic</code> để tăng tốc độ cho chương trình.</p>
@@ -965,639 +1626,9 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
       
     </article>
   
-    
-    <article>
-      
-        
-  
-
-
-
-
-
-  <header class="project-header">
-    <div class="app-icon-name">
-      <img src="/images/vlcameraapp/icon.png" class="my-img app-icon">
-      <h1 class="entry-title app-name vn-title"><a href="/blog/2013/08/13/vlcamera/">vlcamera</a></h1>
-    </div>
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-13T11:29:00+07:00" pubdate data-updated="true">Aug 13<span>th</span>, 2013</time>
-       | <a href="/blog/2013/08/13/vlcamera/#disqus_thread" class="article-comments">Comments</a>
-        
-    </p>
-    
-  </header>
-
-
-<div class"content-part">
-<div class="project-entry-content">
-
-  <div class="entry-content app-description"><h3>Description</h3>
-
-<p>Do you like to put troll faces and funny texts in your photos? &ldquo;vlcamera&rdquo; can offer you all that.</p>
-
-<p>FEATURES</p>
-
-<ul>
-<li>Easy to use! You can add unlimited number of troll faces and funny texts in your photos.</li>
-<li>Easy to translate, rotate, scale, flip the troll faces and the texts</li>
-<li>Can change the content of the texts with cool GUI.</li>
-<li>Can undo, remove the troll faces and the texts.</li>
-<li>Save photos to your Photo Album.</li>
-<li>Share your photos with friends on Facebook and Twitter.</li>
-<li>Enjoy your fun without any ads.</li>
-</ul>
-
-
-<p>Let&rsquo;s have funny moments with &ldquo;vlcamera&rdquo;.</p>
-
-<p>keywords: troll, haivl, funny, photo, camera</p>
- </div>
-  <div class="app-market">
-    <a href="" class="market-icon">
-      
-      <img src="/images/viewdemo-icon.png" class="my-img" style="opacity: 0.25;">
-      
-    </a>
-    <a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=687063069&mt=8" class="market-icon">
-      
-      <img src="/images/applestore-icon.png" class="my-img">
-      
-    </a>
-  </div>
-</div>
-
-<div id=vlcameraapp class="carousel slide screenshot-carousel">
-  <ol class="carousel-indicators">
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to=0 class="active"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="1"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="2"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="3"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="4"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="5"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="6"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="7"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="8"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="9"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="10"></li>
-      
-    
-      
-        <li data-target="#vlcameraapp" data-slide-to="11"></li>
-      
-    
-  </ol>
-  <!-- Carousel items -->
-  <div class="carousel-inner">
-    
-      
-        <div class="active item">
-      
-      <img src="/images/vlcameraapp/0.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/1.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/2.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/3.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/4.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/5.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/6.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/7.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/8.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/9.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/10.png" class="screenshot-img">
-    </div>
-    
-      
-        <div class="item">
-      
-      <img src="/images/vlcameraapp/11.png" class="screenshot-img">
-    </div>
-    
-  </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#vlcameraapp" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#vlcameraapp" data-slide="next">&rsaquo;</a>
-</div>
-</div>
-<div style="clear:both;"></div>
-
-      
-    </article>
-  
-    
-    <article>
-      
-        
-  <header>
-    
-      <h1 class="entry-title vn-title"><a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/">Tạo Class Datasource Cho TableView</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-12T18:16:00+07:00" pubdate data-updated="true">Aug 12<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/#disqus_thread" class="article-comments">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-
-  <div class="entry-content"><h1>Mở đầu</h1>
-
-<p>Để tiếp nối chuỗi bài về TableView, hôm nay mình cũng viết một bài liên quan đến TableView. Trong iOS TableView là class được dùng khá nhiều.
-Khi dùng TableView chúng ta thường phải set datasource và delegate cho TableView. Thường thì datasource của TableView là một array.</p>
-
-<p>Khá nhiều bạn thường set datasource cho Tableview ngay trong ViewController (<code>tableview.datasource = self</code>). Và khi đấy trong ViewController chúng ta luôn luôn phải implement delegate cho TableViewDataSource như sau:</p>
-
-<figure class='code'><figcaption><span>TmpViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#pragma mark - UITableViewDataSource delegate</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITalbeView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">dataArray</span> <span class="n">count</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">cellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;MyCell&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="c1">// lấy cell có sẵn</span>
-</span><span class='line'>  <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nl">dequeueReusableCellWithIdentifier:</span><span class="n">cellIdentifier</span><span class="p">];</span>
-</span><span class='line'>  <span class="c1">// nếu không có cell có sẵn thì tạo cell mới</span>
-</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">cell</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">UITableViewCell</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewCellStyleDefault</span>
-</span><span class='line'>                                 <span class="nl">reuseIdentifier:</span><span class="n">cellIdentifier</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// lấy dữ liệu cho cell hiện tại. (Ví dụ dữ liệu là NSString)</span>
-</span><span class='line'>  <span class="n">NSString</span> <span class="o">*</span><span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">dataArray</span> <span class="nl">objectAtIndex:</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
-</span><span class='line'>  <span class="c1">// gán dữ liệu cho cell</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span> <span class="nl">setText:</span><span class="n">item</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Việc viết như trên đối với những ứng dụng nhỏ thì không vấn đề gì nhưng khi ứng dụng sử dụng nhiều tableview thì trong từng ViewController chúng ta luôn phải viết đi viết lại đoạn code trên. Nếu nhìn kỹ đoạn code trên bạn sẽ thấy thực ra với mỗi TableView khác nhau chúng ta chỉ cần thay đổi phần <code>#gán dữ liệu cho cell</code> tuỳ theo cấu trúc của từng cell. Còn đâu những phần còn lại chúng ta có thể sử dụng lại code. Ngoài ra nếu chúng ta để những đoạn code này trong ViewController sẽ khiến ViewController trở nên dài hơn bởi vì bản thân ViewController đã chứa rất nhiều code như delegate, code xử lý sự kiện, gesture. Vì vậy để có một ViewController ngắn gọn hơn, dễ hiểu hơn, lại tăng tính sử dụng lại code chúng ta sẽ tạo 1 class datasource riêng tên là TVArrayDataSource.</p>
-
-<h1>Tạo class TVArrayDataSource</h1>
-
-<p>Vậy chúng ta sẽ chuyển hết code ở trên sang class TVArrayDataSource và trong các ViewController chúng ta chỉ cần viết phần <code>#gán dữ liệu cho cell</code> tuỳ theo cấu trúc của cell. Vậy trong TVArrayDataSource cần những property gì?</p>
-
-<p>Đầu tiên là <code>NSArray *items</code> trỏ đến array data của chúng ta trong ViewController để chúng ta có thể lấy data tương ứng cho từng cell và cell identifier <code>NSString *cellIdentifier</code> là string dùng để định danh cell.</p>
-
-<figure class='code'><figcaption><span>TVArrayDatasource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">TVArrayDataSource</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
-</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">cellIdentifier</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">TVArrayDataSource</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="n">count</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="c1">// tìm cell có sẵn</span>
-</span><span class='line'>    <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nl">dequeueReusableCellWithIdentifier:</span><span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span><span class="p">];</span>
-</span><span class='line'>    <span class="c1">// tạo cell mới nếu không tìm thấy</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">cell</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// lấy data cho cell</span>
-</span><span class='line'>    <span class="kt">id</span> <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="nl">objectAtIndex:</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// gán dữ liệu cho cell</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Đầu tiên chúng ta sẽ nói về đoạn <code>...</code> tại phần gán dữ liệu cho cell. Tại vì tuỳ từng trường hợp của tableview mà cell của chúng ta có cấu trúc khác nhau, data source có cấu trúc khác nhau nên phần gán dữ liệu này là khác nhau. Do đó tại đây chúng ta có thể gọi đến các hàm callback trong ViewController để gán dữ liệu cho cell theo cách mà chúng ta muốn. Có nhiều cách như dùng block, selector hay delegate. Mình thì thấy tiện nhất và ngắn nhất là block và selector nên mình sẽ tạo class TVArrayDataSource có thể dùng block hoặc selector.</p>
-
-<p>Với block thì chúng ta cần tạo 1 property để lưu block và execute block tại đoạn gán dữ liệu. Chúng ta sẽ thêm block property vào TVArrayDataSource.m và tạo 1 method khởi tạo dataSource với block như sau:</p>
-
-<figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">^</span><span class="n">TVCellConfigureBlock</span><span class="p">)(</span><span class="kt">id</span><span class="p">,</span> <span class="kt">id</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">TVArrayDataSource</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">UITableViewDataSource</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* khởi tạo datasource với block */</span>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">initWithItems:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">items</span>
-</span><span class='line'>     <span class="nl">cellIdentifier:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">cellIdentifier</span>
-</span><span class='line'> <span class="nl">cellConfigureBlock:</span><span class="p">(</span><span class="n">TVCellConfigureBlock</span><span class="p">)</span> <span class="n">configureBlock</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">...</span>
-</span><span class='line'><span class="c1">// thêm block property vào</span>
-</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">TVCellConfigureBlock</span> <span class="n">configureBlock</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// và method khởi tạo chỉ đơn giản như sau</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithItems:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">items</span>
-</span><span class='line'>     <span class="nf">cellIdentifier:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">cellIdentifier</span>
-</span><span class='line'> <span class="nf">cellConfigureBlock:</span><span class="p">(</span><span class="n">TVCellConfigureBlock</span><span class="p">)</span><span class="nv">configureBlock</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">items</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span> <span class="o">=</span> <span class="n">cellIdentifier</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">configureBlock</span> <span class="o">=</span> <span class="n">configureBlock</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// và chúng ta thêm phần execute block tại đoạn gán dữ liệu cho cell</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>   <span class="c1">// tìm cell có sẵn</span>
-</span><span class='line'>    <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nl">dequeueReusableCellWithIdentifier:</span><span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span><span class="p">];</span>
-</span><span class='line'>    <span class="c1">// tạo cell mới nếu không tìm thấy</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">cell</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// lấy data cho cell</span>
-</span><span class='line'>    <span class="kt">id</span> <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="nl">objectAtIndex:</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// execute block để gán dữ liệu cho cell</span>
-</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">configureBlock</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Khi đó bên ViewController chúng ta chỉ cần tạo 1 block để thực hiện việc gán dữ liệu cho cell. Và block này sẽ được execute bằng <code>self.configureBlock(cell, item)</code> với tham số là cell hiện tại và data tương ứng của cell. Bởi vì tham số của block là cell hiện tại và data cho cell đấy nênchúng ta hoàn toàn có thể tự do tuỳ chỉnh cell theo ý muốn. Và code bên ViewController sẽ rất ngắn và đẹp như sau:</p>
-
-<figure class='code'><figcaption><span>ViewController1.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// configure block. Kiểu tham số có thể tuỳ chỉnh theo kiểu data bất kỳ của bạn.</span>
-</span><span class='line'><span class="n">TVCellConfigureBlock</span> <span class="n">configureCell</span> <span class="o">=</span> <span class="o">^</span><span class="p">(</span><span class="n">CellClassName</span> <span class="o">*</span><span class="n">cell</span><span class="p">,</span> <span class="n">DataType</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// gán dữ liệu cho cell. ví dụ như sau:</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">title</span> <span class="nl">setText:</span><span class="n">name</span><span class="p">];</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'><span class="c1">// tạo instance dataSource của TVArrayDataSource và khởi tạo với block ở trên</span>
-</span><span class='line'><span class="n">dataSource</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVArrayDataSource</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithItems:</span><span class="n">items</span>
-</span><span class='line'>                                       <span class="nl">cellIdentifier:</span><span class="s">@&quot;MYCELL&quot;</span>
-</span><span class='line'>                                   <span class="nl">cellConfigureBlock:</span><span class="n">configureCell</span><span class="p">];</span>
-</span><span class='line'><span class="n">tableView</span><span class="p">.</span><span class="n">datasource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Bạn thấy đấy giờ trong ViewController thì phần code cho dataSource của tableView khá là đẹp.
-Đôi khi bạn muốn viết đoạn gán dữ liệu cho cell vào một method khác trong class ViewController thay vì dùng block. Để cho những trường hợp đó như đã nói ở trên chúng ta có thể dùng selector. Tương tự như block chúng ta cũng sẽ tạo một <code>@property (assign, nonatomic) SEL configureSelector;</code> và đối tượng để execute method của selector này <code>@property (weak, nonatomic) id target;</code> (Đối tượng này chính là ViewController). Chúng ta cũng cần tạo một hàm khởi tạo datasource khác với selector. Cuối cùng trong phần gán dữ liệu cho cell chúng ta execute method của selector với <code>objc_msgSend(self.target, self.configureSelector, cell, item);</code>. Do phần này tương tự như đối với block  nên mình không giải thích thêm mà các bạn có thể xem code trên github.</p>
-
-<p>Tiếp theo còn một đoạn <code>...</code> tại phần tạo cell mới khi mà không tìm thấy cell có thể dùng lại. Như bạn thấy đấy để tạo cell mới chúng ta cần biết Class của cell. Với Objective-C chúng ta có thể tạo 1 instance từ tên class. Khi đó chúng ta có thể tạo 1 cell như sau:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cell</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="n">CELL_CLASS_NAME</span><span class="p">)</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewCellStyleDefault</span>
-</span><span class='line'>                                                 <span class="nl">reuseIdentifier:</span><span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span><span class="p">];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Như vậy class TVArrayDataSource chỉ cần có thêm thông tin là tên class của cell là mọi việc có thể hoàn tất. Ngoài ra nhiều khi chúng ta muốn tạo cell từ file Xib. Để tạo cell từ file xib chúng ta cũng chỉ cần biết thêm tên file xib. Thế nên mình tạo thêm một property <code>cellName</code> để lưu tên class của cell hoặc tên file Xib tuỳ theo trường hợp cell tạo từ file xib hay từ code.
-Như vậy việc tạo class TVArrayDatasource đã hoàn thành. Và bây giờ trong ViewController chúng ta chỉ implement đoạn code ngắn như sau:
-Khi sử dụng với block</p>
-
-<figure class='code'><figcaption><span>block - ViewController.m</span><a href='https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m'>github </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// tạo block</span>
-</span><span class='line'><span class="n">TVCellConfigureBlock</span> <span class="n">configureCell</span> <span class="o">=</span> <span class="o">^</span><span class="p">(</span><span class="n">CELL_CLASS_NAME</span> <span class="o">*</span><span class="n">cell</span><span class="p">,</span> <span class="n">DATATYPE</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">title</span> <span class="nl">setText:</span><span class="n">name</span><span class="p">];</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">dataSource</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVArrayDataSource</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithItems:</span><span class="n">items</span>
-</span><span class='line'>                                       <span class="nl">cellIdentifier:</span><span class="s">@&quot;MYCELL&quot;</span>
-</span><span class='line'>                                   <span class="nl">cellConfigureBlock:</span><span class="n">configureCell</span><span class="p">];</span>
-</span><span class='line'><span class="p">[</span><span class="n">dataSource</span> <span class="nl">setXibFileName:</span><span class="s">@&quot;XibFileName&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="n">tableview</span><span class="p">.</span><span class="n">datasource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hoặc khi sử dụng với selector.</p>
-
-<figure class='code'><figcaption><span>ViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dataSource</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVArrayDataSource</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithItems:</span><span class="n">items</span>
-</span><span class='line'>                                       <span class="nl">cellIdentifier:</span><span class="s">@&quot;MYCELL&quot;</span>
-</span><span class='line'>                                               <span class="nl">target:</span><span class="n">self</span>
-</span><span class='line'>                                     <span class="nl">cellConfigureSel:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">configureCell:andItem:</span><span class="p">)];</span>
-</span><span class='line'><span class="p">[</span><span class="n">dataSource</span> <span class="nl">setCellClassName:</span><span class="s">@&quot;CELL_CLASS_NAME&quot;</span><span class="p">];</span>
-</span><span class='line'><span class="n">tableView</span><span class="p">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// selector</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">configureCell:</span><span class="p">(</span><span class="n">CELL_CLASS_NAME</span> <span class="o">*</span><span class="p">)</span><span class="nv">cell</span> <span class="nf">andItem:</span><span class="p">(</span><span class="n">DATA_TYPE</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">title</span> <span class="nl">setText:</span><span class="n">item</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Tổng kết</h1>
-
-<p>Bài viết trình bày về cách tạo class datasource riêng cho tableView thay vì implement trực tiếp trong ViewController. Điều này sẽ giúp ViewController ngắn gọn hơn và code trông đẹp hơn, cũng như tăng khả năng sử dụng lại code. Chúng ta có thể dùng lại class TVArrayDataSource tại nhiều ViewController mà không cần phải implement lại các hàm delegate của TableViewDataSource. Thế nhưng hiện tại class này chỉ dùng cho những tableview có 1 section.
-Toàn bộ code của class này cũng như sample bạn có thể tham khảo tại: <a href="https://github.com/nghialv/TVDataSource">https://github.com/nghialv/TVDataSource</a></p>
-
-<p>Hoặc để sử dụng class này bạn có thể cài qua coccoapod bằng cách thêm <code>pod 'TVArrayDataSource'</code> vào Podfile.</p>
-</div>
-  
-  
-
-
-      
-    </article>
-  
-    
-    <article>
-      
-        
-  <header>
-    
-      <h1 class="entry-title vn-title"><a href="/blog/2012/12/09/iball-game/">iBall Game</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-09T01:17:00+07:00" pubdate data-updated="true">Dec 9<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/12/09/iball-game/#disqus_thread" class="article-comments">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-      
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1610,6 +1641,14 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
       </li>
     
@@ -1619,14 +1658,6 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
     
       <li class="post">
         <a href="/blog/2013/09/10/ios-property-attributes/">[iOS property:attributes]</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/13/vlcamera/">vlcamera</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/">Tạo class datasource cho TableView</a>
       </li>
     
   </ul>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Objective-C | nghialv blog]]></title>
+  <title><![CDATA[Category: objective-c | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-01T17:19:21+07:00</updated>
+  <updated>2014-10-15T10:20:05+07:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -37,8 +37,8 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 <p>Ví dụ với chương trình helloworld quen thuộc như dưới đây:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>helloworld.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>helloworld.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -64,7 +64,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Chúng ta có thể chạy preprocessor để xem file sinh ra sau giai đoạn này bằng lệnh <code>clang -E helloworld.m | less</code>.</p>
 
@@ -72,8 +72,8 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 <p>Với việc sử dụng <code>#include</code> tồn tại vấn đề gọi là recursive include. Ví dụ :</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -83,10 +83,10 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">SecondFile</span><span class="p">.</span><span class="n">h</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Some</span> <span class="n">code</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -96,7 +96,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">FirstFile</span><span class="p">.</span><span class="n">h</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Some</span> <span class="n">other</span> <span class="n">code</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Khi đấy preprocessor sẽ duyệt file FirstFile.h và copy nội dung của SecondFile.h vào FirstFile.h.
 Khi duyệt file SecondFile.h lại copy/paste nội dung của file FirstFile.h.
@@ -109,7 +109,7 @@ Khi dùng <code>#import</code> thì trước khi include 1 file header, preproce
 nếu đã include rồi thì sẽ không include nữa.
 Tương tự trong C chúng ta cũng tránh recursive include bằng việc kiểm tra file header đã được  include chưa như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -130,15 +130,15 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'>
 </span><span class='line'>&lt;h1>endif&lt;/h1>
 </span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></p>
 
 <h2>@import</h2>
 
 <p>Tuy nhiên việc sử dụng <code>#import</code> cũng như <code>#include</code> khiến cho preprocessor đối mặt với 1 số vấn đề khác như Fragility và Performance.
 Để hiểu về vấn đề Header Fragility chúng ta xem qua một ví dụ đơn giản sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>MyFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -156,11 +156,11 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Khi đó sau quá trình preprocessing thì file header của chúng ta sẽ như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -180,7 +180,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Tất cả những đoạn NSURL của Foundation.h đều bị preprocessor thay thế bằng “my url” do có <code>#define NSURL @“my url”</code> bên trên.
 Từ đó ta thấy với việc dùng <code>#include</code> hay <code>#import</code> thông thường thì các header của các file khác,
@@ -196,8 +196,8 @@ Thế nên thời gian compile sẽ trở nên nhiều hơn rất nhiều.</p>
 <p>Để giải quyết 1 phần vấn đề performance chúng ta có thể dùng precompiled headers (.pch).
 Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra đều có file PROJECTNAME-Prefix.pch như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -235,7 +235,7 @@ Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">endif</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Trong file .pch này chúng ta sẽ include những header mà có khả năng được include tại nhiều nơi trong source code
 của ứng dụng như Foundation.h, UIKit.h… Khi source code của ứng dụng được compile thì file .pch này sẽ được compile đầu tiên,
@@ -254,7 +254,7 @@ Vậy module là gì? Module chính là một package mô tả một library, fr
 
 <p>Ví dụ chạy 2 lệnh dưới đây ta sẽ có thể xem được các module trong SDK của iOS7.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -285,7 +285,7 @@ Vậy module là gì? Module chính là một package mô tả một library, fr
 </span><span class='line'>&lt;p> ./usr/include/dispatch/module.map &lt;br/>
 </span><span class='line'> ./usr/include/mach-o/module.map &lt;br/>
 </span><span class='line'> ./usr/include/module.map &lt;br/>
-</span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Với mỗi framework ta thấy có 1 file module.map để mô tả framework đấy.</p>
 

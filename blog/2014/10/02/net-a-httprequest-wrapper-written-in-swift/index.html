@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Net - a HttpRequest wrapper - nghialv blog</title>
+  <meta name="author" content="nghialv">
+
+  
+  <meta name="description" content="Net is a HttpRequest wrapper written in Swift. source code : https://github.com/nghialv/Net Features GET, POST, PUT, DELETE method
+Powerful request &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift">
+  <link href="/favicon.png" rel="icon">
+  <link href="/javascripts/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nghialv blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-43205514-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      $('.carousel').carousel({
+        interval: 3000
+      });
+      $('.carousel').carousel('cycle');
+    });
+  </script>
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nghialv blog</a></h1>
+  
+    <h2>practice makes perfect</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:nghialv.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+    
+  <header>
+    
+      <h1 class="entry-title vn-title">Net - a HttpRequest Wrapper</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-02T20:29:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 pm</span></time>
+        
+         | <a href="#disqus_thread" class="article-comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Net is a HttpRequest wrapper written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/Net">source code : https://github.com/nghialv/Net</a></p>
+
+<h3>Features</h3>
+
+<ul>
+<li>GET, POST, PUT, DELETE method</li>
+<li>Powerful request params: nested params, number, string, dic, array, image, data</li>
+<li>Json, Image, Xml Response</li>
+<li>Download file: resume, suspend, cancel</li>
+<li>Upload file, data, params(multi-part)</li>
+<li>Progress closure</li>
+<li>Background donwload, upload</li>
+<li>Authentication</li>
+<li>Batch of operations</li>
+<li>BaseURL</li>
+<li>Customizable header</li>
+</ul>
+
+
+<h3>Demo app</h3>
+
+<p><img src="https://dl.dropboxusercontent.com/u/8556646/screenshot2.png" alt="screenshot" /></p>
+
+<h3>Usage</h3>
+
+<p>Use one of the following methods to create a Net instance</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// without baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// with baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="nl">baseUrlString</span><span class="p">:</span> <span class="s">&quot;http://www.puqiz.com/&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>HttpRequest</h4>
+
+<h6><code>GET</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;get_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;doubleNumber&quot;</span><span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;hello&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can also make a request with absolute url</span>
+</span><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.puqiz.com/get_path&quot;</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also use nested params</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// nested params</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;array&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;dictionary&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;image&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By using responseData in sucessHandler closure you can quickly</p>
+
+<ul>
+<li>get json dictionary</li>
+<li>get image</li>
+<li>parse xml</li>
+</ul>
+
+
+<p>for GET, POST, PUT, DELETE request.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get json dictionary from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">jsonDic</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// get image from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">image</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// parse xml with delegate</span>
+</span><span class='line'><span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">parseXml</span><span class="p">(</span><span class="nl">delegate</span><span class="p">:</span> <span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>POST</code> Request</h6>
+
+<p>Net will automatically check your params to send request as a URL-Encoded request or a Multi-Part request. So you can easily post with number, string, image or binary data.</p>
+
+<ul>
+<li>URL-Encoded Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Multi-Part Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;puqiz_icon&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;icon&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>PUT</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;put_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>DELETE</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;delete_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Task</h4>
+
+<p>Before using download/upload function you have to call <code>setupSession</code> method to setup the session.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session without backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To perform background downloads or uploads, you have to call <code>setupSession</code> method with a background identifier string. Then your download/upload tasks can be run even when the app is suspended, exits or crashes.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session with backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">(</span><span class="nl">backgroundIdentifier</span><span class="p">:</span> <span class="s">&quot;com.nghialv.download&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can set eventsForBackgroundHandler closure</span>
+</span><span class='line'><span class="c1">// this closure will be invoked when a task is completed in the background</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;All files have been downloaded!&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Download</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Download failed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Downloaded to  : \(fileUrl)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can control your task</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">suspend</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Upload</h6>
+
+<ul>
+<li>Upload with file path</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload failed : \(error)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with data</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">yourData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(...)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with params</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;image_file&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;number&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;net&quot;</span><span class="p">,</span> <span class="s">&quot;data&quot;</span><span class="o">:</span> <span class="n">imageData</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the upload task will be performed as POST method and</p>
+
+<ul>
+<li><code>Content-Type</code> = <code>application/octet-stream</code> (upload with file or data)</li>
+<li><code>Content-Type</code> = <code>multipart/form-data</code> (upload with params)</li>
+</ul>
+
+
+<p>But you can configure the upload task before resuming.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// set method</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setHttpMethod</span><span class="p">(.</span><span class="n">PUT</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// set header field</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="nl">value</span><span class="p">:</span> <span class="s">&quot;your_value&quot;</span><span class="p">,</span> <span class="nl">forHttpHeaderField</span><span class="p">:</span> <span class="s">&quot;header_field&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>In progress</h3>
+
+<ul>
+<li>Batch of operations</li>
+<li>Basic authentiacation</li>
+</ul>
+
+
+<h3>Integration</h3>
+
+<p>Just drag Net folder to the project tree</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">nghialv</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-02T20:29:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/http-request/'>http request</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/net/'>net</a>, <a class='category' href='/blog/categories/project/'>project</a>, <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/" data-via="" data-counturl="http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/" title="Previous Post: GCD - a wrapper of Grand Central Dispatch">&laquo; GCD - a wrapper of Grand Central Dispatch</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/06/sslide/">sslide</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/10/ios-property-attributes/">[iOS property:attributes]</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/nghialv">@nghialv</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'nghialv',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - nghialv -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'nghialv';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/';
+        var disqus_url = 'http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

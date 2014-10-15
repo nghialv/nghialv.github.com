@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: iOS | nghialv blog]]></title>
+  <title><![CDATA[Category: ios | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-01T17:19:21+07:00</updated>
+  <updated>2014-10-15T10:20:05+07:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -12,6 +12,763 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Net - a HttpRequest wrapper]]></title>
+    <link href="http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/"/>
+    <updated>2014-10-02T20:29:00+07:00</updated>
+    <id>http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift</id>
+    <content type="html"><![CDATA[<p>Net is a HttpRequest wrapper written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/Net">source code : https://github.com/nghialv/Net</a></p>
+
+<h3>Features</h3>
+
+<ul>
+<li>GET, POST, PUT, DELETE method</li>
+<li>Powerful request params: nested params, number, string, dic, array, image, data</li>
+<li>Json, Image, Xml Response</li>
+<li>Download file: resume, suspend, cancel</li>
+<li>Upload file, data, params(multi-part)</li>
+<li>Progress closure</li>
+<li>Background donwload, upload</li>
+<li>Authentication</li>
+<li>Batch of operations</li>
+<li>BaseURL</li>
+<li>Customizable header</li>
+</ul>
+
+
+<h3>Demo app</h3>
+
+<p><img src="https://dl.dropboxusercontent.com/u/8556646/screenshot2.png" alt="screenshot" /></p>
+
+<h3>Usage</h3>
+
+<p>Use one of the following methods to create a Net instance</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// without baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// with baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="nl">baseUrlString</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://www.puqiz.com/&quot;</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.puqiz.com/&lt;/a&gt;&amp;rdquo;)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>HttpRequest</h4>
+
+<h6><code>GET</code> Request</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">get_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">doubleNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">hello</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can also make a request with absolute url</span>
+</span><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://www.puqiz.com/get_path&quot;</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.puqiz.com/get_path&lt;/a&gt;&amp;rdquo;</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>You can also use nested params</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// nested params</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;array&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+</span><span class='line'>        <span class="s">&quot;dictionary&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
+</span><span class='line'>        <span class="s">&quot;image&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>By using responseData in sucessHandler closure you can quickly</p>
+
+<ul>
+<li>get json dictionary</li>
+<li>get image</li>
+<li>parse xml</li>
+</ul>
+
+
+<p>for GET, POST, PUT, DELETE request.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get json dictionary from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">jsonDic</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// get image from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">image</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// parse xml with delegate</span>
+</span><span class='line'><span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">parseXml</span><span class="p">(</span><span class="nl">delegate</span><span class="p">:</span> <span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6><code>POST</code> Request</h6>
+
+<p>Net will automatically check your params to send request as a URL-Encoded request or a Multi-Part request. So you can easily post with number, string, image or binary data.</p>
+
+<ul>
+<li>URL-Encoded Request</li>
+</ul>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">post_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">floatNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>Multi-Part Request</li>
+</ul>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">post_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">puqiz_icon</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="s">&quot;icon&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6><code>PUT</code> Request</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">put_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">floatNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6><code>DELETE</code> Request</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">delete_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="kt">id</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">10</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Task</h4>
+
+<p>Before using download/upload function you have to call <code>setupSession</code> method to setup the session.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session without backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>To perform background downloads or uploads, you have to call <code>setupSession</code> method with a background identifier string. Then your download/upload tasks can be run even when the app is suspended, exits or crashes.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session with backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">(</span><span class="nl">backgroundIdentifier</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">com</span><span class="p">.</span><span class="n">nghialv</span><span class="p">.</span><span class="n">download</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can set eventsForBackgroundHandler closure</span>
+</span><span class='line'><span class="c1">// this closure will be invoked when a task is completed in the background</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;All files have been downloaded!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6>Download</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Download failed&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Downloaded to  : \(fileUrl)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can control your task</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">suspend</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6>Upload</h6>
+
+<ul>
+<li>Upload with file path</li>
+</ul>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload failed : \(error)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>Upload with data</li>
+</ul>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">yourData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<ul>
+<li>Upload with params</li>
+</ul>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">image_file</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">number</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">net</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">data</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="n">imageData</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>By default, the upload task will be performed as POST method and</p>
+
+<ul>
+<li><code>Content-Type</code> = <code>application/octet-stream</code> (upload with file or data)</li>
+<li><code>Content-Type</code> = <code>multipart/form-data</code> (upload with params)</li>
+</ul>
+
+
+<p>But you can configure the upload task before resuming.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// set method</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setHttpMethod</span><span class="p">(.</span><span class="n">PUT</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// set header field</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="nl">value</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">your_value</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="nl">forHttpHeaderField</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">header_field</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>In progress</h3>
+
+<ul>
+<li>Batch of operations</li>
+<li>Basic authentiacation</li>
+</ul>
+
+
+<h3>Integration</h3>
+
+<p>Just drag Net folder to the project tree</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GCD - a wrapper of Grand Central Dispatch]]></title>
+    <link href="http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/"/>
+    <updated>2014-10-01T20:22:00+07:00</updated>
+    <id>http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift</id>
+    <content type="html"><![CDATA[<p>GCD is a wrapper of Grand Central Dispatch written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/GCD">source code : https://github.com/nghialv/GCD</a></p>
+
+<h3>Examples</h3>
+
+<h6>&ndash; gcd</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// submit your code for asynchronous execution on a global queue with high priority</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">High</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or with main thread</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Default</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// code run on main thread</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// with your custom queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">myQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Custom</span><span class="p">(</span><span class="n">myQueue</span><span class="p">))</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// run with delay</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Background</span><span class="p">,</span> <span class="nl">delay</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// sync code</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">sync</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// apply</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">apply</span><span class="p">(.</span><span class="n">Default</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// once</span>
+</span><span class='line'><span class="k">var</span> <span class="nl">onceToken</span><span class="p">:</span> <span class="n">GCDOnce</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">onceToken</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6>&ndash; manage group of block with GCDGroup</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create group</span>
+</span><span class='line'><span class="k">let</span> <span class="n">group</span> <span class="o">=</span> <span class="n">GCDGroup</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can add async code to group</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Defaul</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can set notify for this group</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">notify</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or wait synchronously for block in group to complete and timeout is 10 seconds</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h6>&ndash; create your custom queue with CGDQueue</h6>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a serial queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">serialQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">mySerialQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// create a concurrent queue</span>
+</span><span class='line'><span class="k">let</span> <span class="n">concurrentQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">concurrent</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myConcurrentQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can submit async barrier to queue</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">asyncBarrier</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or sync code</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">syncBarrier</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>Integration</h3>
+
+<p>Just drag GCD.swift file to the project tree</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[#include, #import, @import (clang modules)]]></title>
@@ -37,8 +794,8 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 <p>Ví dụ với chương trình helloworld quen thuộc như dưới đây:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>helloworld.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>helloworld.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -64,7 +821,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Chúng ta có thể chạy preprocessor để xem file sinh ra sau giai đoạn này bằng lệnh <code>clang -E helloworld.m | less</code>.</p>
 
@@ -72,8 +829,8 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 <p>Với việc sử dụng <code>#include</code> tồn tại vấn đề gọi là recursive include. Ví dụ :</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -83,10 +840,10 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">SecondFile</span><span class="p">.</span><span class="n">h</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Some</span> <span class="n">code</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -96,7 +853,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">FirstFile</span><span class="p">.</span><span class="n">h</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">Some</span> <span class="n">other</span> <span class="n">code</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Khi đấy preprocessor sẽ duyệt file FirstFile.h và copy nội dung của SecondFile.h vào FirstFile.h.
 Khi duyệt file SecondFile.h lại copy/paste nội dung của file FirstFile.h.
@@ -109,7 +866,7 @@ Khi dùng <code>#import</code> thì trước khi include 1 file header, preproce
 nếu đã include rồi thì sẽ không include nữa.
 Tương tự trong C chúng ta cũng tránh recursive include bằng việc kiểm tra file header đã được  include chưa như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -130,15 +887,15 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'>
 </span><span class='line'>&lt;h1>endif&lt;/h1>
 </span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></p>
 
 <h2>@import</h2>
 
 <p>Tuy nhiên việc sử dụng <code>#import</code> cũng như <code>#include</code> khiến cho preprocessor đối mặt với 1 số vấn đề khác như Fragility và Performance.
 Để hiểu về vấn đề Header Fragility chúng ta xem qua một ví dụ đơn giản sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>MyFile.h </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -156,11 +913,11 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Khi đó sau quá trình preprocessing thì file header của chúng ta sẽ như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -180,7 +937,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Tất cả những đoạn NSURL của Foundation.h đều bị preprocessor thay thế bằng “my url” do có <code>#define NSURL @“my url”</code> bên trên.
 Từ đó ta thấy với việc dùng <code>#include</code> hay <code>#import</code> thông thường thì các header của các file khác,
@@ -196,8 +953,8 @@ Thế nên thời gian compile sẽ trở nên nhiều hơn rất nhiều.</p>
 <p>Để giải quyết 1 phần vấn đề performance chúng ta có thể dùng precompiled headers (.pch).
 Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra đều có file PROJECTNAME-Prefix.pch như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -235,7 +992,7 @@ Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">endif</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Trong file .pch này chúng ta sẽ include những header mà có khả năng được include tại nhiều nơi trong source code
 của ứng dụng như Foundation.h, UIKit.h… Khi source code của ứng dụng được compile thì file .pch này sẽ được compile đầu tiên,
@@ -254,7 +1011,7 @@ Vậy module là gì? Module chính là một package mô tả một library, fr
 
 <p>Ví dụ chạy 2 lệnh dưới đây ta sẽ có thể xem được các module trong SDK của iOS7.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -285,7 +1042,7 @@ Vậy module là gì? Module chính là một package mô tả một library, fr
 </span><span class='line'>&lt;p> ./usr/include/dispatch/module.map &lt;br/>
 </span><span class='line'> ./usr/include/mach-o/module.map &lt;br/>
 </span><span class='line'> ./usr/include/module.map &lt;br/>
-</span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Với mỗi framework ta thấy có 1 file module.map để mô tả framework đấy.</p>
 
@@ -345,6 +1102,53 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[sslide]]></title>
+    <link href="http://nghialv.github.io/blog/2013/11/06/sslide/"/>
+    <updated>2013-11-06T10:00:00+07:00</updated>
+    <id>http://nghialv.github.io/blog/2013/11/06/sslide</id>
+    <content type="html"><![CDATA[<h3>Description</h3>
+
+<p>&ldquo;&mdash; Welcome to a new world of presentations &mdash;&rdquo;</p>
+
+<p>SSlide is a presentation tool that will make your presentations more interactive.</p>
+
+<p>FEATURES</p>
+
+<ul>
+<li><p>Integrating with SlideShare</p>
+
+<ul>
+<li>Browse your slides on SlideShare</li>
+<li>Download slides for offline viewing</li>
+<li>Browse your favourite slides at top page (you can add or remove the tags)</li>
+<li>Search slides by keyword with three options: relevance, most viewed, latest</li>
+</ul>
+</li>
+<li><p>Presentation</p>
+
+<ul>
+<li>Streaming
+
+<ul>
+<li>establish streaming for the subscribing from other devices</li>
+<li>subscribe to a streaming channel (established by other device or web)</li>
+<li>synchronize your slide page</li>
+<li>synchronize your drawing on each page</li>
+</ul>
+</li>
+<li>Send the questions to the presenter directly on your device</li>
+<li>Take the notes in your slide</li>
+</ul>
+</li>
+<li><p>Super cool interface</p></li>
+</ul>
+
+
+<p>keywords: slideshare, slide, presentation, streaming</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[[iOS property:attributes]]]></title>
     <link href="http://nghialv.github.io/blog/2013/09/10/ios-property-attributes/"/>
     <updated>2013-09-10T00:56:00+07:00</updated>
@@ -352,25 +1156,27 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
     <content type="html"><![CDATA[<h1>Mở đầu</h1>
 
 <p>Nếu bạn đã từng sử dụng Objective C thì thấy rằng khi khai báo các property cho 1 class nào đấy chúng ta có 2 cách như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>NSString *myString;
-</span><span class='line'>&lt;/code>&lt;/pre>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>}</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 hoặc có thể dùng <code>@property (attributes) type name</code> để khai báo như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {
-</span><span class='line'>}
-</span><span class='line'>@property (strong, nonatomic) NSString *myString;</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 Với cách thứ 2 thì compiler sẽ tự động sinh ra các setter/getter cho property ấy. Thế nhưng việc sinh ra setter/getter như thế nào là phụ thuộc vào tập <code>attributes</code> mà bạn đã set ở trên. Khi mới bắt đầu code iOS mình thấy việc set thuộc tính này hơi bị loạn với khá nhiều thuộc tính (retain, strong, weak, unsafe_unretained, nonatomic&hellip;). Rồi khi phiên bản thay đổi, kiểu project có dùng ARC hay không cũng dẫn đến việc sử dụng các thuộc tính này cũng khác nhau. Ngoài ra trong một số trường hợp nếu bạn không sử dụng đúng thuộc tính có thể làm app của bạn chạy bị lỗi. Trong bài viết này mình sẽ tóm tắt lại các thuộc tính của property, cũng như nói về khi nào sẽ dùng thuộc tính nào, tại sao, và thuộc tính nào là mặc định.</p>
 
 <h1>Các thuộc tính của property</h1>
@@ -389,12 +1195,13 @@ Mặc định là <code>readwrite</code> (không liên quan đến project dùng
 <code>assign</code>, <code>strong</code>, <code>weak</code>, <code>unsafe_unretained</code>, <code>retain</code>, <code>copy</code>.
 Khi chúng ta set một trong các thuộc tính này cho property thì setter (getter không liên quan) được tạo ra thay đổi tương ứng với thuộc tính đó.
 Trước hết chúng ta sẽ nói qua về cách quản lý bộ nhớ trước iOS5 khi mà ARC chưa xuất hiện.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Car &lt;em>car1 = [[Car alloc] init];
-</span><span class='line'>//&hellip;
-</span><span class='line'>[car1 release]</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Car</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">car1</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Car</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//&amp;hellip;</span>
+</span><span class='line'><span class="p">[</span><span class="n">car1</span> <span class="n">release</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
 Trước khi ARC xuất hiện thì các lập trình viên iOS đều phải tự quản lý bộ nhớ.
 Khi chúng ta tạo object với vùng nhớ của nó, đồng nghĩa với việc chúng ta nắm giữ ownership của object đó.
 Khi không cần dùng nữa thì phải huỷ bỏ ownership đấy đi bằng cách gửi message <code>release</code>.
@@ -403,29 +1210,32 @@ Mỗi khi chúng ta tạo object, hay <code>retain</code> thì <code>retainCount
 Khi chúng ta gửi message <code>release</code> tới object đấy thì <code>retainCount</code> lại bị giảm đi 1.
 Một khi <code>retainCount</code> bằng 0 thì vùng nhớ của nó sẽ bị giải phóng.
 Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownership như ví dụ dưới đây. Khi đó <code>car1</code> và <code>car2</code> cùng trỏ đến 1 vùng nhớ và <code>retainCount</code> bây giờ bằng 2.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// retain
-</span><span class='line'>Car &lt;/em>car2 = [car1 retain];  // retainCount = 2</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// retain</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">car2</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">retain</span><span class="p">];</span>  <span class="c1">// retainCount = 2</span>
+</span></code></pre></td></tr></table></div></figure>
 Ngoài ra để copy sang vùng nhớ mới chúng ta có thể gửi message <code>copy</code> như ví dụ dưới đây. Khi đó <code>retainCount</code> ở vùng nhớ mới có giá trị khởi tạo là 1.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// copy
-</span><span class='line'>Car *car3 = [car1 copy];    // retainCount = 1</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// copy</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car3</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">copy</span><span class="p">];</span>    <span class="c1">// retainCount = 1</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Quay trở lại với thuộc tính của property. Thuộc tính đầu tiên là <code>retain</code>. Như ví dụ dưới đây khi ta set thuộc tính <code>retain</code> cho property <code>name</code> thì compiler sẽ sinh ra setter <code>setName</code> như bên dưới.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@property (nonatomic, retain) NSString *name;&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@end;</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -433,14 +1243,15 @@ Ngoài ra để copy sang vùng nhớ mới chúng ta có thể gửi message <c
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&ndash; (void)setName:(NSString *)newName {&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>[newName retain];
-</span><span class='line'>[_name release];
-</span><span class='line'>_name = newName;
-</span><span class='line'>&lt;/code>&lt;/pre>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'><span class="n">_name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>}</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 Nhìn vào setter ta thấy đầu tiên là tạo ownership (hay tăng <code>retainCount</code> thêm 1) của <code>newName</code> bằng cách gọi <code>[newNmane retain]</code>.
 Tiếp theo là việc gửi message <code>release</code> tới <code>_name</code> ban đầu để xoá ownership ban đầu đi. Sau đó mới gán contrỏ trỏ đến object mới.
 Vậy nên thuộc tính <code>retain</code> giúp tạo ra setter trong đó tạo ownership mới và trỏ đến vùng nhớ mới.
@@ -460,48 +1271,52 @@ Thuộc tính <code>weak</code> cũng chỉ dùng trong trường hợp bạn đ
 <p>Tuy nhiên vẫn còn một vài class như NSTextView, NSFont, NSColorSpace chưa hỗ trợ khai báo thuộc tính <code>weak</code> nên với những class này bạn có thể dùng thuộc tính <code>unsafe_unretained</code> thay cho <code>weak</code>. Thế nhưng chú ý 1 điều rằng sau khi vùng nhớ nó trỏ tới bị xoá thì con trỏ không được set la nil.</p>
 
 <p>Tiếp theo là thuộc tính <code>copy</code>. Với việc thiết lập thuộc tính này compiller sẽ tạo ra setter như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@property (nonatomic, copy) NSString *name;&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@end;</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&ndash; (void)setName:(NSString *)newName {&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">newName</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>[_name release];
-</span><span class='line'>_name = [newName copy];     // retainCount = 1
-</span><span class='line'>&lt;/code>&lt;/pre>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'><span class="n">_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">copy</span><span class="p">];</span>     <span class="c1">// retainCount = 1</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>}</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Như ở trên ta thấy 1 vùng nhớ mới được copy ra và <code>_name</code> giờ chiếm giữ 1 ownership của vùng nhớ đó.
 Tại sao chúng ta không dùng <code>strong</code> ở đây mà lại dùng <code>copy</code>. Giả sử ở trên chúng ta dùng thuộc tính <code>strong</code> và xem qua 2 ví dụ dưới đây.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSString &lt;em>name1 = @&ldquo;Toyota&rdquo;;
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>name1 = @&ldquo;Honda&rdquo;;</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">name1</span> <span class="o">=</span> <span class="err">@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Toyota</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="n">name1</span> <span class="o">=</span> <span class="err">@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Honda</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;;</span>
+</span></code></pre></td></tr></table></div></figure>
 Trong trường hợp này <code>car1.name</code> vẫn có giá trị là &ldquo;Toyota&rdquo; và <code>name1</code> giờ chuyển thành &ldquo;Honda&rdquo;. Hoàn toàn không có vấn đề gì.
 Thế nhưng trong ví dụ thứ 2 dưới đây thay vì dùng NSString mà dùng subclass của nó là NSMutableString.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSMutableString &lt;/em>name1 = @&ldquo;Toyota&rdquo;;
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>[name1 appendString:&ldquo;2&rdquo;];</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSMutableString</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">name1</span> <span class="o">=</span> <span class="err">@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Toyota</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="p">[</span><span class="n">name1</span> <span class="nl">appendString:</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;];</span>
+</span></code></pre></td></tr></table></div></figure>
 Trong trường hợp này giá trị của <code>car1.name</code> là &ldquo;Toyota2&rdquo; mặc dù ban đầu chúng ta set là &ldquo;Toyota&rdquo;.
 Vì vậy mặc dù property <code>name</code> trong class <code>Car</code> với kiểu NSString nhưng nếu dùng <code>strong</code> giá trị của <code>name</code> vẫn có thể bị append như trên.
 Để tránh những trường hợp như thế ta dùng <code>copy</code> để mỗi lần gán sẽ copy 1 vùng nhớ mới tránh được những trường hợp như trên.
@@ -515,22 +1330,23 @@ Vì vậy mặc dù property <code>name</code> trong class <code>Car</code> vớ
 
 <p>Nhóm thuộc tính này bao gồm 2 thuộc tính là <code>atomic</code> và <code>nonatomic</code>. Thuộc tính mặc định là <code>atomic</code>.
 Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn đến atomic hay nonatomic, mà chúng ta cùng xem ví dụ sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyView {
-</span><span class='line'>}&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyView</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@property CGPoint center;&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@property</span> <span class="n">CGPoint</span> <span class="n">center</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>@end</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>khi đấy chúng ta có setter/getter như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -538,30 +1354,32 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&ndash; (CGPoint) center {
-</span><span class='line'>  return _center;
-</span><span class='line'>}&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="n">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;ul>
-</span><span class='line'>&lt;li>(void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>_center = newCenter;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="n">newCenter</span> <span class="p">{</span>
+</span><span class='line'><span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 và bởi vì struct CGPoint có 2 thành phần <code>CGFloat x, CGFloat y</code> nên thực ra setter sẽ thực hiện các bước như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/li>
-</span><span class='line'>&lt;li>(void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>&lt;em>center.x = newCenter.x;
-</span><span class='line'>&lt;/em>center.y = newCenter.y;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="n">newCenter</span> <span class="p">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></li>
 </ul>
 
 
 <p>Trong trường hợp chúng ta chạy multithread thì có thể xảy ra khả năng như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -575,25 +1393,26 @@ và bởi vì struct CGPoint có 2 thành phần <code>CGFloat x, CGFloat y</cod
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// giả sủ ban đầu center của myView là (-5.f, -8.f)&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// giả sủ ban đầu center của myView là (-5.f, -8.f)&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>// thread 1 gọi setter
-</span><span class='line'>[myView setCenter:CGPointMake(1.f, 2.f)];&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// thread 1 gọi setter</span>
+</span><span class='line'><span class="p">[</span><span class="n">myView</span> <span class="nl">setCenter:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mf">1.f</span><span class="p">,</span> <span class="mf">2.f</span><span class="p">)];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>// tiep theo bên trong setCenter sẽ chạy
-</span><span class='line'>&lt;em>center.x = newCenter.x; // &lt;/em>center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// tiep theo bên trong setCenter sẽ chạy</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="c1">// &lt;/em&gt;center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter
-</span><span class='line'>CGPoint point = [myView center];
-</span><span class='line'>// và getter chạy trả về (1.f, -8.f)&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter</span>
+</span><span class='line'><span class="n">CGPoint</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">myView</span> <span class="n">center</span><span class="p">];</span>
+</span><span class='line'><span class="c1">// và getter chạy trả về (1.f, -8.f)&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>// thread 1 tiếp tục giá trị cho y
-</span><span class='line'>&lt;em>center.y = newCenter.y // &lt;/em>center.y giờ là  2.f</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// thread 1 tiếp tục giá trị cho y</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="c1">// &lt;/em&gt;center.y giờ là  2.f</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Như trường hợp ở trên ta thấy giá trị center là (1.f, 2.f) nhưng tại thread 2 giá trị lấy được lại là (1.f, -8.f)
 dẫn đến kết quả không được như mong muốn.
 Vì vậy trong trường hợp multithread để tránh những tình huống như trên ta set thuộc tính <code>atomic</code> cho property. Khi đấy compiler sẽ sinh ra các setter/getter như sau:
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -610,23 +1429,24 @@ Vì vậy trong trường hợp multithread để tránh những tình huống n
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&ndash; (CGPoint) center {
-</span><span class='line'>  CGPoint curCenter;
-</span><span class='line'>  @synchronized(self) {&lt;/p>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="n">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">CGPoint</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>curCenter = _center;
-</span><span class='line'>&lt;/code>&lt;/pre>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">curCenter</span> <span class="o">=</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p>  }
-</span><span class='line'>  return curCenter;
-</span><span class='line'>}&lt;/p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;ul>
-</span><span class='line'>&lt;li>(void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>@synchronized(self) {
-</span><span class='line'>  _center = newCenter;
-</span><span class='line'>}
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="n">newCenter</span> <span class="p">{</span>
+</span><span class='line'><span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 Bên trong setter/getter sử dụng lock để tránh việc nhiều thread truy cập đồng thời. Thế nhưng việc dùng lock sẽ mất chi phí cũng như cản trở tốc độ của chương trình. Vì vậy nên trong trường hợp bạn không dùng multithread hoặc không thể xảy ra những vấn đề như trên thì bạn nên dùng thuộc tính <code>nonatomic</code> để tăng tốc độ cho chương trình.</li>
 </ul>
 

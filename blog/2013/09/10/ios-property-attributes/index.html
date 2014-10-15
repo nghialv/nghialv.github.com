@@ -69,14 +69,17 @@
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-    <li><a href="nghialv2607@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:nghialv.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -108,14 +111,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-09-10T00:56:00+07:00" pubdate data-updated="true">Sep 10<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-09-10T00:56:00+07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:56 am</span></time>
         
          | <a href="#disqus_thread" class="article-comments">Comments</a>
         
@@ -132,9 +128,10 @@
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {
-</span><span class='line'>    NSString *myString;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>hoặc có thể dùng <code>@property (attributes) type name</code> để khai báo như sau:</p>
@@ -142,9 +139,10 @@
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyClass : NSObject {
-</span><span class='line'>}
-</span><span class='line'>@property (strong, nonatomic) NSString *myString;</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">myString</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Với cách thứ 2 thì compiler sẽ tự động sinh ra các setter/getter cho property ấy. Thế nhưng việc sinh ra setter/getter như thế nào là phụ thuộc vào tập <code>attributes</code> mà bạn đã set ở trên. Khi mới bắt đầu code iOS mình thấy việc set thuộc tính này hơi bị loạn với khá nhiều thuộc tính (retain, strong, weak, unsafe_unretained, nonatomic&hellip;). Rồi khi phiên bản thay đổi, kiểu project có dùng ARC hay không cũng dẫn đến việc sử dụng các thuộc tính này cũng khác nhau. Ngoài ra trong một số trường hợp nếu bạn không sử dụng đúng thuộc tính có thể làm app của bạn chạy bị lỗi. Trong bài viết này mình sẽ tóm tắt lại các thuộc tính của property, cũng như nói về khi nào sẽ dùng thuộc tính nào, tại sao, và thuộc tính nào là mặc định.</p>
@@ -169,9 +167,10 @@ Trước hết chúng ta sẽ nói qua về cách quản lý bộ nhớ trước
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Car *car1 = [[Car alloc] init];
-</span><span class='line'>//...
-</span><span class='line'>[car1 release]</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car1</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Car</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'><span class="p">[</span><span class="n">car1</span> <span class="n">release</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trước khi ARC xuất hiện thì các lập trình viên iOS đều phải tự quản lý bộ nhớ.
@@ -185,16 +184,18 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// retain
-</span><span class='line'>Car *car2 = [car1 retain];  // retainCount = 2</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// retain</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car2</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">retain</span><span class="p">];</span>  <span class="c1">// retainCount = 2</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Ngoài ra để copy sang vùng nhớ mới chúng ta có thể gửi message <code>copy</code> như ví dụ dưới đây. Khi đó <code>retainCount</code> ở vùng nhớ mới có giá trị khởi tạo là 1.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// copy
-</span><span class='line'>Car *car3 = [car1 copy];    // retainCount = 1</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// copy</span>
+</span><span class='line'><span class="n">Car</span> <span class="o">*</span><span class="n">car3</span> <span class="o">=</span> <span class="p">[</span><span class="n">car1</span> <span class="n">copy</span><span class="p">];</span>    <span class="c1">// retainCount = 1</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Quay trở lại với thuộc tính của property. Thuộc tính đầu tiên là <code>retain</code>. Như ví dụ dưới đây khi ta set thuộc tính <code>retain</code> cho property <code>name</code> thì compiler sẽ sinh ra setter <code>setName</code> như bên dưới.</p>
@@ -204,11 +205,12 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span>
 </span><span class='line'>
-</span><span class='line'>@property (nonatomic, retain) NSString *name;
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end;</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -218,11 +220,12 @@ Chúng ta có thể gửi message <code>retain</code> để tạo thêm ownershi
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setName:(NSString *)newName {
-</span><span class='line'>    [newName retain];
-</span><span class='line'>    [_name release];
-</span><span class='line'>    _name = newName;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">newName</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">_name</span> <span class="o">=</span> <span class="n">newName</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Nhìn vào setter ta thấy đầu tiên là tạo ownership (hay tăng <code>retainCount</code> thêm 1) của <code>newName</code> bằng cách gọi <code>[newNmane retain]</code>.
@@ -250,11 +253,12 @@ Thuộc tính <code>weak</code> cũng chỉ dùng trong trường hợp bạn đ
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface Car: NSObject
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Car</span>: <span class="nc">NSObject</span>
 </span><span class='line'>
-</span><span class='line'>@property (nonatomic, copy) NSString *name;
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end;</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -263,10 +267,11 @@ Thuộc tính <code>weak</code> cũng chỉ dùng trong trường hợp bạn đ
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setName:(NSString *)newName {
-</span><span class='line'>    [_name release];
-</span><span class='line'>    _name = [newName copy];     // retainCount = 1
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">newName</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">_name</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">newName</span> <span class="n">copy</span><span class="p">];</span>     <span class="c1">// retainCount = 1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Như ở trên ta thấy 1 vùng nhớ mới được copy ra và <code>_name</code> giờ chiếm giữ 1 ownership của vùng nhớ đó.
@@ -275,9 +280,10 @@ Tại sao chúng ta không dùng <code>strong</code> ở đây mà lại dùng <
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSString *name1 = @"Toyota";
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>name1 = @"Honda";</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Toyota&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Honda&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp này <code>car1.name</code> vẫn có giá trị là &ldquo;Toyota&rdquo; và <code>name1</code> giờ chuyển thành &ldquo;Honda&rdquo;. Hoàn toàn không có vấn đề gì.
@@ -286,9 +292,10 @@ Thế nhưng trong ví dụ thứ 2 dưới đây thay vì dùng NSString mà d�
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSMutableString *name1 = @"Toyota";
-</span><span class='line'>car1.name = name1;
-</span><span class='line'>[name1 appendString:"2"];</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSMutableString</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="s">@&quot;Toyota&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">car1</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name1</span><span class="p">;</span>
+</span><span class='line'><span class="p">[</span><span class="n">name1</span> <span class="nl">appendString:</span><span class="s">&quot;2&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp này giá trị của <code>car1.name</code> là &ldquo;Toyota2&rdquo; mặc dù ban đầu chúng ta set là &ldquo;Toyota&rdquo;.
@@ -311,12 +318,13 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@interface MyView {
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyView</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>@property CGPoint center;
+</span><span class='line'><span class="k">@property</span> <span class="n">CGPoint</span> <span class="n">center</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>@end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>khi đấy chúng ta có setter/getter như sau:</p>
@@ -328,13 +336,14 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint) center {
-</span><span class='line'>  return _center;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="nf">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  _center = newCenter;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>và bởi vì struct CGPoint có 2 thành phần <code>CGFloat x, CGFloat y</code> nên thực ra setter sẽ thực hiện các bước như sau:</p>
@@ -343,10 +352,11 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  _center.x = newCenter.x;
-</span><span class='line'>  _center.y = newCenter.y;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">_center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">_center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Trong trường hợp chúng ta chạy multithread thì có thể xảy ra khả năng như sau:</p>
@@ -365,20 +375,21 @@ Nhóm thuộc tính này liên quan đến vấn đề multithread. Chưa bàn �
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// giả sủ ban đầu center của myView là (-5.f, -8.f)
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// giả sủ ban đầu center của myView là (-5.f, -8.f)</span>
 </span><span class='line'>
-</span><span class='line'>// thread 1 gọi setter
-</span><span class='line'>[myView setCenter:CGPointMake(1.f, 2.f)];
+</span><span class='line'><span class="c1">// thread 1 gọi setter</span>
+</span><span class='line'><span class="p">[</span><span class="n">myView</span> <span class="nl">setCenter:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="mf">1.f</span><span class="p">,</span> <span class="mf">2.f</span><span class="p">)];</span>
 </span><span class='line'>
-</span><span class='line'>// tiep theo bên trong setCenter sẽ chạy
-</span><span class='line'>_center.x = newCenter.x; // _center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f
+</span><span class='line'><span class="c1">// tiep theo bên trong setCenter sẽ chạy</span>
+</span><span class='line'><span class="n">_center</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="c1">// _center.x giờ có giá trị là 1.f và _center.y vẫn giữ giá trị là -8.f</span>
 </span><span class='line'>
-</span><span class='line'>// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter
-</span><span class='line'>CGPoint point = [myView center];
-</span><span class='line'>// và getter chạy trả về (1.f, -8.f)
+</span><span class='line'><span class="c1">// chưa kịp chạy lệnh tiếp theo để set _center.y thì ở thread 2 gọi getter</span>
+</span><span class='line'><span class="n">CGPoint</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">myView</span> <span class="n">center</span><span class="p">];</span>
+</span><span class='line'><span class="c1">// và getter chạy trả về (1.f, -8.f)</span>
 </span><span class='line'>
-</span><span class='line'>// thread 1 tiếp tục giá trị cho y
-</span><span class='line'>_center.y = newCenter.y // _center.y giờ là  2.f</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="c1">// thread 1 tiếp tục giá trị cho y</span>
+</span><span class='line'><span class="n">_center</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="c1">// _center.y giờ là  2.f</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Như trường hợp ở trên ta thấy giá trị center là (1.f, 2.f) nhưng tại thread 2 giá trị lấy được lại là (1.f, -8.f)
@@ -398,19 +409,20 @@ Vì vậy trong trường hợp multithread để tránh những tình huống n
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint) center {
-</span><span class='line'>  CGPoint curCenter;
-</span><span class='line'>  @synchronized(self) {
-</span><span class='line'>    curCenter = _center;
-</span><span class='line'>  }
-</span><span class='line'>  return curCenter;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span> <span class="nf">center</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">CGPoint</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">curCenter</span> <span class="o">=</span> <span class="n">_center</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">curCenter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>- (void)setCenter:(CGPoint)newCenter {
-</span><span class='line'>  @synchronized(self) {
-</span><span class='line'>    _center = newCenter;
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setCenter:</span><span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">newCenter</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">@synchronized</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">_center</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Bên trong setter/getter sử dụng lock để tránh việc nhiều thread truy cập đồng thời. Thế nhưng việc dùng lock sẽ mất chi phí cũng như cản trở tốc độ của chương trình. Vì vậy nên trong trường hợp bạn không dùng multithread hoặc không thể xảy ra những vấn đề như trên thì bạn nên dùng thuộc tính <code>nonatomic</code> để tăng tốc độ cho chương trình.</p>
@@ -437,19 +449,12 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-09-10T00:56:00+07:00" pubdate data-updated="true">Sep 10<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-09-10T00:56:00+07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:56 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/attributes/'>attributes</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/objective-c/'>objective c</a>, <a class='category' href='/blog/categories/property/'>property</a>
+    <a class='category' href='/blog/categories/attributes/'>attributes</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/objective-c/'>objective c</a>, <a class='category' href='/blog/categories/property/'>property</a>
   
 </span>
 
@@ -492,6 +497,14 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
       </li>
     
@@ -503,21 +516,13 @@ Thế nên thuộc tính <code>retain</code> có thể không cần dùng nữa.
         <a href="/blog/2013/09/10/ios-property-attributes/">[iOS property:attributes]</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/08/13/vlcamera/">vlcamera</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/">Tạo class datasource cho TableView</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/nghialv">@nghialv</a> on GitHub

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tableview | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/tableview/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-01T17:19:21+07:00</updated>
+  <updated>2014-10-15T10:20:05+07:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -25,8 +25,8 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 
 <p>Khá nhiều bạn thường set datasource cho Tableview ngay trong ViewController (<code>tableview.datasource = self</code>). Và khi đấy trong ViewController chúng ta luôn luôn phải implement delegate cho TableViewDataSource như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TmpViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>TmpViewController.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -80,7 +80,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</span></code></pre></td></tr></table></div></figure></p></li>
 </ul>
 
 
@@ -92,8 +92,8 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 
 <p>Đầu tiên là <code>NSArray *items</code> trỏ đến array data của chúng ta trong ViewController để chúng ta có thể lấy data tương ứng cho từng cell và cell identifier <code>NSString *cellIdentifier</code> là string dùng để định danh cell.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TVArrayDatasource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>TVArrayDatasource.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -161,14 +161,14 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Đầu tiên chúng ta sẽ nói về đoạn <code>...</code> tại phần gán dữ liệu cho cell. Tại vì tuỳ từng trường hợp của tableview mà cell của chúng ta có cấu trúc khác nhau, data source có cấu trúc khác nhau nên phần gán dữ liệu này là khác nhau. Do đó tại đây chúng ta có thể gọi đến các hàm callback trong ViewController để gán dữ liệu cho cell theo cách mà chúng ta muốn. Có nhiều cách như dùng block, selector hay delegate. Mình thì thấy tiện nhất và ngắn nhất là block và selector nên mình sẽ tạo class TVArrayDataSource có thể dùng block hoặc selector.</p>
 
 <p>Với block thì chúng ta cần tạo 1 property để lưu block và execute block tại đoạn gán dữ liệu. Chúng ta sẽ thêm block property vào TVArrayDataSource.m và tạo 1 method khởi tạo dataSource với block như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -194,10 +194,10 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="nl">cellConfigureBlock:</span><span class="p">(</span><span class="n">TVCellConfigureBlock</span><span class="p">)</span> <span class="n">configureBlock</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -291,12 +291,12 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Khi đó bên ViewController chúng ta chỉ cần tạo 1 block để thực hiện việc gán dữ liệu cho cell. Và block này sẽ được execute bằng <code>self.configureBlock(cell, item)</code> với tham số là cell hiện tại và data tương ứng của cell. Bởi vì tham số của block là cell hiện tại và data cho cell đấy nênchúng ta hoàn toàn có thể tự do tuỳ chỉnh cell theo ý muốn. Và code bên ViewController sẽ rất ngắn và đẹp như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ViewController1.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><figcaption><span>ViewController1.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -322,14 +322,14 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">tableView</span><span class="p">.</span><span class="n">datasource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Bạn thấy đấy giờ trong ViewController thì phần code cho dataSource của tableView khá là đẹp.
 Đôi khi bạn muốn viết đoạn gán dữ liệu cho cell vào một method khác trong class ViewController thay vì dùng block. Để cho những trường hợp đó như đã nói ở trên chúng ta có thể dùng selector. Tương tự như block chúng ta cũng sẽ tạo một <code>@property (assign, nonatomic) SEL configureSelector;</code> và đối tượng để execute method của selector này <code>@property (weak, nonatomic) id target;</code> (Đối tượng này chính là ViewController). Chúng ta cũng cần tạo một hàm khởi tạo datasource khác với selector. Cuối cùng trong phần gán dữ liệu cho cell chúng ta execute method của selector với <code>objc_msgSend(self.target, self.configureSelector, cell, item);</code>. Do phần này tương tự như đối với block  nên mình không giải thích thêm mà các bạn có thể xem code trên github.</p>
 
 <p>Tiếp theo còn một đoạn <code>...</code> tại phần tạo cell mới khi mà không tìm thấy cell có thể dùng lại. Như bạn thấy đấy để tạo cell mới chúng ta cần biết Class của cell. Với Objective-C chúng ta có thể tạo 1 instance từ tên class. Khi đó chúng ta có thể tạo 1 cell như sau:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -341,13 +341,13 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Như vậy class TVArrayDataSource chỉ cần có thêm thông tin là tên class của cell là mọi việc có thể hoàn tất. Ngoài ra nhiều khi chúng ta muốn tạo cell từ file Xib. Để tạo cell từ file xib chúng ta cũng chỉ cần biết thêm tên file xib. Thế nên mình tạo thêm một property <code>cellName</code> để lưu tên class của cell hoặc tên file Xib tuỳ theo trường hợp cell tạo từ file xib hay từ code.
 Như vậy việc tạo class TVArrayDatasource đã hoàn thành. Và bây giờ trong ViewController chúng ta chỉ implement đoạn code ngắn như sau:
 Khi sử dụng với block
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>block &ndash; ViewController.m <a href="https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m">https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m</a> github </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>block &ndash; ViewController.m <a href="https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m">https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m</a> github </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -373,11 +373,11 @@ Khi sử dụng với block
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">dataSource</span> <span class="nl">setXibFileName:</span><span class="err">@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">XibFileName</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;];</span>
 </span><span class='line'><span class="n">tableview</span><span class="p">.</span><span class="n">datasource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Hoặc khi sử dụng với selector.
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>ViewController.m </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -413,7 +413,7 @@ Khi sử dụng với block
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <h1>Tổng kết</h1>
 

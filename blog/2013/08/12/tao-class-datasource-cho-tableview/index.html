@@ -66,14 +66,17 @@
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-    <li><a href="nghialv2607@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:nghialv.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -105,14 +108,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-08-12T18:16:00+07:00" pubdate data-updated="true">Aug 12<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-08-12T18:16:00+07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:16 pm</span></time>
         
          | <a href="#disqus_thread" class="article-comments">Comments</a>
         
@@ -130,7 +126,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 <p>Khá nhiều bạn thường set datasource cho Tableview ngay trong ViewController (<code>tableview.datasource = self</code>). Và khi đấy trong ViewController chúng ta luôn luôn phải implement delegate cho TableViewDataSource như sau:</p>
 
 <figure class='code'><figcaption><span>TmpViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -190,7 +186,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 <p>Đầu tiên là <code>NSArray *items</code> trỏ đến array data của chúng ta trong ViewController để chúng ta có thể lấy data tương ứng cho từng cell và cell identifier <code>NSString *cellIdentifier</code> là string dùng để định danh cell.</p>
 
 <figure class='code'><figcaption><span>TVArrayDatasource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -260,7 +256,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 <p>Với block thì chúng ta cần tạo 1 property để lưu block và execute block tại đoạn gán dữ liệu. Chúng ta sẽ thêm block property vào TVArrayDataSource.m và tạo 1 method khởi tạo dataSource với block như sau:</p>
 
 <figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -282,7 +278,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 
 
 <figure class='code'><figcaption><span>TVArrayDataSource.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -360,7 +356,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 <p>Khi đó bên ViewController chúng ta chỉ cần tạo 1 block để thực hiện việc gán dữ liệu cho cell. Và block này sẽ được execute bằng <code>self.configureBlock(cell, item)</code> với tham số là cell hiện tại và data tương ứng của cell. Bởi vì tham số của block là cell hiện tại và data cho cell đấy nênchúng ta hoàn toàn có thể tự do tuỳ chỉnh cell theo ý muốn. Và code bên ViewController sẽ rất ngắn và đẹp như sau:</p>
 
 <figure class='code'><figcaption><span>ViewController1.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -388,7 +384,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 
 <p>Tiếp theo còn một đoạn <code>...</code> tại phần tạo cell mới khi mà không tìm thấy cell có thể dùng lại. Như bạn thấy đấy để tạo cell mới chúng ta cần biết Class của cell. Với Objective-C chúng ta có thể tạo 1 instance từ tên class. Khi đó chúng ta có thể tạo 1 cell như sau:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cell</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="n">CELL_CLASS_NAME</span><span class="p">)</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewCellStyleDefault</span>
 </span><span class='line'>                                                 <span class="nl">reuseIdentifier:</span><span class="n">self</span><span class="p">.</span><span class="n">cellIdentifier</span><span class="p">];</span>
@@ -399,7 +395,7 @@ Khi dùng TableView chúng ta thường phải set datasource và delegate cho T
 Như vậy việc tạo class TVArrayDatasource đã hoàn thành. Và bây giờ trong ViewController chúng ta chỉ implement đoạn code ngắn như sau:
 Khi sử dụng với block</p>
 
-<figure class='code'><figcaption><span>block - ViewController.m</span><a href='https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m'>github </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>block - ViewController.m</span><a href='https://github.com/nghialv/TVDataSource/blob/master/sample/TVDataSource/Classes/Controller/TVBlockViewController.m'>github </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -425,7 +421,7 @@ Khi sử dụng với block</p>
 <p>Hoặc khi sử dụng với selector.</p>
 
 <figure class='code'><figcaption><span>ViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -476,14 +472,7 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-08-12T18:16:00+07:00" pubdate data-updated="true">Aug 12<span>th</span>, 2013</time>
+<time class='entry-date' datetime='2013-08-12T18:16:00+07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:16 pm</span></time>
       
 
 <span class="categories">
@@ -531,6 +520,14 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
       </li>
     
@@ -542,21 +539,13 @@ Toàn bộ code của class này cũng như sample bạn có thể tham khảo t
         <a href="/blog/2013/09/10/ios-property-attributes/">[iOS property:attributes]</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/08/13/vlcamera/">vlcamera</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/">Tạo class datasource cho TableView</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/nghialv">@nghialv</a> on GitHub

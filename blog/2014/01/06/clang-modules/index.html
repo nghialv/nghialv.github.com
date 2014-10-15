@@ -67,14 +67,17 @@
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-    <li><a href="nghialv2607@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:nghialv.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -106,14 +109,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-01-06T04:14:00+07:00" pubdate data-updated="true">Jan 6<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-01-06T04:14:00+07:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:14 am</span></time>
         
          | <a href="#disqus_thread" class="article-comments">Comments</a>
         
@@ -143,7 +139,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 <p>Ví dụ với chương trình helloworld quen thuộc như dưới đây:</p>
 
 <figure class='code'><figcaption><span>helloworld.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -169,7 +165,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 <p>Với việc sử dụng <code>#include</code> tồn tại vấn đề gọi là recursive include. Ví dụ :</p>
 
 <figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;SecondFile.h&quot;</span>
@@ -181,7 +177,7 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 
 
 <figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;FirstFile.h&quot;</span>
@@ -221,7 +217,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 Để hiểu về vấn đề Header Fragility chúng ta xem qua một ví dụ đơn giản sau:</p>
 
 <figure class='code'><figcaption><span>MyFile.h </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -240,7 +236,7 @@ Tương tự trong C chúng ta cũng tránh recursive include bằng việc ki�
 
 <p>Khi đó sau quá trình preprocessing thì file header của chúng ta sẽ như sau:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -274,7 +270,7 @@ Thế nên thời gian compile sẽ trở nên nhiều hơn rất nhiều.</p>
 Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra đều có file PROJECTNAME-Prefix.pch như sau:</p>
 
 <figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -412,19 +408,12 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-01-06T04:14:00+07:00" pubdate data-updated="true">Jan 6<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-01-06T04:14:00+07:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:14 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/clang/'>Clang</a>, <a class='category' href='/blog/categories/compiler/'>Compiler</a>, <a class='category' href='/blog/categories/modules/'>Modules</a>, <a class='category' href='/blog/categories/objective-c/'>Objective-C</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>
+    <a class='category' href='/blog/categories/clang/'>clang</a>, <a class='category' href='/blog/categories/compiler/'>compiler</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/modules/'>modules</a>, <a class='category' href='/blog/categories/objective-c/'>objective-c</a>
   
 </span>
 
@@ -444,6 +433,8 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
       
         <a class="basic-alignment left" href="/blog/2013/11/06/sslide/" title="Previous Post: sslide">&laquo; sslide</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/" title="Next Post: GCD - a wrapper of Grand Central Dispatch">GCD - a wrapper of Grand Central Dispatch &raquo;</a>
       
     </p>
   </footer>
@@ -465,6 +456,14 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
       </li>
     
@@ -476,21 +475,13 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
         <a href="/blog/2013/09/10/ios-property-attributes/">[iOS property:attributes]</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/08/13/vlcamera/">vlcamera</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/12/tao-class-datasource-cho-tableview/">Tạo class datasource cho TableView</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/nghialv">@nghialv</a> on GitHub
