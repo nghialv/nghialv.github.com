@@ -4,7 +4,7 @@
   <title><![CDATA[nghialv blog]]></title>
   <link href="http://nghialv.github.io/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-15T10:20:05+07:00</updated>
+  <updated>2014-10-15T10:55:13+07:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Net - a HttpRequest wrapper]]></title>
-    <link href="http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift/"/>
-    <updated>2014-10-02T20:29:00+07:00</updated>
-    <id>http://nghialv.github.io/blog/2014/10/02/net-a-httprequest-wrapper-written-in-swift</id>
+    <link href="http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/"/>
+    <updated>2014-10-15T08:29:00+07:00</updated>
+    <id>http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift</id>
     <content type="html"><![CDATA[<p>Net is a HttpRequest wrapper written in Swift.</p>
 
 <p><a href="https://github.com/nghialv/Net">source code : https://github.com/nghialv/Net</a></p>
@@ -445,6 +445,32 @@
 <h3>Integration</h3>
 
 <p>Just drag Net folder to the project tree</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puqiz]]></title>
+    <link href="http://nghialv.github.io/blog/2014/10/05/puqiz/"/>
+    <updated>2014-10-05T10:25:57+07:00</updated>
+    <id>http://nghialv.github.io/blog/2014/10/05/puqiz</id>
+    <content type="html"><![CDATA[<h3>Description</h3>
+
+<p>プログラミングクイズアプリです.
+Swift, Ruby, Java, C++などの言語に関する質問を解いてみませんか.</p>
+
+<p>プログラミングが好きな人は大歓迎. (^^)</p>
+
+<p>FEATURES</p>
+
+<ul>
+<li>クイズを 解く (コードのクイズもある）</li>
+<li>ランキング</li>
+<li>歴史の閲覧</li>
+<li>質問のストック</li>
+<li>質問作成</li>
+<li>共有</li>
+</ul>
+
 ]]></content>
   </entry>
   
