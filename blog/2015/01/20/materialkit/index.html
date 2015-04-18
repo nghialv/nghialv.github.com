@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MaterialKit - nghialv blog</title>
+  <meta name="author" content="nghialv">
+
+  
+  <meta name="description" content="Material design components (inspired by Google Material Design) for iOS written in Swift Please feel free to make pull requests. Github Features &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nghialv.github.io/blog/2015/01/20/materialkit">
+  <link href="/favicon.png" rel="icon">
+  <link href="/javascripts/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nghialv blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-43205514-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      $('.carousel').carousel({
+        interval: 3000
+      });
+      $('.carousel').carousel('cycle');
+    });
+  </script>
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nghialv blog</a></h1>
+  
+    <h2>practice makes perfect</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:nghialv.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+    
+  <header>
+    
+      <h1 class="entry-title vn-title">MaterialKit</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T01:20:13+09:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:20 am</span></time>
+        
+         | <a href="#disqus_thread"
+             + data-disqus-identifier="http://nghialv.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Material design components (inspired by <a href="http://www.google.com/design/spec/material-design/introduction.html">Google Material Design</a>) for iOS written in Swift</p>
+
+<p>Please feel free to make pull requests.</p>
+
+<p><a href="https://github.com/nghialv/MaterialKit">Github</a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Highly customizable</li>
+<li>Complete example</li>
+<li>Supports @IBDesignable to live-render the component in the Interface Builder</li>
+<li><p>By suporting @IBInspectable, the class properties can be exposed in the Interface Builder, and you can edit these properties in realtime</p></li>
+<li><p>[x] MKButton: floating action button, raised button, flat button, ripple effect</p></li>
+<li>[x] MKTextField: ripple effect, floating placeholder</li>
+<li>[x] MKTableViewCell</li>
+<li>[x] MKLabel</li>
+<li>[x] MKImageView</li>
+<li>[ ] MKTextView <strong>(In progress)</strong></li>
+<li>[ ] MKSwitch <strong>(In progress)</strong></li>
+<li>[ ] MKAlert <strong>(In progress)</strong></li>
+<li>[ ] MKActivityIndicator <strong>(In progress)</strong></li>
+<li>[x] MKLayer</li>
+<li>[x] MKColor</li>
+</ul>
+
+
+<h2>Components</h2>
+
+<h4>MKButton</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>There are 3 types of main buttons: <code>Floating Action Button</code>, <code>Raised Button</code>, <code>Flat Button</code></li>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">button</span> <span class="o">=</span> <span class="n">MKButton</span><span class="p">(</span><span class="nl">frame</span><span class="p">:</span> <span class="bp">CGRect</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">35</span><span class="p">))</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">maskEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">TapLocation</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightGreen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKTextField</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
+</p>
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField_bottomborder.gif" width="365" height="111">
+</p>
+
+
+<ul>
+<li>Single-line text field</li>
+<li>Floating placeholder</li>
+<li>Ripple Animation</li>
+<li>Custommizable attributes: color, ripple location, bottom border, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Left</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">floatingPlaceholderEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">placeholder</span> <span class="o">=</span> <span class="s">&quot;Description&quot;</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">Green</span><span class="p">.</span><span class="bp">CGColor</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightGreen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKTableViewCell</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">tableView</span><span class="p">.</span><span class="n">dequeueReusableCellWithIdentifier</span><span class="p">(</span><span class="s">&quot;MyCell&quot;</span><span class="p">)</span> <span class="kt">as</span> <span class="n">MyCell</span>
+</span><span class='line'><span class="n">cell</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Center</span>
+</span><span class='line'><span class="n">cell</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">Blue</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKLabel, MKImageView (BarButtonItem)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKBarButtonItem.gif" width="373" height="334">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+<li><p>Play ripple animation whenever you want by calling <code>animateRipple</code> method
+or by setting <code>userInteractionEnabled = true</code> ripple animation will be played when the label/imageview is tapped</p></li>
+<li><p>Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// customize UIBarButtonItem by using MKImageView</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imgView</span> <span class="o">=</span> <span class="n">MKImageView</span><span class="p">(</span><span class="nl">frame</span><span class="p">:</span> <span class="bp">CGRect</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">32</span><span class="p">))</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;uibaritem_icon.png&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Center</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">userInteractionEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">rightBarButton</span> <span class="o">=</span> <span class="bp">UIBarButtonItem</span><span class="p">(</span><span class="nl">customView</span><span class="p">:</span> <span class="n">imgView</span><span class="p">)</span>
+</span><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">navigationItem</span><span class="p">.</span><span class="n">rightBarButtonItem</span> <span class="o">=</span> <span class="n">rightBarButton</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKProgressView (Coming Soon)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView2.gif" width="217" height="155">
+</p>
+
+
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView.gif" width="217" height="155">
+</p>
+
+
+<h4>MKLayer</h4>
+
+<p>A subclass of CALayer.</p>
+
+<h4>MKColor</h4>
+
+<p>A category for UIColor that adds some methods to get flat colors designed by <a href="http://www.google.com/design/spec/style/color.html">Google</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get color from UIColor</span>
+</span><span class='line'><span class="k">let</span> <span class="n">lightBlueColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightBlue</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>TODO</h2>
+
+<ul>
+<li>[x] pod file</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">pod</span> <span class="err">&#39;</span><span class="n">MaterialKit</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>MaterialKit is released under the MIT license. See LICENSE for details.</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">nghialv</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T01:20:13+09:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:20 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/material-design/'>material design</a>, <a class='category' href='/blog/categories/project/'>project</a>, <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nghialv.github.io/blog/2015/01/20/materialkit/" data-via="" data-counturl="http://nghialv.github.io/blog/2015/01/20/materialkit/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/" title="Previous Post: Net - a HttpRequest wrapper">&laquo; Net - a HttpRequest wrapper</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/03/20/hakuba/" title="Next Post: Hakuba">Hakuba &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/20/hakuba/">Hakuba</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/20/materialkit/">MaterialKit</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/05/puqiz/">Puqiz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/nghialv">@nghialv</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'nghialv',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - nghialv -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'nghialv';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nghialv.github.io/blog/2015/01/20/materialkit/';
+        var disqus_url = 'http://nghialv.github.io/blog/2015/01/20/materialkit/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

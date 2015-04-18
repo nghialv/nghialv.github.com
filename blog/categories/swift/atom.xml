@@ -4,7 +4,7 @@
   <title><![CDATA[Category: swift | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-15T12:02:45+07:00</updated>
+  <updated>2015-04-19T01:40:28+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -14,9 +14,584 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Hakuba]]></title>
+    <link href="http://nghialv.github.io/blog/2015/03/20/hakuba/"/>
+    <updated>2015-03-20T01:33:10+09:00</updated>
+    <id>http://nghialv.github.io/blog/2015/03/20/hakuba</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/nghialv/Hakuba">Github</a></p>
+
+<p>I want to slim down my view controllers.</p>
+
+<p>I want to manage tableview without the code of <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code>.</p>
+
+<p>That is why I created <code>Hakuba</code>.</p>
+
+<p>( <strong>Hakuba</strong> is one of the most famous ski resorts in Japan. )</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Don&rsquo;t have to write the code for <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code> protocols</li>
+<li>Easy to manage your sections and cells (append/reset/insert/remove/update)</li>
+<li>Support dynamic cell height from <strong>ios7</strong></li>
+<li>Don&rsquo;t have to worry about cell identifier</li>
+<li>Handling cell selection by trailing closure</li>
+<li>Easy to implement header/footer view (floating callback)</li>
+<li>Support for creating cells from Nibs or Storyboards</li>
+<li>Method chaining</li>
+<li>Subscript</li>
+<li>Support loadmore closure</li>
+<li>Complete example</li>
+</ul>
+
+
+<h5>Quick example</h5>
+
+<p>&#8220;` swift</p>
+
+<pre><code>// viewController swift file
+
+hakuba = Hakuba(tableView: tableView)
+
+let cellmodel = YourCellModel(title: "Title", des: "description") {
+    println("Did select cell with title = \(title)")
+}
+
+hakuba[2].append(cellmodel)     // append a new cell model in datasource
+         .slide(.Fade)          // show the cell of your cell model in the table view
+
+hakuba[1].remove(1...3)
+         .slide(.Right)
+</code></pre>
+
+<p><code>
+</code> swift</p>
+
+<pre><code>// your cell swift file
+
+class YourCellModel : MYCellModel {
+    let title: String
+    let des: String
+
+    init(title: String, des: String, selectionHandler: MYSelectionHandler) {
+        self.title = title
+        self.des = des
+        super.init(YourCell.self, selectionHandler: selectionHandler)
+    }
+}
+
+
+class YourCell : MYTableViewCell {
+    @IBOutlet weak var titleLabel: UILabel!
+
+    override func configureCell(data: MYCellModel) {
+        super.configureCell(data)
+        if let cellmodel = data as? YourCellModel {
+            titleLabel.text = cellmodel.title
+        }
+    }
+}
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h2>Usage</h2>
+
+<ul>
+<li>Initilization</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>private var hakuba = Hakuba(tableView: tableView)   
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Section handling</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>let section = hakuba[secIndex]  // retrieve a section or create a new section if it doesn't already exist
+
+// inserting
+hakuba.insert(section, atIndex: 1)
+      .slide()
+
+// removing
+hakuba.remove(index)
+      .slide(.Left)
+
+hakuba.removeAll()
+      .slide()
+
+// handing section index by enum
+enum Section : Int, MYSectionIndex {
+    case Top = 0
+    case Center
+    case Bottom
+
+    var intValue: Int {
+        return self.rawValue
+    }
+}
+let topSection = hakuba[Section.Top]
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Cell handling</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>// 1. appending
+hakuba[0].append(cellmodel)             // append a cellmodel
+         .slide(.Fade)                  // and slide with `Fade` animation
+
+hakuba[1].append(cellmodels)            // append a list of cellmodes
+        .slide(.Left)                   
+
+// by using section
+let section = hakuba[Section.Top]
+section.append(cellmodel)
+       .slide()
+
+
+// 2. inserting
+section.insert(cellmodels, atIndex: 1)
+       .slide(.Middle)
+
+
+// 3. reseting
+section.reset(cellmodels)               // replace current data in section by the new data
+       .slide()
+section.reset()                         // or remove all data in section
+       .slide()
+
+
+// 4. removing
+section.remove(1)
+       .slide(.Right)
+section.remove(2...5)
+       .slide()
+section.removeLast()
+       .slide()
+</code></pre>
+
+<p>&#8220;`</p>
+
+<p>&#8220;` swift</p>
+
+<pre><code>// updating cell data
+let section = hakuba[Section.Top]
+section[1].property = newData
+section[1].slide()      
+</code></pre>
+
+<p>&#8220;`</p>
+
+<p>&#8220;` swift</p>
+
+<pre><code>section.sort().slide()
+section.shuffle().slide()
+section.map
+section.filter
+section.reduce
+section.mapFilter
+section.each
+
+section.first
+section.last
+section[1]
+section.count
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Creating cell model</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>// create a cell model
+let cellmodel = MYCellModel(cellClass: YourCell.self, userData: celldata) {
+    println("Did select")
+}
+
+// create a list of cell models from api results
+let items = [...] // or your data from API
+
+let cellmodels = items.map { item -&gt; MYCellModel in
+    return MYCellModel(cellClass: YourCell.self, userData: item) {
+        println("Did select cell")
+    }
+}
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Register cell, header, footer</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>hakuba.registerCellNib(CellClassName)
+hakuba.registerCellClass(CellClassName)
+hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
+hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
+
+// register a list of cells by using variadic parameters
+hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Section header/footer</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>let header = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
+    println("Did select header view")
+}
+hakuba[Section.Top].header = header
+
+// hide header in section 1
+hakuba[Section.Center].header?.enabled = false
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Loadmore</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>hakuba.loadmoreEnabled = true
+hakuba.loadmoreHandler = {
+    // request api
+    // append new data
+}
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Commit editing</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>hakuba.commitEditingHandler = { [weak self] style, indexPath in
+    self?.hakuba[indexPath.section].remove(indexPath.row)
+}
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Deselect all cells</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>hakuba.deselectAllCells(animated: true)
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the <code>height</code> parameter and set <code>dynamicHeightEnabled = true</code></li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>let cellmodel = MYCellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
+    println("Did select cell")
+}
+cellmodel.dynamicHeightEnabled = true
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Callback methods in the cell class</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>func willAppear(data: MYCellModel)
+func didDisappear(data: MYCellModel)
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<p>&#8220;`</p>
+
+<pre><code>pod 'Hakuba'
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>Hakuba is released under the MIT license. See LICENSE for details.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MaterialKit]]></title>
+    <link href="http://nghialv.github.io/blog/2015/01/20/materialkit/"/>
+    <updated>2015-01-20T01:20:13+09:00</updated>
+    <id>http://nghialv.github.io/blog/2015/01/20/materialkit</id>
+    <content type="html"><![CDATA[<p>Material design components (inspired by <a href="http://www.google.com/design/spec/material-design/introduction.html">Google Material Design</a>) for iOS written in Swift</p>
+
+<p>Please feel free to make pull requests.</p>
+
+<p><a href="https://github.com/nghialv/MaterialKit">Github</a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Highly customizable</li>
+<li>Complete example</li>
+<li>Supports @IBDesignable to live-render the component in the Interface Builder</li>
+<li><p>By suporting @IBInspectable, the class properties can be exposed in the Interface Builder, and you can edit these properties in realtime</p></li>
+<li><p>[x] MKButton: floating action button, raised button, flat button, ripple effect</p></li>
+<li>[x] MKTextField: ripple effect, floating placeholder</li>
+<li>[x] MKTableViewCell</li>
+<li>[x] MKLabel</li>
+<li>[x] MKImageView</li>
+<li>[ ] MKTextView <strong>(In progress)</strong></li>
+<li>[ ] MKSwitch <strong>(In progress)</strong></li>
+<li>[ ] MKAlert <strong>(In progress)</strong></li>
+<li>[ ] MKActivityIndicator <strong>(In progress)</strong></li>
+<li>[x] MKLayer</li>
+<li>[x] MKColor</li>
+</ul>
+
+
+<h2>Components</h2>
+
+<h4>MKButton</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>There are 3 types of main buttons: <code>Floating Action Button</code>, <code>Raised Button</code>, <code>Flat Button</code></li>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
+button.maskEnabled = true
+button.rippleLocation = .TapLocation
+button.rippleLayerColor = UIColor.MKColor.LightGreen
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKTextField</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
+</p>
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField_bottomborder.gif" width="365" height="111">
+</p>
+
+
+<ul>
+<li>Single-line text field</li>
+<li>Floating placeholder</li>
+<li>Ripple Animation</li>
+<li>Custommizable attributes: color, ripple location, bottom border, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>textField.rippleLocation = .Left
+textField.floatingPlaceholderEnabled = true
+textField.placeholder = "Description"
+textField.layer.borderColor = UIColor.MKColor.Green.CGColor
+textField.rippleLayerColor = UIColor.MKColor.LightGreen
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKTableViewCell</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
+cell.rippleLocation = .Center
+cell.rippleLayerColor = UIColor.MKColor.Blue
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKLabel, MKImageView (BarButtonItem)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKBarButtonItem.gif" width="373" height="334">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+<li><p>Play ripple animation whenever you want by calling <code>animateRipple</code> method
+or by setting <code>userInteractionEnabled = true</code> ripple animation will be played when the label/imageview is tapped</p></li>
+<li><p>Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView</p></li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>// customize UIBarButtonItem by using MKImageView
+let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+imgView.image = UIImage(named: "uibaritem_icon.png")
+imgView.rippleLocation = .Center
+imgView.userInteractionEnabled = true
+
+let rightBarButton = UIBarButtonItem(customView: imgView)
+self.navigationItem.rightBarButtonItem = rightBarButton
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKProgressView (Coming Soon)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView2.gif" width="217" height="155">
+</p>
+
+
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView.gif" width="217" height="155">
+</p>
+
+
+<h4>MKLayer</h4>
+
+<p>A subclass of CALayer.</p>
+
+<h4>MKColor</h4>
+
+<p>A category for UIColor that adds some methods to get flat colors designed by <a href="http://www.google.com/design/spec/style/color.html">Google</a></p>
+
+<p>&#8220;` swift</p>
+
+<pre><code>// get color from UIColor
+let lightBlueColor = UIColor.MKColor.LightBlue
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h2>TODO</h2>
+
+<ul>
+<li>[x] pod file</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<p>&#8220;`</p>
+
+<pre><code>pod 'MaterialKit'
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>MaterialKit is released under the MIT license. See LICENSE for details.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Net - a HttpRequest wrapper]]></title>
     <link href="http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/"/>
-    <updated>2014-10-15T08:29:00+07:00</updated>
+    <updated>2014-10-15T08:29:00+09:00</updated>
     <id>http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift</id>
     <content type="html"><![CDATA[<p>Net is a HttpRequest wrapper written in Swift.</p>
 
@@ -526,7 +1101,7 @@
   <entry>
     <title type="html"><![CDATA[GCD - a wrapper of Grand Central Dispatch]]></title>
     <link href="http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/"/>
-    <updated>2014-10-01T20:22:00+07:00</updated>
+    <updated>2014-10-01T20:22:00+09:00</updated>
     <id>http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift</id>
     <content type="html"><![CDATA[<p>GCD is a wrapper of Grand Central Dispatch written in Swift.</p>
 

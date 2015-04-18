@@ -4,7 +4,7 @@
   <title><![CDATA[Category: net | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/net/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-15T12:02:45+07:00</updated>
+  <updated>2015-04-19T01:40:28+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Net - a HttpRequest wrapper]]></title>
     <link href="http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/"/>
-    <updated>2014-10-15T08:29:00+07:00</updated>
+    <updated>2014-10-15T08:29:00+09:00</updated>
     <id>http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift</id>
     <content type="html"><![CDATA[<p>Net is a HttpRequest wrapper written in Swift.</p>
 

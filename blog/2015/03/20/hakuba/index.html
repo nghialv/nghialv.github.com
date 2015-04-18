@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hakuba - nghialv blog</title>
+  <meta name="author" content="nghialv">
+
+  
+  <meta name="description" content="Github I want to slim down my view controllers. I want to manage tableview without the code of UITableViewDelegate and UITableViewDataSource. That is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nghialv.github.io/blog/2015/03/20/hakuba">
+  <link href="/favicon.png" rel="icon">
+  <link href="/javascripts/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nghialv blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-43205514-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      $('.carousel').carousel({
+        interval: 3000
+      });
+      $('.carousel').carousel('cycle');
+    });
+  </script>
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nghialv blog</a></h1>
+  
+    <h2>practice makes perfect</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+    
+    
+    <li><a href="https://github.com/nghialv" rel="subscribe-github" title="@nghialv on GitHub">GitHub</a></li>
+    
+    
+    
+    <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:nghialv.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+    
+  <header>
+    
+      <h1 class="entry-title vn-title">Hakuba</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-20T01:33:10+09:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:33 am</span></time>
+        
+         | <a href="#disqus_thread"
+             + data-disqus-identifier="http://nghialv.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p><a href="https://github.com/nghialv/Hakuba">Github</a></p>
+
+<p>I want to slim down my view controllers.</p>
+
+<p>I want to manage tableview without the code of <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code>.</p>
+
+<p>That is why I created <code>Hakuba</code>.</p>
+
+<p>( <strong>Hakuba</strong> is one of the most famous ski resorts in Japan. )</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Don&rsquo;t have to write the code for <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code> protocols</li>
+<li>Easy to manage your sections and cells (append/reset/insert/remove/update)</li>
+<li>Support dynamic cell height from <strong>ios7</strong></li>
+<li>Don&rsquo;t have to worry about cell identifier</li>
+<li>Handling cell selection by trailing closure</li>
+<li>Easy to implement header/footer view (floating callback)</li>
+<li>Support for creating cells from Nibs or Storyboards</li>
+<li>Method chaining</li>
+<li>Subscript</li>
+<li>Support loadmore closure</li>
+<li>Complete example</li>
+</ul>
+
+
+<h5>Quick example</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// viewController swift file</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span> <span class="o">=</span> <span class="n">Hakuba</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="n">tableView</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">YourCellModel</span><span class="p">(</span><span class="nl">title</span><span class="p">:</span> <span class="s">&quot;Title&quot;</span><span class="p">,</span> <span class="nl">des</span><span class="p">:</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell with title = \(title)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>      <span class="c1">// append a new cell model in datasource</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Fade</span><span class="p">)</span>           <span class="c1">// show the cell of your cell model in the table view</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">remove</span><span class="p">(</span><span class="mf">1.</span><span class="p">.</span><span class="mf">.3</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Right</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// your cell swift file</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">YourCellModel</span> <span class="p">:</span> <span class="n">MYCellModel</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">title</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">des</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">init</span><span class="p">(</span><span class="nl">title</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">des</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">selectionHandler</span><span class="p">:</span> <span class="n">MYSelectionHandler</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">des</span> <span class="o">=</span> <span class="n">des</span>
+</span><span class='line'>      <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">selectionHandler</span><span class="p">:</span> <span class="n">selectionHandler</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">YourCell</span> <span class="p">:</span> <span class="n">MYTableViewCell</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">@</span><span class="kt">IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nl">titleLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="o">!</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kr">override</span> <span class="k">func</span> <span class="n">configureCell</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">super</span><span class="p">.</span><span class="n">configureCell</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">data</span> <span class="kt">as</span><span class="o">?</span> <span class="n">YourCellModel</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cellmodel</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Usage</h2>
+
+<ul>
+<li>Initilization</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">private</span> <span class="k">var</span> <span class="n">hakuba</span> <span class="o">=</span> <span class="n">Hakuba</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="n">tableView</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Section handling</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">secIndex</span><span class="p">]</span> <span class="c1">// retrieve a section or create a new section if it doesn&#39;t already exist</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// inserting</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="nl">atIndex</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// removing</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Left</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">removeAll</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>      
+</span><span class='line'><span class="c1">// handing section index by enum</span>
+</span><span class='line'><span class="k">enum</span> <span class="nl">Section</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">MYSectionIndex</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Top</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Center</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Bottom</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">var</span> <span class="nl">intValue</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">rawValue</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">let</span> <span class="n">topSection</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Cell handling</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// 1. appending</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>              <span class="c1">// append a cellmodel</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Fade</span><span class="p">)</span>                   <span class="c1">// and slide with `Fade` animation</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">)</span>         <span class="c1">// append a list of cellmodes</span>
+</span><span class='line'>      <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Left</span><span class="p">)</span>                    
+</span><span class='line'>
+</span><span class='line'><span class="c1">// by using section</span>
+</span><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 2. inserting</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">,</span> <span class="nl">atIndex</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Middle</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 3. reseting</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">)</span>               <span class="c1">// replace current data in section by the new data</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>                           <span class="c1">// or remove all data in section</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 4. removing</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Right</span><span class="p">)</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mf">2.</span><span class="p">.</span><span class="mf">.5</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">removeLast</span><span class="p">()</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// updating cell data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">property</span> <span class="o">=</span> <span class="n">newData</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">slide</span><span class="p">()</span>     
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">sort</span><span class="p">().</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">shuffle</span><span class="p">().</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">map</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">filter</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reduce</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">mapFilter</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">each</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">first</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">last</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Creating cell model</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a cell model</span>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">celldata</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// create a list of cell models from api results</span>
+</span><span class='line'><span class="k">let</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[...]</span> <span class="c1">// or your data from API</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodels</span> <span class="o">=</span> <span class="n">items</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">item</span> <span class="o">-&gt;</span> <span class="n">MYCellModel</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Register cell, header, footer</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellNib</span><span class="p">(</span><span class="n">CellClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellClass</span><span class="p">(</span><span class="n">CellClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerHeaderFooterNib</span><span class="p">(</span><span class="n">HeaderOrFooterClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerHeaderFooterClass</span><span class="p">(</span><span class="n">HeaderOrFooterClassName</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// register a list of cells by using variadic parameters</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellNib</span><span class="p">(</span><span class="n">CellClass1</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="n">CellClass2</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="p">...,</span> <span class="n">CellClassN</span><span class="p">.</span><span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Section header/footer</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">header</span> <span class="o">=</span> <span class="n">MYHeaderFooterViewModel</span><span class="p">(</span><span class="nl">viewClass</span><span class="p">:</span> <span class="n">CustomHeaderView</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">yourData</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select header view&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">].</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// hide header in section 1</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Center</span><span class="p">].</span><span class="n">header</span><span class="o">?</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Loadmore</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">loadmoreEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">loadmoreHandler</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// request api</span>
+</span><span class='line'>  <span class="c1">// append new data</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Commit editing</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">commitEditingHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="n">style</span><span class="p">,</span> <span class="n">indexPath</span> <span class="k">in</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">?</span><span class="p">.</span><span class="n">hakuba</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">section</span><span class="p">].</span><span class="n">remove</span><span class="p">(</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Deselect all cells</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">deselectAllCells</span><span class="p">(</span><span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the <code>height</code> parameter and set <code>dynamicHeightEnabled = true</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">yourCellData</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">cellmodel</span><span class="p">.</span><span class="n">dynamicHeightEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Callback methods in the cell class</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">willAppear</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span>
+</span><span class='line'><span class="k">func</span> <span class="n">didDisappear</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">pod</span> <span class="err">&#39;</span><span class="n">Hakuba</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>Hakuba is released under the MIT license. See LICENSE for details.</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">nghialv</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-03-20T01:33:10+09:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:33 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/project/'>project</a>, <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nghialv.github.io/blog/2015/03/20/hakuba/" data-via="" data-counturl="http://nghialv.github.io/blog/2015/03/20/hakuba/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/20/materialkit/" title="Previous Post: MaterialKit">&laquo; MaterialKit</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/20/hakuba/">Hakuba</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/20/materialkit/">MaterialKit</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/05/puqiz/">Puqiz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/nghialv">@nghialv</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'nghialv',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - nghialv -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'nghialv';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nghialv.github.io/blog/2015/03/20/hakuba/';
+        var disqus_url = 'http://nghialv.github.io/blog/2015/03/20/hakuba/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

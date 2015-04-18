@@ -9,8 +9,7 @@
   <meta name="author" content="nghialv">
 
   
-  <meta name="description" content="Net is a HttpRequest wrapper written in Swift. source code : https://github.com/nghialv/Net Features GET, POST, PUT, DELETE method
-Powerful request &hellip;">
+  <meta name="description" content="Github I want to slim down my view controllers. I want to manage tableview without the code of UITableViewDelegate and UITableViewDataSource. That is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,6 +102,748 @@ Powerful request &hellip;">
         
   <header>
     
+      <h1 class="entry-title vn-title"><a href="/blog/2015/03/20/hakuba/">Hakuba</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-20T01:33:10+09:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:33 am</span></time>
+        
+         | <a href="/blog/2015/03/20/hakuba/#disqus_thread"
+             + data-disqus-identifier="http://nghialv.github.io/blog/2015/03/20/hakuba/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p><a href="https://github.com/nghialv/Hakuba">Github</a></p>
+
+<p>I want to slim down my view controllers.</p>
+
+<p>I want to manage tableview without the code of <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code>.</p>
+
+<p>That is why I created <code>Hakuba</code>.</p>
+
+<p>( <strong>Hakuba</strong> is one of the most famous ski resorts in Japan. )</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Don&rsquo;t have to write the code for <code>UITableViewDelegate</code> and <code>UITableViewDataSource</code> protocols</li>
+<li>Easy to manage your sections and cells (append/reset/insert/remove/update)</li>
+<li>Support dynamic cell height from <strong>ios7</strong></li>
+<li>Don&rsquo;t have to worry about cell identifier</li>
+<li>Handling cell selection by trailing closure</li>
+<li>Easy to implement header/footer view (floating callback)</li>
+<li>Support for creating cells from Nibs or Storyboards</li>
+<li>Method chaining</li>
+<li>Subscript</li>
+<li>Support loadmore closure</li>
+<li>Complete example</li>
+</ul>
+
+
+<h5>Quick example</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// viewController swift file</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span> <span class="o">=</span> <span class="n">Hakuba</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="n">tableView</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">YourCellModel</span><span class="p">(</span><span class="nl">title</span><span class="p">:</span> <span class="s">&quot;Title&quot;</span><span class="p">,</span> <span class="nl">des</span><span class="p">:</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell with title = \(title)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>      <span class="c1">// append a new cell model in datasource</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Fade</span><span class="p">)</span>           <span class="c1">// show the cell of your cell model in the table view</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">remove</span><span class="p">(</span><span class="mf">1.</span><span class="p">.</span><span class="mf">.3</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Right</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// your cell swift file</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">YourCellModel</span> <span class="p">:</span> <span class="n">MYCellModel</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">title</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">des</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">init</span><span class="p">(</span><span class="nl">title</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">des</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">selectionHandler</span><span class="p">:</span> <span class="n">MYSelectionHandler</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">des</span> <span class="o">=</span> <span class="n">des</span>
+</span><span class='line'>      <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">selectionHandler</span><span class="p">:</span> <span class="n">selectionHandler</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">YourCell</span> <span class="p">:</span> <span class="n">MYTableViewCell</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">@</span><span class="kt">IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nl">titleLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="o">!</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kr">override</span> <span class="k">func</span> <span class="n">configureCell</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">super</span><span class="p">.</span><span class="n">configureCell</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">data</span> <span class="kt">as</span><span class="o">?</span> <span class="n">YourCellModel</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cellmodel</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Usage</h2>
+
+<ul>
+<li>Initilization</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">private</span> <span class="k">var</span> <span class="n">hakuba</span> <span class="o">=</span> <span class="n">Hakuba</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="n">tableView</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Section handling</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">secIndex</span><span class="p">]</span> <span class="c1">// retrieve a section or create a new section if it doesn&#39;t already exist</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// inserting</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="nl">atIndex</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// removing</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Left</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">removeAll</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>      
+</span><span class='line'><span class="c1">// handing section index by enum</span>
+</span><span class='line'><span class="k">enum</span> <span class="nl">Section</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="n">MYSectionIndex</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Top</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Center</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Bottom</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">var</span> <span class="nl">intValue</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">rawValue</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">let</span> <span class="n">topSection</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Cell handling</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// 1. appending</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>              <span class="c1">// append a cellmodel</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Fade</span><span class="p">)</span>                   <span class="c1">// and slide with `Fade` animation</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">)</span>         <span class="c1">// append a list of cellmodes</span>
+</span><span class='line'>      <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Left</span><span class="p">)</span>                    
+</span><span class='line'>
+</span><span class='line'><span class="c1">// by using section</span>
+</span><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cellmodel</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 2. inserting</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">,</span> <span class="nl">atIndex</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Middle</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 3. reseting</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">cellmodels</span><span class="p">)</span>               <span class="c1">// replace current data in section by the new data</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>                           <span class="c1">// or remove all data in section</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 4. removing</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">(.</span><span class="n">Right</span><span class="p">)</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mf">2.</span><span class="p">.</span><span class="mf">.5</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">removeLast</span><span class="p">()</span>
+</span><span class='line'>       <span class="p">.</span><span class="n">slide</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// updating cell data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">section</span> <span class="o">=</span> <span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">property</span> <span class="o">=</span> <span class="n">newData</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">slide</span><span class="p">()</span>     
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">sort</span><span class="p">().</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">shuffle</span><span class="p">().</span><span class="n">slide</span><span class="p">()</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">map</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">filter</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">reduce</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">mapFilter</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">each</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">first</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">last</span>
+</span><span class='line'><span class="n">section</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="n">section</span><span class="p">.</span><span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Creating cell model</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a cell model</span>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">celldata</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// create a list of cell models from api results</span>
+</span><span class='line'><span class="k">let</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[...]</span> <span class="c1">// or your data from API</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">cellmodels</span> <span class="o">=</span> <span class="n">items</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">item</span> <span class="o">-&gt;</span> <span class="n">MYCellModel</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Register cell, header, footer</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellNib</span><span class="p">(</span><span class="n">CellClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellClass</span><span class="p">(</span><span class="n">CellClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerHeaderFooterNib</span><span class="p">(</span><span class="n">HeaderOrFooterClassName</span><span class="p">)</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerHeaderFooterClass</span><span class="p">(</span><span class="n">HeaderOrFooterClassName</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// register a list of cells by using variadic parameters</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">registerCellNib</span><span class="p">(</span><span class="n">CellClass1</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="n">CellClass2</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="p">...,</span> <span class="n">CellClassN</span><span class="p">.</span><span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Section header/footer</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">header</span> <span class="o">=</span> <span class="n">MYHeaderFooterViewModel</span><span class="p">(</span><span class="nl">viewClass</span><span class="p">:</span> <span class="n">CustomHeaderView</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">yourData</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select header view&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Top</span><span class="p">].</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// hide header in section 1</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">[</span><span class="n">Section</span><span class="p">.</span><span class="n">Center</span><span class="p">].</span><span class="n">header</span><span class="o">?</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Loadmore</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">loadmoreEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">loadmoreHandler</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// request api</span>
+</span><span class='line'>  <span class="c1">// append new data</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Commit editing</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">commitEditingHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="n">style</span><span class="p">,</span> <span class="n">indexPath</span> <span class="k">in</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">?</span><span class="p">.</span><span class="n">hakuba</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">section</span><span class="p">].</span><span class="n">remove</span><span class="p">(</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Deselect all cells</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">hakuba</span><span class="p">.</span><span class="n">deselectAllCells</span><span class="p">(</span><span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the <code>height</code> parameter and set <code>dynamicHeightEnabled = true</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">cellmodel</span> <span class="o">=</span> <span class="n">MYCellModel</span><span class="p">(</span><span class="nl">cellClass</span><span class="p">:</span> <span class="n">YourCell</span><span class="p">.</span><span class="nb">self</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">userData</span><span class="p">:</span> <span class="n">yourCellData</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Did select cell&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">cellmodel</span><span class="p">.</span><span class="n">dynamicHeightEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Callback methods in the cell class</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">willAppear</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span>
+</span><span class='line'><span class="k">func</span> <span class="n">didDisappear</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">MYCellModel</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">pod</span> <span class="err">&#39;</span><span class="n">Hakuba</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>Hakuba is released under the MIT license. See LICENSE for details.</p>
+</div>
+  
+  
+
+
+      
+    </article>
+  
+    
+    <article>
+      
+        
+  <header>
+    
+      <h1 class="entry-title vn-title"><a href="/blog/2015/01/20/materialkit/">MaterialKit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T01:20:13+09:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:20 am</span></time>
+        
+         | <a href="/blog/2015/01/20/materialkit/#disqus_thread"
+             + data-disqus-identifier="http://nghialv.github.io/blog/2015/01/20/materialkit/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Material design components (inspired by <a href="http://www.google.com/design/spec/material-design/introduction.html">Google Material Design</a>) for iOS written in Swift</p>
+
+<p>Please feel free to make pull requests.</p>
+
+<p><a href="https://github.com/nghialv/MaterialKit">Github</a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Highly customizable</li>
+<li>Complete example</li>
+<li>Supports @IBDesignable to live-render the component in the Interface Builder</li>
+<li><p>By suporting @IBInspectable, the class properties can be exposed in the Interface Builder, and you can edit these properties in realtime</p></li>
+<li><p>[x] MKButton: floating action button, raised button, flat button, ripple effect</p></li>
+<li>[x] MKTextField: ripple effect, floating placeholder</li>
+<li>[x] MKTableViewCell</li>
+<li>[x] MKLabel</li>
+<li>[x] MKImageView</li>
+<li>[ ] MKTextView <strong>(In progress)</strong></li>
+<li>[ ] MKSwitch <strong>(In progress)</strong></li>
+<li>[ ] MKAlert <strong>(In progress)</strong></li>
+<li>[ ] MKActivityIndicator <strong>(In progress)</strong></li>
+<li>[x] MKLayer</li>
+<li>[x] MKColor</li>
+</ul>
+
+
+<h2>Components</h2>
+
+<h4>MKButton</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>There are 3 types of main buttons: <code>Floating Action Button</code>, <code>Raised Button</code>, <code>Flat Button</code></li>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">button</span> <span class="o">=</span> <span class="n">MKButton</span><span class="p">(</span><span class="nl">frame</span><span class="p">:</span> <span class="bp">CGRect</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">35</span><span class="p">))</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">maskEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">TapLocation</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightGreen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKTextField</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
+</p>
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField_bottomborder.gif" width="365" height="111">
+</p>
+
+
+<ul>
+<li>Single-line text field</li>
+<li>Floating placeholder</li>
+<li>Ripple Animation</li>
+<li>Custommizable attributes: color, ripple location, bottom border, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Left</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">floatingPlaceholderEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">placeholder</span> <span class="o">=</span> <span class="s">&quot;Description&quot;</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">Green</span><span class="p">.</span><span class="bp">CGColor</span>
+</span><span class='line'><span class="n">textField</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightGreen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKTableViewCell</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">tableView</span><span class="p">.</span><span class="n">dequeueReusableCellWithIdentifier</span><span class="p">(</span><span class="s">&quot;MyCell&quot;</span><span class="p">)</span> <span class="kt">as</span> <span class="n">MyCell</span>
+</span><span class='line'><span class="n">cell</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Center</span>
+</span><span class='line'><span class="n">cell</span><span class="p">.</span><span class="n">rippleLayerColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">Blue</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKLabel, MKImageView (BarButtonItem)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKBarButtonItem.gif" width="373" height="334">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+<li><p>Play ripple animation whenever you want by calling <code>animateRipple</code> method
+or by setting <code>userInteractionEnabled = true</code> ripple animation will be played when the label/imageview is tapped</p></li>
+<li><p>Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// customize UIBarButtonItem by using MKImageView</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imgView</span> <span class="o">=</span> <span class="n">MKImageView</span><span class="p">(</span><span class="nl">frame</span><span class="p">:</span> <span class="bp">CGRect</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">32</span><span class="p">))</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;uibaritem_icon.png&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">rippleLocation</span> <span class="o">=</span> <span class="p">.</span><span class="n">Center</span>
+</span><span class='line'><span class="n">imgView</span><span class="p">.</span><span class="n">userInteractionEnabled</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">rightBarButton</span> <span class="o">=</span> <span class="bp">UIBarButtonItem</span><span class="p">(</span><span class="nl">customView</span><span class="p">:</span> <span class="n">imgView</span><span class="p">)</span>
+</span><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">navigationItem</span><span class="p">.</span><span class="n">rightBarButtonItem</span> <span class="o">=</span> <span class="n">rightBarButton</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>MKProgressView (Coming Soon)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView2.gif" width="217" height="155">
+</p>
+
+
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView.gif" width="217" height="155">
+</p>
+
+
+<h4>MKLayer</h4>
+
+<p>A subclass of CALayer.</p>
+
+<h4>MKColor</h4>
+
+<p>A category for UIColor that adds some methods to get flat colors designed by <a href="http://www.google.com/design/spec/style/color.html">Google</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get color from UIColor</span>
+</span><span class='line'><span class="k">let</span> <span class="n">lightBlueColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">MKColor</span><span class="p">.</span><span class="n">LightBlue</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>TODO</h2>
+
+<ul>
+<li>[x] pod file</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">pod</span> <span class="err">&#39;</span><span class="n">MaterialKit</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>MaterialKit is released under the MIT license. See LICENSE for details.</p>
+</div>
+  
+  
+
+
+      
+    </article>
+  
+    
+    <article>
+      
+        
+  <header>
+    
       <h1 class="entry-title vn-title"><a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest Wrapper</a></h1>
     
     
@@ -112,7 +853,7 @@ Powerful request &hellip;">
 
 
 
-<time class='entry-date' datetime='2014-10-15T08:29:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 am</span></time>
+<time class='entry-date' datetime='2014-10-15T08:29:00+09:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 am</span></time>
         
          | <a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/#disqus_thread"
              + data-disqus-identifier="http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Comments</a>
@@ -558,306 +1299,6 @@ Powerful request &hellip;">
       
     </article>
   
-    
-    <article>
-      
-        
-  
-
-
-
-
-
-  <header class="project-header">
-    <div class="app-icon-name">
-      <img src="/images/puqizapp/icon.png" class="my-img app-icon">
-      <h1 class="entry-title app-name vn-title"><a href="/blog/2014/10/05/puqiz/">Puqiz</a></h1>
-    </div>
-    
-    <p class="meta">
-      
-
-
-
-
-<time class='entry-date' datetime='2014-10-05T10:25:57+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:25 am</span></time>
-       
-      | <a href="/blog/2014/10/05/puqiz/#disqus_thread" 
-          + data-disqus-identifier="http://nghialv.github.io/blog/2014/10/05/puqiz/">Comments</a>
-        
-    </p>
-    
-  </header>
-
-
-<div class"content-part">
-<div class="project-entry-content">
-
-  <div class="entry-content app-description"><h3>Description</h3>
-
-<p>プログラミングクイズアプリです.
-Swift, Ruby, Java, C++などの言語に関する質問を解いてみませんか.</p>
-
-<p>プログラミングが好きな人は大歓迎. (^^)</p>
-
-<p>FEATURES</p>
-
-<ul>
-<li>クイズを 解く (コードのクイズもある）</li>
-<li>ランキング</li>
-<li>歴史の閲覧</li>
-<li>質問のストック</li>
-<li>質問作成</li>
-<li>共有</li>
-</ul>
-
- </div>
-  <div class="app-market">
-    <a href="" class="market-icon">
-      
-      <img src="/images/viewdemo-icon.png" class="my-img" style="opacity: 0.25;">
-      
-    </a>
-    <a href="https://itunes.apple.com/us/app/puqiz/id887862245?ls=1&mt=8" class="market-icon">
-      
-      <img src="/images/applestore-icon.png" class="my-img">
-      
-    </a>
-  </div>
-</div>
-
-<div id=puqizapp class="carousel slide screenshot-carousel">
-  <ol class="carousel-indicators">
-    
-      
-        <li data-target="#puqizapp" data-slide-to=0 class="active"></li>
-      
-    
-  </ol>
-  <!-- Carousel items -->
-  <div class="carousel-inner">
-    
-      
-        <div class="active item">
-      
-      <img src="/images/puqizapp/0.png" class="screenshot-img">
-    </div>
-    
-  </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#puqizapp" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#puqizapp" data-slide="next">&rsaquo;</a>
-</div>
-</div>
-<div style="clear:both;"></div>
-
-      
-    </article>
-  
-    
-    <article>
-      
-        
-  <header>
-    
-      <h1 class="entry-title vn-title"><a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a Wrapper of Grand Central Dispatch</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-10-01T20:22:00+07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>8:22 pm</span></time>
-        
-         | <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/#disqus_thread"
-             + data-disqus-identifier="http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-
-  <div class="entry-content"><p>GCD is a wrapper of Grand Central Dispatch written in Swift.</p>
-
-<p><a href="https://github.com/nghialv/GCD">source code : https://github.com/nghialv/GCD</a></p>
-
-<h3>Examples</h3>
-
-<h6>&ndash; gcd</h6>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// submit your code for asynchronous execution on a global queue with high priority</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">High</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// or with main thread</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Default</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'>    <span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// code run on main thread</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// with your custom queue</span>
-</span><span class='line'><span class="k">let</span> <span class="n">myQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="s">&quot;myQueue&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Custom</span><span class="p">(</span><span class="n">myQueue</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// run with delay</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Background</span><span class="p">,</span> <span class="nl">delay</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// sync code</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">sync</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// apply</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">apply</span><span class="p">(.</span><span class="n">Default</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// once</span>
-</span><span class='line'><span class="k">var</span> <span class="nl">onceToken</span><span class="p">:</span> <span class="n">GCDOnce</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h6>&ndash; manage group of block with GCDGroup</h6>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create group</span>
-</span><span class='line'><span class="k">let</span> <span class="n">group</span> <span class="o">=</span> <span class="n">GCDGroup</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// you can add async code to group</span>
-</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Defaul</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// you can set notify for this group</span>
-</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">notify</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// or wait synchronously for block in group to complete and timeout is 10 seconds</span>
-</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h6>&ndash; create your custom queue with CGDQueue</h6>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a serial queue</span>
-</span><span class='line'><span class="k">let</span> <span class="n">serialQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="s">&quot;mySerialQueue&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// create a concurrent queue</span>
-</span><span class='line'><span class="k">let</span> <span class="n">concurrentQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">concurrent</span><span class="p">:</span> <span class="s">&quot;myConcurrentQueue&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// you can submit async barrier to queue</span>
-</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">asyncBarrier</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// or sync code</span>
-</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">syncBarrier</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// your code</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Integration</h3>
-
-<p>Just drag GCD.swift file to the project tree</p>
-</div>
-  
-  
-
-
-      
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -873,6 +1314,14 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/20/hakuba/">Hakuba</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/20/materialkit/">MaterialKit</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest wrapper</a>
       </li>
     
@@ -882,14 +1331,6 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
     
       <li class="post">
         <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (clang modules)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/06/sslide/">sslide</a>
       </li>
     
   </ul>
@@ -934,7 +1375,7 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - nghialv -
+  Copyright &copy; 2015 - nghialv -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

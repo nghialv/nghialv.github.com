@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gcd | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/gcd/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2014-10-15T12:02:45+07:00</updated>
+  <updated>2015-04-19T01:40:28+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[GCD - a wrapper of Grand Central Dispatch]]></title>
     <link href="http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/"/>
-    <updated>2014-10-01T20:22:00+07:00</updated>
+    <updated>2014-10-01T20:22:00+09:00</updated>
     <id>http://nghialv.github.io/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift</id>
     <content type="html"><![CDATA[<p>GCD is a wrapper of Grand Central Dispatch written in Swift.</p>
 

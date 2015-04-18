@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: material design | nghialv blog]]></title>
+  <link href="http://nghialv.github.io/blog/categories/material-design/atom.xml" rel="self"/>
+  <link href="http://nghialv.github.io/"/>
+  <updated>2015-04-19T01:40:28+09:00</updated>
+  <id>http://nghialv.github.io/</id>
+  <author>
+    <name><![CDATA[nghialv]]></name>
+    <email><![CDATA[nghialv2607@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MaterialKit]]></title>
+    <link href="http://nghialv.github.io/blog/2015/01/20/materialkit/"/>
+    <updated>2015-01-20T01:20:13+09:00</updated>
+    <id>http://nghialv.github.io/blog/2015/01/20/materialkit</id>
+    <content type="html"><![CDATA[<p>Material design components (inspired by <a href="http://www.google.com/design/spec/material-design/introduction.html">Google Material Design</a>) for iOS written in Swift</p>
+
+<p>Please feel free to make pull requests.</p>
+
+<p><a href="https://github.com/nghialv/MaterialKit">Github</a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Highly customizable</li>
+<li>Complete example</li>
+<li>Supports @IBDesignable to live-render the component in the Interface Builder</li>
+<li><p>By suporting @IBInspectable, the class properties can be exposed in the Interface Builder, and you can edit these properties in realtime</p></li>
+<li><p>[x] MKButton: floating action button, raised button, flat button, ripple effect</p></li>
+<li>[x] MKTextField: ripple effect, floating placeholder</li>
+<li>[x] MKTableViewCell</li>
+<li>[x] MKLabel</li>
+<li>[x] MKImageView</li>
+<li>[ ] MKTextView <strong>(In progress)</strong></li>
+<li>[ ] MKSwitch <strong>(In progress)</strong></li>
+<li>[ ] MKAlert <strong>(In progress)</strong></li>
+<li>[ ] MKActivityIndicator <strong>(In progress)</strong></li>
+<li>[x] MKLayer</li>
+<li>[x] MKColor</li>
+</ul>
+
+
+<h2>Components</h2>
+
+<h4>MKButton</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>There are 3 types of main buttons: <code>Floating Action Button</code>, <code>Raised Button</code>, <code>Flat Button</code></li>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
+button.maskEnabled = true
+button.rippleLocation = .TapLocation
+button.rippleLayerColor = UIColor.MKColor.LightGreen
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKTextField</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
+</p>
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField_bottomborder.gif" width="365" height="111">
+</p>
+
+
+<ul>
+<li>Single-line text field</li>
+<li>Floating placeholder</li>
+<li>Ripple Animation</li>
+<li>Custommizable attributes: color, ripple location, bottom border, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>textField.rippleLocation = .Left
+textField.floatingPlaceholderEnabled = true
+textField.placeholder = "Description"
+textField.layer.borderColor = UIColor.MKColor.Green.CGColor
+textField.rippleLayerColor = UIColor.MKColor.LightGreen
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKTableViewCell</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
+cell.rippleLocation = .Center
+cell.rippleLayerColor = UIColor.MKColor.Blue
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKLabel, MKImageView (BarButtonItem)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKBarButtonItem.gif" width="373" height="334">
+</p>
+
+
+<ul>
+<li>Custommizable attributes: color, ripple location, animation timing function, animation duration&hellip;</li>
+<li><p>Play ripple animation whenever you want by calling <code>animateRipple</code> method
+or by setting <code>userInteractionEnabled = true</code> ripple animation will be played when the label/imageview is tapped</p></li>
+<li><p>Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView</p></li>
+</ul>
+
+
+<p>&#8220;` swift</p>
+
+<pre><code>// customize UIBarButtonItem by using MKImageView
+let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+imgView.image = UIImage(named: "uibaritem_icon.png")
+imgView.rippleLocation = .Center
+imgView.userInteractionEnabled = true
+
+let rightBarButton = UIBarButtonItem(customView: imgView)
+self.navigationItem.rightBarButtonItem = rightBarButton
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h4>MKProgressView (Coming Soon)</h4>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView2.gif" width="217" height="155">
+</p>
+
+
+
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView.gif" width="217" height="155">
+</p>
+
+
+<h4>MKLayer</h4>
+
+<p>A subclass of CALayer.</p>
+
+<h4>MKColor</h4>
+
+<p>A category for UIColor that adds some methods to get flat colors designed by <a href="http://www.google.com/design/spec/style/color.html">Google</a></p>
+
+<p>&#8220;` swift</p>
+
+<pre><code>// get color from UIColor
+let lightBlueColor = UIColor.MKColor.LightBlue
+</code></pre>
+
+<p>&#8220;`</p>
+
+<h2>TODO</h2>
+
+<ul>
+<li>[x] pod file</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>Installation with CocoaPods</li>
+</ul>
+
+
+<p>&#8220;`</p>
+
+<pre><code>pod 'MaterialKit'
+</code></pre>
+
+<p>&#8220;`</p>
+
+<ul>
+<li>Copying all the files into your project</li>
+<li>Using submodule</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>iOS 7.0+</li>
+<li>Xcode 6.1</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>MaterialKit is released under the MIT license. See LICENSE for details.</p>
+]]></content>
+  </entry>
+  
+</feed>
