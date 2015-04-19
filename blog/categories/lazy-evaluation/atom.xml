@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: lazy evaluation | nghialv blog]]></title>
+  <link href="http://nghialv.github.io/blog/categories/lazy-evaluation/atom.xml" rel="self"/>
+  <link href="http://nghialv.github.io/"/>
+  <updated>2015-04-19T23:04:03+09:00</updated>
+  <id>http://nghialv.github.io/</id>
+  <author>
+    <name><![CDATA[nghialv]]></name>
+    <email><![CDATA[nghialv2607@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Lazy Evaluation in Swift]]></title>
+    <link href="http://nghialv.github.io/blog/2015/04/19/lazy-evaluation-in-swift/"/>
+    <updated>2015-04-19T17:24:46+09:00</updated>
+    <id>http://nghialv.github.io/blog/2015/04/19/lazy-evaluation-in-swift</id>
+    <content type="html"><![CDATA[<p>Đối với các ngôn ngữ lập trình hàm như Haskell thì lazy evaluation dường như rất phổ biến. Nhưng đối với các lập trình viên iOS, hay lập trình viên sử dụng một số ngôn ngữ khác chúng ta lại ít chú ý đến. Khi sử dụng Swift mình thấy Swift cũng hỗ trợ khá nhiều về <code>lazy evaluation</code> không hẳn chỉ là <code>lazy property</code>. Thế nhưng có lẽ do tài liệu về Swift chưa được nhiều hoặc ít chú ý đến <code>lazy evaluation</code> nên có thể chúng ta chưa áp dụng nhiều. Vậy nên bài viết này sẽ tập trung nói về các chiến lược lazy evaluation của Swift. Bài viết sẽ đi qua từng <code>evaluation strategy</code>, và mỗi strategy sẽ cố gắng tập hợp nhiều ví dụ khác nhau để chúng ta hiểu rõ và dễ áp dụng sau này.</p>
+
+<p>Đầu tiên hãy cùng xem qua định nghĩa về <code>evaluation strategy</code> từ Wikipedia:</p>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://qiita-image-store.s3.amazonaws.com/0/18907/cd13467a-b136-402c-6cbc-704881b0cbff.png" height="120">
+</p>
+
+
+<p>Ở đây chúng ta nhấn mạnh vào <code>when</code> và <code>what</code>.</p>
+
+<p><code>What</code> thì có lẽ quen thuộc hơn với 2 strategies nổi bật là <code>call-by-value</code>, <code>call-by-reference</code> (Tên gọi của các strategy trong bài viết này mình sử dụng như tại Wikipedia). Đối với Swift thì các đối số thuộc kiểu Class sẽ áp dụng call-by-reference còn các kiểu dữ liệu còn lại như String, Struct, Tuple, Enum, Int, &hellip; đều áp dụng call-by-value strategy. Như chúng ta đều biết với call-by-value thì trong hàm sẽ thao tác với 1 bản copy của đối số truyền vào nên không ảnh hưởng đến giá trị bên ngoài hàm. Còn call-by-reference thì thay cho việc copy mà thao tác với một reference tới instance của đối số nên mọi thay đổi bên trong hàm tới đối số sẽ ảnh hưởng đến biến bên ngoài hàm.</p>
+
+<p>Còn <code>When</code> ở đấy muốn nói tới thời điểm đối số được evaluate, và sẽ là chủ đề chính của bài viết hôm nay. <code>When</code> thường thì chia làm 3 loại chính như sau:</p>
+
+<ul>
+<li>Eager evaluation</li>
+<li>Call by name</li>
+<li>Call by need</li>
+</ul>
+
+
+<p>Mình sẽ đi qua từng loại và kèm theo các ví dụ trong Swift, sau cùng sẽ rút ra kết luận về từng loại.</p>
+
+<p><strong>(Eager evaluation)</strong></p>
+
+<p>Đầu tiên mình hãy nhìn vào đoạn code đơn giản sau:</p>
+
+<pre><code class="swift">func dosomething() -&gt; Int {
+    println("dosomething")
+    return 1
+}
+
+func foo(x: Int, status: String) {
+    println("foo")
+}
+
+foo(dosomething(), "200")
+</code></pre>
+
+<pre><code>// output
+dosomething
+foo
+</code></pre>
+
+<p>Nhìn vào output chúng ta thấy rằng hàm <code>dosomething</code> chạy trước hàm <code>foo</code>. Từ đấy có thể thấy đối số của <code>foo</code> đã bị evaluate trước khi body của hàm <code>foo</code> được thực hiện. Đây chính là <code>eager evaluation</code> strategy: đối số được evaluate trước khi truyền vào hàm. Tiếp theo chúng ta hãy cùng nhìn vào đoạn code sau:</p>
+
+<pre><code class="swift">func expensiveComputation() -&gt; Int {
+    println("expensiveComputation")
+    return 1
+}
+
+func foo(x: Int, status: String) {
+    println("foo")
+    let result = status == "200" ? x : 0
+
+    println("result: \(result)")
+}
+
+foo(expensiveComputation(), "404")
+</code></pre>
+
+<pre><code>// output
+expensiveComputation
+foo
+result: 0
+</code></pre>
+
+<p>Điểm khác biệt đầu tiên so với đoạn code trước đó là chúng ta có 1 tình toán cực kỳ tốn chi phí <code>expensiveComputation</code>, và được truyền vào như một đối số <code>x</code> của hàm <code>foo</code>. Hơn nữa bản thân bên trong hàm <code>foo</code> có những trường hợp không cần dùng đến <code>x</code> (như ví dụ là khi status != &ldquo;200&rdquo;). Quả là sự phung phí không hề nhỏ khi mà tồn tại trường hợp x không cần dùng đến nhưng đối số <code>x</code> vẫn bị evaluate từ đầu dẫn đến hàm <code>expensiveComputation</code> vẫn bị thực hiện.
+Đây là ví dụ thứ nhất cho thấy vấn đề của <code>eager evaluation</code>.</p>
+
+<p>Ví dụ tiếp theo khi sử dụng <code>map</code> và <code>filter</code> như sau:</p>
+
+<pre><code class="swift ">var array = Array(0...100000)
+let doubles = array.map { i -&gt; Int in
+    println("map")
+    return i * 2
+}
+
+let x = doubles[1]
+println(x)
+</code></pre>
+
+<pre><code>// output
+map
+... // (100001 lần)
+map 
+0
+</code></pre>
+
+<p>Đây chỉ là ví dụ đơn giản để chúng ta dễ hiểu hơn. Còn hãy tưởng tượng bạn có 1 mảng khá lớn và sau khi qua các bước sử dụng <code>map</code>, <code>filter</code> để xử lý thì cuối cùng chúng ta chỉ sử dụng 1 số lượng phần tử nhỏ hơn nhiều so với số lượng mảng ban đầu. Nhưng tất cả các phần tử trong mảng đều đã bị evaluate cho dù tồn tại những phần tử không thực sự cần thiết phải evaluate.</p>
+
+<p>Thêm một ví dụ nữa sử dụng <code>function currying</code> như đoạn code sau:</p>
+
+<pre><code class="swift ">func dosomething() -&gt; Int {
+    println("dosomething")
+    return 1
+}
+
+func foo(a: Int)(b: Int) {
+    println("add")
+}
+
+let cFoo = foo(dosomething())
+
+//cFoo(b: 10)
+</code></pre>
+
+<p>Sau khi truyền đối số thứ nhất cho hàm <code>foo</code> chúng ta sẽ nhận được 1 hàm mới là <code>cFoo</code>. Hàm cFoo này sẽ có nhiệm vụ nhận thêm 1 đối số còn lại của hàm <code>foo</code> bạn đầu và sau đó thực hiện xử lý bên trong <code>foo</code>. Các xử lý trong <code>foo</code> chỉ thực hiện khi chúng ta gọi <code>cFoo</code> với đối số còn lại là <code>b</code>.
+Thế nhưng với <code>eager evaluation</code> strategy thì đối số <code>a</code> bị evaluate tại thời điểm tạo hàm <code>cFoo</code>, ngay cả khi cFoo chưa được gọi. Dẫn tới thời điểm evaluate <code>a</code>, thời điểm evaluate <code>b</code>, thời điểm xử lý của hàm <code>foo</code> được thực hiện là hoàn toàn khác nhau.</p>
+
+<p>Từ 3 ví dụ trên chúng ta thấy có những trường hợp chúng ta chỉ muốn evaluate khi thực sự cần thiết, hay chỉ muốn evaluate những biến cần dùng, hay có thể chúng ta muốn thay đổi thời điểm evaluate vào bên trong hàm. Điều này sẽ được giải quyết bởi <code>call-by-name</code> strategy.</p>
+
+<p><strong>(Call-by-name)</strong></p>
+
+<p>Để chuyển thời điểm evaluate vào trong hàm hay chỉ evaluate khi thực sự cần thiết, với Swift thì tuỳ trường hợp mà ta có cách khác nhau. Trường hợp function/method do chúng ta tự khai báo như ví dụ thứ nhất và thứ ba ở phần trước chúng ta có thể sửa lại cách khai báo đối số bằng cách wrap đối số bởi một closure như đoạn code sau:</p>
+
+<pre><code class="swift">func expensiveComputation() -&gt; Int {
+    println("expensiveComputation")
+    return 1
+}
+
+func foo(x: () -&gt; Int, status: String) {
+    println("foo")
+    let result = status == "200" ? x() : 0
+    println("result: \(result)")
+}
+
+foo({ expensiveComputation() }, "404")
+</code></pre>
+
+<pre><code>// output
+foo
+result: 0
+</code></pre>
+
+<p>Đối số đầu tiên của hàm <code>foo</code> không phải kiểu <code>Int</code> như ban đầu mà chuyển thành closure có kiểu <code>() -&gt; Int</code>. Và khi cần evaluate chúng ta gọi closure <code>x()</code> để evaluate. Như vậy đối số <code>x</code> sẽ không bị evaluate trước khi hàm <code>foo</code> được thực hiện, và ngoài ra chỉ trong trường hợp <code>status == "200"</code> thì <code>x</code> mới bị evaluate và hàm <code>expensiveComputation</code> mới bị thực hiện.
+Tuy nhiên chú ý rằng hàm <code>foo</code> đã thay đổi khai báo nên khi gọi hàm <code>foo</code> chúng ta phải wrap đối số thứ nhất trong 1 closure có kiểu <code>() -&gt; Int</code> như <code>{ expensiveComputation() }</code>.
+Tuy nhiên việc gọi rườm rà này chúng ta có thể giải quyết bằng việc sử dụng thuộc tính <code>@autoclosure</code> khi khai báo hàm <code>foo</code> như sau:</p>
+
+<pre><code class="swift">func expensiveComputation() -&gt; Int {
+    println("expensiveComputation")
+    return 1
+}
+
+func foo(x: @autoclosure () -&gt; Int, status: String) {
+    println("foo")
+    let result = status == "200" ? x() : 0
+    println("result: \(result)")
+}
+
+foo(expensiveComputation(), "404")
+</code></pre>
+
+<p>Nhờ có việc sử dụng <code>@autoclosure</code> mà khi gọi hàm <code>foo</code> chúng ta thấy code không có gì thay đổi so với bình thường.</p>
+
+<p>Thế còn trường hợp như ví dụ thứ hai của phần trước thì sao. Khi mà chúng ta chỉ muốn evaluate những biến thực sự cần thiết, nhưng hàm <code>map</code> và <code>filter</code> là do thư viện chuẩn của Swift cung cấp, chúng ta không thể thêm <code>@autoclosure</code> vào được. Tin vui đó là Swift cung cấp chúng ta function <code>lazy()</code> mà ít khi ta chú ý tới.</p>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://qiita-image-store.s3.amazonaws.com/0/18907/dbf84e44-9664-e29d-6dfa-64de9d10829c.png" height="180">
+</p>
+
+
+<p>Ví dụ như để giải quyết vấn đề ở ví dụ trước chúng ta chỉ cần sử dụng function <code>lazy</code> để tạo ra lazy collection như sau:</p>
+
+<pre><code class="swift">var array = lazy(Array(0...1000))
+let doubles = array.map { i -&gt; Int in
+    println("map")
+    return i * 2
+}
+
+let x = doubles[1]
+println(x)
+</code></pre>
+
+<pre><code>// output
+map
+0
+</code></pre>
+
+<p>Và kết quả là chỉ những phần tử cần thiết mới phải evaluate.</p>
+
+<p>Mình lại tiếp tục cùng xem đoạn code sau:</p>
+
+<pre><code class="swift">func expensiveComputation() -&gt; Int {
+    println("expensiveComputation")
+    return 1
+}
+
+func foo(x: @autoclosure () -&gt; Int, status: String) {
+    println("foo")
+    let result = status == "200" ? x() : 0
+
+    let t1 = x()
+    let t2 = x()
+
+    println("result: \(result)")
+}
+
+foo(expensiveComputation(), "404")
+</code></pre>
+
+<pre><code>// output
+foo
+expensiveComputation
+expensiveComputation
+result: 0
+</code></pre>
+
+<p>Ta thấy rằng mỗi lần access thì x lại bị evaluate lại tức là hàm <code>expensiveComputation</code> bị thực hiện lại. Không ít những trường hợp mà chúng ta muốn tránh việc evaluate lại như thế. Đấy chính là điểm khác biệt của <code>call-by-need</code> so với <code>call-by-name</code>.</p>
+
+<p><strong>(Call-by-need)</strong></p>
+
+<p>Giống như call-by-name strategy, call-by-need cũng chỉ evaluate biến khi thực sự cần thiết, thế nhưng việc evaluate chỉ thực hiện lần đầu và kết quả được lưu lại và sử dụng cho những lần access tiếp theo.
+Và dễ nhận thấy nhất là <code>lazy property</code> cũng sử dụng call-by-need strategy.</p>
+
+<pre><code class="swift">class Foo {
+    lazy var tmp: Int = {
+            println("tmp init")
+            return 1
+        }()
+}
+
+println("before init")
+let foo = Foo()
+println("after init")
+foo.tmp
+foo.tmp
+</code></pre>
+
+<pre><code>// output
+before init
+after init
+tmp init
+</code></pre>
+
+<p>Nhìn vào kết quả output ta thấy property <code>tmp</code> chỉ được evaluate khi cần thiết (khi acccess <code>foo.tmp</code>). Ngoài ra việc evaluate chỉ thực hiện một lần duy nhất, những lần access sau đều sử dụng giá trị đã evaluate ở lần đầu tiên.
+Ngoài <code>lazy property</code> thì <code>global variable</code> hay <code>static property</code> đều mặc định áp dụng call-by-need strategy.</p>
+
+<pre><code class="swift ">struct Foo {
+    static var tmp: Int = {
+            println("tmp init")
+            return 1
+        }()
+
+    static func log() {
+        println("foo")
+    }
+}
+
+let foo = Foo()
+Foo.log()
+println("access tmp")
+let x = Foo.tmp
+</code></pre>
+
+<pre><code>// output
+foo
+access tmp
+tmp init
+</code></pre>
+
+<h5>Kết luận</h5>
+
+<ul>
+<li><code>Eager evaluation</code>:
+
+<ul>
+<li>evaluation được thực hiện trước khi truyền vào hàm</li>
+</ul>
+</li>
+<li><code>Call-by-name</code>:
+
+<ul>
+<li>evaluation thực hiện trong hàm hay chỉ evaluate khi thực sư cần thiết</li>
+<li>thế nhưng việc evaluation sẽ bị thực hiện lại mỗi khi access</li>
+<li>cách áp dụng call-by-name strategy:
+
+<ul>
+<li>đối với những funtion/method tự khai báo thì có thể dùng <code>@autoclosure</code> để thực hiện call-by-name strategy</li>
+<li>khi sử dụng <code>map</code>, <code>filter</code> chúng ta có thể sử dụng function <code>lazy</code> để tạo ra lazy collection/sequence</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Call-by-need:
+
+<ul>
+<li>evaluation chỉ thực hiện khi cần thiết</li>
+<li>lazy evaluation, global variable, static property mặc định áp dụng strategy này</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

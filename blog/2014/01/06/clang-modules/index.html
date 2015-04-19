@@ -351,14 +351,14 @@ Performance của preprocessor?</p>
 <ul>
 <li>Tìm file module.map của framework có tên là Foundation</li>
 <li>Dựa vào mô tả về framework trong file module.map này compiler sẽ parse các file headers và
-sinh ra file module (lưu dưới dạng AST &ndash; biểu diễn dưới dạng tree trước khi chuyển sang mã máy)</li>
+sinh ra file module (lưu dưới dạng AST - biểu diễn dưới dạng tree trước khi chuyển sang mã máy)</li>
 <li>Load file module này tại đoạn khai báo import</li>
 <li>Cache file module này để sử dụng lại cho những lần sau</li>
 </ul>
 
 
 <p>Thứ nhất thay vì copy nội dung các file header được include rồi mới compile, mà import trưc tiếp file module đã được
-lưu dưới dạng AST nên các header của framework ko bị ảnh hưởng bởi các đoạn code trước khi import (như #define) &ndash;>
+lưu dưới dạng AST nên các header của framework ko bị ảnh hưởng bởi các đoạn code trước khi import (như #define) ->
  tránh được vấn đề Fragility.</p>
 
 <p>Thứ hai là nhờ việc cache những file module này mà compiler không phải biên dịch lần 2 nên sẽ rút gọn thời gian biên dịch.</p>
@@ -457,6 +457,10 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/19/lazy-evaluation-in-swift/">Lazy Evaluation in Swift</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/20/hakuba/">Hakuba</a>
       </li>
     
@@ -470,10 +474,6 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
     
       <li class="post">
         <a href="/blog/2014/10/05/puqiz/">Puqiz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
       </li>
     
   </ul>

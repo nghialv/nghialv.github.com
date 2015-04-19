@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2015-04-19T01:40:28+09:00</updated>
+  <updated>2015-04-19T23:04:03+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -47,53 +47,46 @@
 
 <h5>Quick example</h5>
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    // viewController swift file
 
-<pre><code>// viewController swift file
+    hakuba = Hakuba(tableView: tableView)
 
-hakuba = Hakuba(tableView: tableView)
+    let cellmodel = YourCellModel(title: "Title", des: "description") {
+        println("Did select cell with title = \(title)")
+    }
 
-let cellmodel = YourCellModel(title: "Title", des: "description") {
-    println("Did select cell with title = \(title)")
-}
+    hakuba[2].append(cellmodel)     // append a new cell model in datasource
+             .slide(.Fade)          // show the cell of your cell model in the table view
 
-hakuba[2].append(cellmodel)     // append a new cell model in datasource
-         .slide(.Fade)          // show the cell of your cell model in the table view
-
-hakuba[1].remove(1...3)
-         .slide(.Right)
+    hakuba[1].remove(1...3)
+             .slide(.Right)
 </code></pre>
 
-<p><code>
-</code> swift</p>
+<pre><code class="swift">    // your cell swift file
 
-<pre><code>// your cell swift file
+    class YourCellModel : MYCellModel {
+        let title: String
+        let des: String
 
-class YourCellModel : MYCellModel {
-    let title: String
-    let des: String
-
-    init(title: String, des: String, selectionHandler: MYSelectionHandler) {
-        self.title = title
-        self.des = des
-        super.init(YourCell.self, selectionHandler: selectionHandler)
-    }
-}
-
-
-class YourCell : MYTableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-
-    override func configureCell(data: MYCellModel) {
-        super.configureCell(data)
-        if let cellmodel = data as? YourCellModel {
-            titleLabel.text = cellmodel.title
+        init(title: String, des: String, selectionHandler: MYSelectionHandler) {
+            self.title = title
+            self.des = des
+            super.init(YourCell.self, selectionHandler: selectionHandler)
         }
     }
-}
-</code></pre>
 
-<p>&#8220;`</p>
+
+    class YourCell : MYTableViewCell {
+        @IBOutlet weak var titleLabel: UILabel!
+
+        override func configureCell(data: MYCellModel) {
+            super.configureCell(data)
+            if let cellmodel = data as? YourCellModel {
+                titleLabel.text = cellmodel.title
+            }
+        }
+    }
+</code></pre>
 
 <h2>Usage</h2>
 
@@ -102,248 +95,196 @@ class YourCell : MYTableViewCell {
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>private var hakuba = Hakuba(tableView: tableView)   
+<pre><code class="swift">    private var hakuba = Hakuba(tableView: tableView)   
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Section handling</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    let section = hakuba[secIndex]  // retrieve a section or create a new section if it doesn't already exist
 
-<pre><code>let section = hakuba[secIndex]  // retrieve a section or create a new section if it doesn't already exist
+    // inserting
+    hakuba.insert(section, atIndex: 1)
+          .slide()
 
-// inserting
-hakuba.insert(section, atIndex: 1)
-      .slide()
+    // removing
+    hakuba.remove(index)
+          .slide(.Left)
 
-// removing
-hakuba.remove(index)
-      .slide(.Left)
+    hakuba.removeAll()
+          .slide()
 
-hakuba.removeAll()
-      .slide()
+    // handing section index by enum
+    enum Section : Int, MYSectionIndex {
+        case Top = 0
+        case Center
+        case Bottom
 
-// handing section index by enum
-enum Section : Int, MYSectionIndex {
-    case Top = 0
-    case Center
-    case Bottom
-
-    var intValue: Int {
-        return self.rawValue
+        var intValue: Int {
+            return self.rawValue
+        }
     }
-}
-let topSection = hakuba[Section.Top]
+    let topSection = hakuba[Section.Top]
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Cell handling</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    // 1. appending
+    hakuba[0].append(cellmodel)             // append a cellmodel
+             .slide(.Fade)                  // and slide with `Fade` animation
 
-<pre><code>// 1. appending
-hakuba[0].append(cellmodel)             // append a cellmodel
-         .slide(.Fade)                  // and slide with `Fade` animation
+    hakuba[1].append(cellmodels)            // append a list of cellmodes
+            .slide(.Left)                   
 
-hakuba[1].append(cellmodels)            // append a list of cellmodes
-        .slide(.Left)                   
-
-// by using section
-let section = hakuba[Section.Top]
-section.append(cellmodel)
-       .slide()
+    // by using section
+    let section = hakuba[Section.Top]
+    section.append(cellmodel)
+           .slide()
 
 
-// 2. inserting
-section.insert(cellmodels, atIndex: 1)
-       .slide(.Middle)
+    // 2. inserting
+    section.insert(cellmodels, atIndex: 1)
+           .slide(.Middle)
 
 
-// 3. reseting
-section.reset(cellmodels)               // replace current data in section by the new data
-       .slide()
-section.reset()                         // or remove all data in section
-       .slide()
+    // 3. reseting
+    section.reset(cellmodels)               // replace current data in section by the new data
+           .slide()
+    section.reset()                         // or remove all data in section
+           .slide()
 
 
-// 4. removing
-section.remove(1)
-       .slide(.Right)
-section.remove(2...5)
-       .slide()
-section.removeLast()
-       .slide()
+    // 4. removing
+    section.remove(1)
+           .slide(.Right)
+    section.remove(2...5)
+           .slide()
+    section.removeLast()
+           .slide()
 </code></pre>
 
-<p>&#8220;`</p>
-
-<p>&#8220;` swift</p>
-
-<pre><code>// updating cell data
-let section = hakuba[Section.Top]
-section[1].property = newData
-section[1].slide()      
+<pre><code class="swift">    // updating cell data
+    let section = hakuba[Section.Top]
+    section[1].property = newData
+    section[1].slide()      
 </code></pre>
 
-<p>&#8220;`</p>
+<pre><code class="swift">    section.sort().slide()
+    section.shuffle().slide()
+    section.map
+    section.filter
+    section.reduce
+    section.mapFilter
+    section.each
 
-<p>&#8220;` swift</p>
-
-<pre><code>section.sort().slide()
-section.shuffle().slide()
-section.map
-section.filter
-section.reduce
-section.mapFilter
-section.each
-
-section.first
-section.last
-section[1]
-section.count
+    section.first
+    section.last
+    section[1]
+    section.count
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Creating cell model</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>// create a cell model
-let cellmodel = MYCellModel(cellClass: YourCell.self, userData: celldata) {
-    println("Did select")
-}
-
-// create a list of cell models from api results
-let items = [...] // or your data from API
-
-let cellmodels = items.map { item -&gt; MYCellModel in
-    return MYCellModel(cellClass: YourCell.self, userData: item) {
-        println("Did select cell")
+<pre><code class="swift">    // create a cell model
+    let cellmodel = MYCellModel(cellClass: YourCell.self, userData: celldata) {
+        println("Did select")
     }
-}
-</code></pre>
 
-<p>&#8220;`</p>
+    // create a list of cell models from api results
+    let items = [...] // or your data from API
+
+    let cellmodels = items.map { item -&gt; MYCellModel in
+        return MYCellModel(cellClass: YourCell.self, userData: item) {
+            println("Did select cell")
+        }
+    }
+</code></pre>
 
 <ul>
 <li>Register cell, header, footer</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    hakuba.registerCellNib(CellClassName)
+    hakuba.registerCellClass(CellClassName)
+    hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
+    hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
 
-<pre><code>hakuba.registerCellNib(CellClassName)
-hakuba.registerCellClass(CellClassName)
-hakuba.registerHeaderFooterNib(HeaderOrFooterClassName)
-hakuba.registerHeaderFooterClass(HeaderOrFooterClassName)
-
-// register a list of cells by using variadic parameters
-hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
+    // register a list of cells by using variadic parameters
+    hakuba.registerCellNib(CellClass1.self, CellClass2.self, ..., CellClassN.self)
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Section header/footer</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    let header = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
+        println("Did select header view")
+    }
+    hakuba[Section.Top].header = header
 
-<pre><code>let header = MYHeaderFooterViewModel(viewClass: CustomHeaderView.self, userData: yourData) {
-    println("Did select header view")
-}
-hakuba[Section.Top].header = header
-
-// hide header in section 1
-hakuba[Section.Center].header?.enabled = false
+    // hide header in section 1
+    hakuba[Section.Center].header?.enabled = false
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Loadmore</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>hakuba.loadmoreEnabled = true
-hakuba.loadmoreHandler = {
-    // request api
-    // append new data
-}
+<pre><code class="swift">    hakuba.loadmoreEnabled = true
+    hakuba.loadmoreHandler = {
+        // request api
+        // append new data
+    }
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Commit editing</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>hakuba.commitEditingHandler = { [weak self] style, indexPath in
-    self?.hakuba[indexPath.section].remove(indexPath.row)
-}
+<pre><code class="swift">    hakuba.commitEditingHandler = { [weak self] style, indexPath in
+        self?.hakuba[indexPath.section].remove(indexPath.row)
+    }
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Deselect all cells</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>hakuba.deselectAllCells(animated: true)
+<pre><code class="swift">    hakuba.deselectAllCells(animated: true)
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Dynamic cell height : when you want to enable dynamic cell height, you only need to set the value of estimated height to the <code>height</code> parameter and set <code>dynamicHeightEnabled = true</code></li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>let cellmodel = MYCellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
-    println("Did select cell")
-}
-cellmodel.dynamicHeightEnabled = true
+<pre><code class="swift">    let cellmodel = MYCellModel(cellClass: YourCell.self, height: 50, userData: yourCellData) {
+        println("Did select cell")
+    }
+    cellmodel.dynamicHeightEnabled = true
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Callback methods in the cell class</li>
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>func willAppear(data: MYCellModel)
-func didDisappear(data: MYCellModel)
+<pre><code class="swift">    func willAppear(data: MYCellModel)
+    func didDisappear(data: MYCellModel)
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h2>Installation</h2>
 
@@ -352,12 +293,8 @@ func didDisappear(data: MYCellModel)
 </ul>
 
 
-<p>&#8220;`</p>
-
-<pre><code>pod 'Hakuba'
+<pre><code>    pod 'Hakuba'
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Copying all the files into your project</li>
@@ -426,15 +363,11 @@ func didDisappear(data: MYCellModel)
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
-button.maskEnabled = true
-button.rippleLocation = .TapLocation
-button.rippleLayerColor = UIColor.MKColor.LightGreen
+<pre><code class="swift">    let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
+    button.maskEnabled = true
+    button.rippleLocation = .TapLocation
+    button.rippleLayerColor = UIColor.MKColor.LightGreen
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h4>MKTextField</h4>
 
@@ -456,16 +389,12 @@ button.rippleLayerColor = UIColor.MKColor.LightGreen
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>textField.rippleLocation = .Left
-textField.floatingPlaceholderEnabled = true
-textField.placeholder = "Description"
-textField.layer.borderColor = UIColor.MKColor.Green.CGColor
-textField.rippleLayerColor = UIColor.MKColor.LightGreen
+<pre><code class="swift">    textField.rippleLocation = .Left
+    textField.floatingPlaceholderEnabled = true
+    textField.placeholder = "Description"
+    textField.layer.borderColor = UIColor.MKColor.Green.CGColor
+    textField.rippleLayerColor = UIColor.MKColor.LightGreen
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h4>MKTableViewCell</h4>
 
@@ -479,14 +408,10 @@ textField.rippleLayerColor = UIColor.MKColor.LightGreen
 </ul>
 
 
-<p>&#8220;` swift</p>
-
-<pre><code>var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
-cell.rippleLocation = .Center
-cell.rippleLayerColor = UIColor.MKColor.Blue
+<pre><code class="swift">    var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
+    cell.rippleLocation = .Center
+    cell.rippleLayerColor = UIColor.MKColor.Blue
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h4>MKLabel, MKImageView (BarButtonItem)</h4>
 
@@ -503,19 +428,15 @@ or by setting <code>userInteractionEnabled = true</code> ripple animation will b
 </ul>
 
 
-<p>&#8220;` swift</p>
+<pre><code class="swift">    // customize UIBarButtonItem by using MKImageView
+    let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+    imgView.image = UIImage(named: "uibaritem_icon.png")
+    imgView.rippleLocation = .Center
+    imgView.userInteractionEnabled = true
 
-<pre><code>// customize UIBarButtonItem by using MKImageView
-let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
-imgView.image = UIImage(named: "uibaritem_icon.png")
-imgView.rippleLocation = .Center
-imgView.userInteractionEnabled = true
-
-let rightBarButton = UIBarButtonItem(customView: imgView)
-self.navigationItem.rightBarButtonItem = rightBarButton
+    let rightBarButton = UIBarButtonItem(customView: imgView)
+    self.navigationItem.rightBarButtonItem = rightBarButton
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h4>MKProgressView (Coming Soon)</h4>
 
@@ -539,13 +460,9 @@ self.navigationItem.rightBarButtonItem = rightBarButton
 
 <p>A category for UIColor that adds some methods to get flat colors designed by <a href="http://www.google.com/design/spec/style/color.html">Google</a></p>
 
-<p>&#8220;` swift</p>
-
-<pre><code>// get color from UIColor
-let lightBlueColor = UIColor.MKColor.LightBlue
+<pre><code class="swift">    // get color from UIColor
+    let lightBlueColor = UIColor.MKColor.LightBlue
 </code></pre>
-
-<p>&#8220;`</p>
 
 <h2>TODO</h2>
 
@@ -561,12 +478,8 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 </ul>
 
 
-<p>&#8220;`</p>
-
-<pre><code>pod 'MaterialKit'
+<pre><code>    pod 'MaterialKit'
 </code></pre>
-
-<p>&#8220;`</p>
 
 <ul>
 <li>Copying all the files into your project</li>
@@ -656,36 +569,24 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">get_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
 </span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">doubleNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">hello</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">result</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can also make a request with absolute url</span>
 </span><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://www.puqiz.com/get_path&quot;</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.puqiz.com/get_path&lt;/a&gt;&amp;rdquo;</span>
-</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">result</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>You can also use nested params</p>
@@ -697,21 +598,13 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// nested params</span>
-</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;array&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-</span><span class='line'>        <span class="s">&quot;dictionary&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
-</span><span class='line'>        <span class="s">&quot;image&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">floatNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">array</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">dictionary</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">x</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">y</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">image</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myIcon</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)]</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>By using responseData in sucessHandler closure you can quickly</p>
@@ -761,23 +654,15 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">post_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
 </span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">floatNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">result</span><span class="p">:</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <ul>
@@ -797,30 +682,18 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">post_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
 </span><span class='line'><span class="k">let</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">puqiz_icon</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">icon</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myIcon</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="s">&quot;icon&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">result</span><span class="p">:</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h6><code>PUT</code> Request</h6>
@@ -834,23 +707,15 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">put_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
 </span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">integerNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">floatNumber</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">result</span><span class="p">:</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h6><code>DELETE</code> Request</h6>
@@ -863,22 +728,14 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">delete_path</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
 </span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="kt">id</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">10</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">result</span><span class="p">:</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Error</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h4>Task</h4>
@@ -905,24 +762,18 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session with backgroundIdentifier</span>
 </span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">(</span><span class="nl">backgroundIdentifier</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">com</span><span class="p">.</span><span class="n">nghialv</span><span class="p">.</span><span class="n">download</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can set eventsForBackgroundHandler closure</span>
 </span><span class='line'><span class="c1">// this closure will be invoked when a task is completed in the background</span>
-</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;All files have been downloaded!&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">All</span> <span class="n">files</span> <span class="n">have</span> <span class="n">been</span> <span class="n">downloaded</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h6>Download</h6>
@@ -942,20 +793,16 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Download failed&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Downloaded to  : \(fileUrl)&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">progress</span> <span class="p">(</span><span class="n">progress</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Download</span> <span class="n">failed</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Downloaded</span> <span class="nl">to</span>  <span class="p">:</span> <span class="p">(</span><span class="n">fileUrl</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can control your task</span>
 </span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
@@ -980,24 +827,16 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload failed : \(error)&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">progress</span> <span class="p">(</span><span class="n">progress</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Upload</span> <span class="nl">failed</span> <span class="p">:</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Upload</span> <span class="n">completed</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <ul>
@@ -1012,21 +851,13 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">yourData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">progress</span><span class="p">:</span> <span class="p">(</span><span class="n">progress</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Upload</span> <span class="n">completed</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <ul>
@@ -1043,23 +874,15 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">image_file</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
 </span><span class='line'><span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">number</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">string</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">net</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">data</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">:</span> <span class="n">imageData</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-</span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">})</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">progress</span><span class="p">:</span> <span class="p">(</span><span class="n">progress</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">NSLog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Upload</span> <span class="n">completed</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>By default, the upload task will be performed as POST method and</p>
@@ -1135,7 +958,7 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 
 <h3>Examples</h3>
 
-<h6>&ndash; gcd</h6>
+<h6>- gcd</h6>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1180,100 +1003,52 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 <span class='line-number'>41</span>
 <span class='line-number'>42</span>
 <span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// submit your code for asynchronous execution on a global queue with high priority</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">High</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">High</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or with main thread</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Default</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
 </span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// code run on main thread</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Default</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'>    <span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// code run on main thread</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// with your custom queue</span>
 </span><span class='line'><span class="k">let</span> <span class="n">myQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Custom</span><span class="p">(</span><span class="n">myQueue</span><span class="p">))</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Custom</span><span class="p">(</span><span class="n">myQueue</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// run with delay</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Background</span><span class="p">,</span> <span class="nl">delay</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Background</span><span class="p">,</span> <span class="nl">delay</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// sync code</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">sync</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">sync</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// apply</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">apply</span><span class="p">(.</span><span class="n">Default</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">apply</span><span class="p">(.</span><span class="n">Default</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// once</span>
 </span><span class='line'><span class="k">var</span> <span class="nl">onceToken</span><span class="p">:</span> <span class="n">GCDOnce</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">onceToken</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span><span class='line'><span class="n">gcd</span><span class="p">.</span><span class="n">once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">onceToken</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<h6>&ndash; manage group of block with GCDGroup</h6>
+<h6>- manage group of block with GCDGroup</h6>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1290,36 +1065,24 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create group</span>
 </span><span class='line'><span class="k">let</span> <span class="n">group</span> <span class="o">=</span> <span class="n">GCDGroup</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can add async code to group</span>
-</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Defaul</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">async</span><span class="p">(.</span><span class="n">Defaul</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can set notify for this group</span>
-</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">notify</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">notify</span><span class="p">(.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or wait synchronously for block in group to complete and timeout is 10 seconds</span>
 </span><span class='line'><span class="n">group</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<h6>&ndash; create your custom queue with CGDQueue</h6>
+<h6>- create your custom queue with CGDQueue</h6>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1336,12 +1099,6 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// create a serial queue</span>
 </span><span class='line'><span class="k">let</span> <span class="n">serialQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">serial</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">mySerialQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -1349,20 +1106,14 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 </span><span class='line'><span class="k">let</span> <span class="n">concurrentQueue</span> <span class="o">=</span> <span class="n">GCDQueue</span><span class="p">(</span><span class="nl">concurrent</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">myConcurrentQueue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// you can submit async barrier to queue</span>
-</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">asyncBarrier</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">asyncBarrier</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c1">// or sync code</span>
-</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">syncBarrier</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// your code</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span><span class='line'><span class="n">myQueue</span><span class="p">.</span><span class="n">syncBarrier</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// your code</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h3>Integration</h3>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: objective-c | nghialv blog]]></title>
   <link href="http://nghialv.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://nghialv.github.io/"/>
-  <updated>2015-04-19T01:40:28+09:00</updated>
+  <updated>2015-04-19T23:04:03+09:00</updated>
   <id>http://nghialv.github.io/</id>
   <author>
     <name><![CDATA[nghialv]]></name>
@@ -50,17 +50,15 @@ Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy x
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">Foundation</span><span class="o">/</span><span class="n">Foundation</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>     <span class="n">NSLog</span><span class="p">(@</span><span class="err">“</span><span class="n">Hello</span> <span class="n">world</span><span class="err">”</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="n">NSLog</span><span class="p">(</span><span class="err">@“</span><span class="n">Hello</span> <span class="n">world</span><span class="err">”</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
@@ -267,22 +265,16 @@ Vậy module là gì? Module chính là một package mô tả một library, fr
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>% cd &lt;code>xcrun --sdk iphoneos --show-sdk-path&lt;/code>
 </span><span class='line'>% find . -name module.map&lt;/p>
 </span><span class='line'>
 </span><span class='line'>&lt;p> ./Developer/Library/Frameworks/XCTest.framework/module.map &lt;br/>
 </span><span class='line'> ./System/Library/Frameworks/AudioToolbox.framework/module.map &lt;br/>
 </span><span class='line'> ./System/Library/Frameworks/AudioUnit.framework/module.map &lt;br/>
-</span><span class='line'> ./System/Library/Frameworks/CoreAudio.framework/module.map&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>:     
-</span><span class='line'>:   
-</span><span class='line'>&lt;/code>&lt;/pre>
-</span><span class='line'>
-</span><span class='line'>&lt;p> ./usr/include/dispatch/module.map &lt;br/>
+</span><span class='line'> ./System/Library/Frameworks/CoreAudio.framework/module.map   &lt;br/>
+</span><span class='line'>    :   &lt;br/>
+</span><span class='line'>    : &lt;br/>
+</span><span class='line'> ./usr/include/dispatch/module.map &lt;br/>
 </span><span class='line'> ./usr/include/mach-o/module.map &lt;br/>
 </span><span class='line'> ./usr/include/module.map &lt;br/>
 </span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure></p>
@@ -299,14 +291,14 @@ Performance của preprocessor?</p>
 <ul>
 <li>Tìm file module.map của framework có tên là Foundation</li>
 <li>Dựa vào mô tả về framework trong file module.map này compiler sẽ parse các file headers và
-sinh ra file module (lưu dưới dạng AST &ndash; biểu diễn dưới dạng tree trước khi chuyển sang mã máy)</li>
+sinh ra file module (lưu dưới dạng AST - biểu diễn dưới dạng tree trước khi chuyển sang mã máy)</li>
 <li>Load file module này tại đoạn khai báo import</li>
 <li>Cache file module này để sử dụng lại cho những lần sau</li>
 </ul>
 
 
 <p>Thứ nhất thay vì copy nội dung các file header được include rồi mới compile, mà import trưc tiếp file module đã được
-lưu dưới dạng AST nên các header của framework ko bị ảnh hưởng bởi các đoạn code trước khi import (như #define) &ndash;>
+lưu dưới dạng AST nên các header của framework ko bị ảnh hưởng bởi các đoạn code trước khi import (như #define) ->
  tránh được vấn đề Fragility.</p>
 
 <p>Thứ hai là nhờ việc cache những file module này mà compiler không phải biên dịch lần 2 nên sẽ rút gọn thời gian biên dịch.</p>

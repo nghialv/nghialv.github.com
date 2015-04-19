@@ -9,16 +9,8 @@
   <meta name="author" content="nghialv">
 
   
-  <meta name="description" content="GCD is a wrapper of Grand Central Dispatch written in Swift. source code : https://github.com/nghialv/GCD Examples &ndash; gcd 1
-2
-3
-4
-5
-6
-7
-8
-9
-10 &hellip;">
+  <meta name="description" content="Net is a HttpRequest wrapper written in Swift. source code : https://github.com/nghialv/Net Features GET, POST, PUT, DELETE method
+Powerful request &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,6 +96,467 @@
     <div id="content">
       <div class="blog-index">
   
+  
+    
+    <article>
+      
+        
+  <header>
+    
+      <h1 class="entry-title vn-title"><a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Net - a HttpRequest Wrapper</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-15T08:29:00+09:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:29 am</span></time>
+        
+         | <a href="/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/#disqus_thread"
+             + data-disqus-identifier="http://nghialv.github.io/blog/2014/10/15/net-a-httprequest-wrapper-written-in-swift/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+
+  <div class="entry-content"><p>Net is a HttpRequest wrapper written in Swift.</p>
+
+<p><a href="https://github.com/nghialv/Net">source code : https://github.com/nghialv/Net</a></p>
+
+<h3>Features</h3>
+
+<ul>
+<li>GET, POST, PUT, DELETE method</li>
+<li>Powerful request params: nested params, number, string, dic, array, image, data</li>
+<li>Json, Image, Xml Response</li>
+<li>Download file: resume, suspend, cancel</li>
+<li>Upload file, data, params(multi-part)</li>
+<li>Progress closure</li>
+<li>Background donwload, upload</li>
+<li>Authentication</li>
+<li>Batch of operations</li>
+<li>BaseURL</li>
+<li>Customizable header</li>
+</ul>
+
+
+<h3>Demo app</h3>
+
+<p><img src="https://dl.dropboxusercontent.com/u/8556646/screenshot2.png" alt="screenshot" /></p>
+
+<h3>Usage</h3>
+
+<p>Use one of the following methods to create a Net instance</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// without baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// with baseURL</span>
+</span><span class='line'><span class="k">let</span> <span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="nl">baseUrlString</span><span class="p">:</span> <span class="s">&quot;http://www.puqiz.com/&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>HttpRequest</h4>
+
+<h6><code>GET</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;get_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;doubleNumber&quot;</span><span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;hello&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can also make a request with absolute url</span>
+</span><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.puqiz.com/get_path&quot;</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">GET</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also use nested params</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// nested params</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;array&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;dictionary&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="o">:</span> <span class="mf">100.0</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="o">:</span> <span class="mf">200.0</span><span class="p">],</span>
+</span><span class='line'>            <span class="s">&quot;image&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By using responseData in sucessHandler closure you can quickly</p>
+
+<ul>
+<li>get json dictionary</li>
+<li>get image</li>
+<li>parse xml</li>
+</ul>
+
+
+<p>for GET, POST, PUT, DELETE request.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// get json dictionary from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">jsonDic</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// get image from response data</span>
+</span><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">image</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// parse xml with delegate</span>
+</span><span class='line'><span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">parseXml</span><span class="p">(</span><span class="nl">delegate</span><span class="p">:</span> <span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>POST</code> Request</h6>
+
+<p>Net will automatically check your params to send request as a URL-Encoded request or a Multi-Part request. So you can easily post with number, string, image or binary data.</p>
+
+<ul>
+<li>URL-Encoded Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Multi-Part Request</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;post_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;puqiz_icon&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&quot;icon&quot;</span><span class="o">:</span> <span class="n">NetData</span><span class="p">(</span><span class="nl">pngImage</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> <span class="nl">filename</span><span class="p">:</span> <span class="s">&quot;myIcon&quot;</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>PUT</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;put_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;integerNumber&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;floatNumber&quot;</span><span class="o">:</span> <span class="mf">1.5</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">PUT</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">responseData</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="nl">error</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6><code>DELETE</code> Request</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;delete_path&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">DELETE</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">successHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">responseData</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;result: \(result)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">failureHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Task</h4>
+
+<p>Before using download/upload function you have to call <code>setupSession</code> method to setup the session.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session without backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To perform background downloads or uploads, you have to call <code>setupSession</code> method with a background identifier string. Then your download/upload tasks can be run even when the app is suspended, exits or crashes.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// setup session with backgroundIdentifier</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">setupSession</span><span class="p">(</span><span class="nl">backgroundIdentifier</span><span class="p">:</span> <span class="s">&quot;com.nghialv.download&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can set eventsForBackgroundHandler closure</span>
+</span><span class='line'><span class="c1">// this closure will be invoked when a task is completed in the background</span>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">eventsForBackgroundHandler</span> <span class="o">=</span> <span class="p">{</span> <span class="n">urlSession</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">urlSession</span><span class="p">.</span><span class="n">getDownloadingTasksCount</span><span class="p">{</span> <span class="n">downloadingTaskCount</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">downloadingTaskCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;All files have been downloaded!&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Download</h6>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">downloadTask</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">progress</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">fileUrl</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Download failed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Downloaded to  : \(fileUrl)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can control your task</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">suspend</span><span class="p">()</span>
+</span><span class='line'><span class="n">downloadTask</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>Upload</h6>
+
+<ul>
+<li>Upload with file path</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">fromFile</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload failed : \(error)&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with data</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">yourData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(...)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">data</span><span class="p">:</span> <span class="n">yourData</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Upload with params</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="s">&quot;image_file&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;number&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;string&quot;</span><span class="o">:</span> <span class="s">&quot;net&quot;</span><span class="p">,</span> <span class="s">&quot;data&quot;</span><span class="o">:</span> <span class="n">imageData</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">net</span><span class="p">.</span><span class="n">upload</span><span class="p">(</span><span class="nl">absoluteUrl</span><span class="p">:</span> <span class="n">imgUrl</span><span class="p">,</span> <span class="nl">params</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="nl">progressHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">progress</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;progress: \(progress)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="nl">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+</span><span class='line'>      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Upload completed&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the upload task will be performed as POST method and</p>
+
+<ul>
+<li><code>Content-Type</code> = <code>application/octet-stream</code> (upload with file or data)</li>
+<li><code>Content-Type</code> = <code>multipart/form-data</code> (upload with params)</li>
+</ul>
+
+
+<p>But you can configure the upload task before resuming.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// set method</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setHttpMethod</span><span class="p">(.</span><span class="n">PUT</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// set header field</span>
+</span><span class='line'><span class="n">yourUploadTask</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="nl">value</span><span class="p">:</span> <span class="s">&quot;your_value&quot;</span><span class="p">,</span> <span class="nl">forHttpHeaderField</span><span class="p">:</span> <span class="s">&quot;header_field&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>In progress</h3>
+
+<ul>
+<li>Batch of operations</li>
+<li>Basic authentiacation</li>
+</ul>
+
+
+<h3>Integration</h3>
+
+<p>Just drag Net folder to the project tree</p>
+</div>
+  
+  
+
+
+      
+    </article>
   
     
     <article>
@@ -233,7 +686,7 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 
 <h3>Examples</h3>
 
-<h6>&ndash; gcd</h6>
+<h6>- gcd</h6>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -324,7 +777,7 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h6>&ndash; manage group of block with GCDGroup</h6>
+<h6>- manage group of block with GCDGroup</h6>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -359,7 +812,7 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h6>&ndash; create your custom queue with CGDQueue</h6>
+<h6>- create your custom queue with CGDQueue</h6>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -405,313 +858,6 @@ Swift, Ruby, Java, C++などの言語に関する質問を解いてみません�
       
     </article>
   
-    
-    <article>
-      
-        
-  <header>
-    
-      <h1 class="entry-title vn-title"><a href="/blog/2014/01/06/clang-modules/">#include, #import, @import (Clang Modules)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-01-06T04:14:00+09:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:14 am</span></time>
-        
-         | <a href="/blog/2014/01/06/clang-modules/#disqus_thread"
-             + data-disqus-identifier="http://nghialv.github.io/blog/2014/01/06/clang-modules/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-
-  <div class="entry-content"><h1>Mở đầu</h1>
-
-<p>Happy New Year! Chúc mọi người năm mới vui vẻ, hạnh phúc.</p>
-
-<p>Như các bạn cũng biết gần đây XCode5 cùng iOS7 đã được giới thiệu.
-Đi cùng XCode5 là feature mới “modules” của Clang, một giải pháp nhằm giải quyết một số vấn đề như tăng tốc độ compile source code của ứng dụng.
-Hôm nay mình sẽ giới thiệu qua về tính năng modules này.
-Hiện tại thì modules đã có thể sử dụng trong C và Objective-C trên môi trường iOS7 hoặc MacOSX 10.9.
-Các đoạn code dưới đây tuy mình viết bằng Objective-C nhưng cũng gần như tương tự với C.
-Để hiểu về modules thì trước tiên mình sẽ giải thích lần lượt về <code>#include</code>, <code>#import</code>, và pre-compiled headers (PCH), sau đó là về modules.</p>
-
-<h2>#include</h2>
-
-<p>Khi chúng ta include 1 file header thì tại giai đoạn preprocessing của quá trình compile,
-compiler sẽ copy nội dung của file header này và paste vào dòng #include.
-Và tất nhiên quá trình copy/paste này là đệ quy cho đến khi copy xong tất cả file header mà nó include và các file header khác được include tại các file nó include. (hơi xoắn)</p>
-
-<p>Ví dụ với chương trình helloworld quen thuộc như dưới đây:</p>
-
-<figure class='code'><figcaption><span>helloworld.m </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &lt;Foundation/Foundation.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>     <span class="n">NSLog</span><span class="p">(</span><span class="err">@“</span><span class="n">Hello</span> <span class="n">world</span><span class="err">”</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Chúng ta có thể chạy preprocessor để xem file sinh ra sau giai đoạn này bằng lệnh <code>clang -E helloworld.m | less</code>.</p>
-
-<p>Nhìn vào kết quả output chúng ta có thể thấy tới hơn 92000 dòng là của Foundation.h (và của các file header mà Foundation.h include), chỉ 8 dòng cuối là code của chúng ta.</p>
-
-<p>Với việc sử dụng <code>#include</code> tồn tại vấn đề gọi là recursive include. Ví dụ :</p>
-
-<figure class='code'><figcaption><span>FirstFile.h </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;SecondFile.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Some code */</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>SecondFile.h </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#include &quot;FirstFile.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Some other code */</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Khi đấy preprocessor sẽ duyệt file FirstFile.h và copy nội dung của SecondFile.h vào FirstFile.h.
-Khi duyệt file SecondFile.h lại copy/paste nội dung của file FirstFile.h.
-Vấn đề này được gọi là recursive include.</p>
-
-<h2>#import</h2>
-
-<p>Trong Objective-C để tránh vấn đề recursive include như trên thì chúng ta thường dùng <code>#import</code>.
-Khi dùng <code>#import</code> thì trước khi include 1 file header, preprocessor sẽ kiểm tra xem file đấy đã được include chưa,
-nếu đã include rồi thì sẽ không include nữa.
-Tương tự trong C chúng ta cũng tránh recursive include bằng việc kiểm tra file header đã được  include chưa như sau:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#ifndef MYFILE_H
-</span><span class='line'>#define MYFILE_H
-</span><span class='line'> 
-</span><span class='line'>// Some code
-</span><span class='line'>  
-</span><span class='line'>#endif</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>@import</h2>
-
-<p>Tuy nhiên việc sử dụng <code>#import</code> cũng như <code>#include</code> khiến cho preprocessor đối mặt với 1 số vấn đề khác như Fragility và Performance.
-Để hiểu về vấn đề Header Fragility chúng ta xem qua một ví dụ đơn giản sau:</p>
-
-<figure class='code'><figcaption><span>MyFile.h </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define NSURL @“my url&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Khi đó sau quá trình preprocessing thì file header của chúng ta sẽ như sau:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define NSURL @“my url&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// đoạn code được copy từ Foundation.h</span>
-</span><span class='line'><span class="c1">// và tất cả những đoạn có chứa NSURL của Foundation.h đều bị thay bằng “my url”</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> :<span class="nc">NSObject</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Tất cả những đoạn NSURL của Foundation.h đều bị preprocessor thay thế bằng “my url” do có <code>#define NSURL @“my url”</code> bên trên.
-Từ đó ta thấy với việc dùng <code>#include</code> hay <code>#import</code> thông thường thì các header của các file khác,
-hay của thư viện mà chúng ta dùng đều có thể bị ảnh hưởng như việc dùng <code>#define</code> ở trên.</p>
-
-<p>Về vấn đề performance thì như ở trên ta đã thấy <code>#include</code> và <code>#import</code> sẽ copy/paste toàn bộ file header mà nó include (đệ quy).
-Như ở ví dụ đầu tiên chúng ta chỉ include mình Foundation.h nhưng sau khi preprocessing thì có tới hơn 92000 dòng là của
-Foundation.h (và các file header mà Foundation.h include), chỉ 8 dòng cuối là code của chúng ta.
-Thế nên thời gian compile sẽ trở nên nhiều hơn rất nhiều.</p>
-
-<h2>Pre-compiled headers</h2>
-
-<p>Để giải quyết 1 phần vấn đề performance chúng ta có thể dùng precompiled headers (.pch).
-Nếu các bạn chú ý thì tất cả iOS project khi được XCode tạo ra đều có file PROJECTNAME-Prefix.pch như sau:</p>
-
-<figure class='code'><figcaption><span>PROJECTNAME-Prefix.pch </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;Availability.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#ifndef __IPHONE_3_0</span>
-</span><span class='line'><span class="cp">#warning &quot;This project uses features only available in iOS SDK 3.0 and later.&quot;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#ifdef __OBJC__</span>
-</span><span class='line'>    <span class="err">#</span><span class="n">import</span> <span class="o">&lt;</span><span class="n">UIKit</span><span class="o">/</span><span class="n">UIKit</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="err">#</span><span class="n">import</span> <span class="o">&lt;</span><span class="n">Foundation</span><span class="o">/</span><span class="n">Foundation</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span><span class="n">Foundation</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Trong file .pch này chúng ta sẽ include những header mà có khả năng được include tại nhiều nơi trong source code
-của ứng dụng như Foundation.h, UIKit.h… Khi source code của ứng dụng được compile thì file .pch này sẽ được compile đầu tiên,
-đồng nghĩa với việc tất cả file header được include trong file .pch này sẽ được compile trước và được include vào tất cả source code.</p>
-
-<p>Bằng viêc caching những file header đã được biên dịch này thì những file này chỉ cần compile 1 lần,
-những lần sau chỉ cần sử dụng lại nên thời gian compile sẽ được rút gọn.</p>
-
-<p>Thế nhưng các developer thường không hay quản lý file .pch này, và không phải file header nào cũng được dùng tại nhiều nơi trong source code
-nên hiệu quả của .pch chưa được cao.</p>
-
-<h2>Modules</h2>
-
-<p>Vào tháng 11 năm 2012, Doug Gregor (một kỹ sư của Apple) đã giới thiệu tính năng modules nhằm giải quyết vấn đề trên của proprocessor thay cho .pch.
-Vậy module là gì? Module chính là một package mô tả một library, framework.</p>
-
-<p>Ví dụ chạy 2 lệnh dưới đây ta sẽ có thể xem được các module trong SDK của iOS7.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>% cd `xcrun --sdk iphoneos --show-sdk-path`
-</span><span class='line'>% find . -name module.map   
-</span><span class='line'>
-</span><span class='line'> ./Developer/Library/Frameworks/XCTest.framework/module.map   
-</span><span class='line'> ./System/Library/Frameworks/AudioToolbox.framework/module.map   
-</span><span class='line'> ./System/Library/Frameworks/AudioUnit.framework/module.map   
-</span><span class='line'> ./System/Library/Frameworks/CoreAudio.framework/module.map     
-</span><span class='line'>    :     
-</span><span class='line'>    :   
-</span><span class='line'> ./usr/include/dispatch/module.map   
-</span><span class='line'> ./usr/include/mach-o/module.map   
-</span><span class='line'> ./usr/include/module.map   
-</span><span class='line'> ./usr/include/objc/module.map</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Với mỗi framework ta thấy có 1 file module.map để mô tả framework đấy.</p>
-
-<p>Và để sử dụng framework chúng ta có thể thay <code>#import &lt;Frameworkname.h&gt;</code> bằng <code>@import Frameworkname;</code>
-Ví dụ khi sử dụng framework Foundation ta sẽ dùng <code>@import Foundation;</code>
-Vậy khi trong một file header gặp đoạn import module thì compiler đã xử lý gì và tại sao lại giải quyết được vấn đề Fragility và
-Performance của preprocessor?</p>
-
-<p>Ví dụ khi trong một file header, preprocessor gặp <code>@import Foundation</code> thì sẽ xử lý các bước như sau:</p>
-
-<ul>
-<li>Tìm file module.map của framework có tên là Foundation</li>
-<li>Dựa vào mô tả về framework trong file module.map này compiler sẽ parse các file headers và
-sinh ra file module (lưu dưới dạng AST &ndash; biểu diễn dưới dạng tree trước khi chuyển sang mã máy)</li>
-<li>Load file module này tại đoạn khai báo import</li>
-<li>Cache file module này để sử dụng lại cho những lần sau</li>
-</ul>
-
-
-<p>Thứ nhất thay vì copy nội dung các file header được include rồi mới compile, mà import trưc tiếp file module đã được
-lưu dưới dạng AST nên các header của framework ko bị ảnh hưởng bởi các đoạn code trước khi import (như #define) &ndash;>
- tránh được vấn đề Fragility.</p>
-
-<p>Thứ hai là nhờ việc cache những file module này mà compiler không phải biên dịch lần 2 nên sẽ rút gọn thời gian biên dịch.</p>
-
-<p>Ngoài ra một điều thú vị nữa mà tính năng module mang lại cho lập trình viên đó là chúng ta không phải tự tay link các framework mà chúng ta import.
-Ví dụ như trước đây nếu trong file tmp.m có <code>#include &lt;Foundation/Foundation.h&gt;</code> thì khi biên dịch chúng ta phải tự link tới Foundation bằng lệnh :
-<code>clang tmp.m -o tmp -framework Foundation</code></p>
-
-<p>Thế nhưng khi sử dụng <code>@import</code> thì chúng ta không cần phải tự link tới framework nữa mà chỉ cần:</p>
-
-<p><code>clang tmp.m -o tmp -fmodules</code></p>
-
-<p>Với XCode chúng ta sẽ không phải add thêm các framework mà mình muốn dùng trong <code>Link Binary With Libraries</code> như hình dưới đây.</p>
-
-<p><img src="/images/clang_modules/link_framework.png"></p>
-
-<p>Đối với những project được tạo từ XCode5 thì tính năng module tự động được enable.
-Nhưng những project được tạo trước đây các bạn phải tự enable trong phần <code>Build Settings</code> (tức là set flag -fmodules).</p>
-
-<p><img src="/images/clang_modules/enable_module.png"></p>
-
-<h1>Kết luận</h1>
-
-<p>Bài viết này mình đã giới thiệu qua tính năng module của Clang trong được giới thiệu từ XCode5.
-Và đồng thời cũng giải thích qua về <code>#include</code>, <code>#import</code>, pch.
-Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng hiện tại chúng ta đã có thể sử dụng với XCode5.</p>
-
-<p>Các bạn có thể tìm hiểu thêm tại:</p>
-
-<ul>
-<li><a href="http://clang.llvm.org/docs/Modules.html">clang_modules</a></li>
-<li><a href="http://llvm.org/devmtg/2012-11/Gregor-Modules.pdf">Bài phát biểu của Gregor</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-      
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -729,6 +875,10 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/19/lazy-evaluation-in-swift/">Lazy Evaluation in Swift</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/20/hakuba/">Hakuba</a>
       </li>
     
@@ -742,10 +892,6 @@ Mặc dù tính năng module vẫn đang trong quá trình hoàn thiện nhưng 
     
       <li class="post">
         <a href="/blog/2014/10/05/puqiz/">Puqiz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/01/gcd-a-wrapper-of-grand-central-dispatch-written-in-swift/">GCD - a wrapper of Grand Central Dispatch</a>
       </li>
     
   </ul>
